@@ -30,21 +30,36 @@
   <style>
     /* ---- Wizard-specific inline styles ---- */
     :root{
-      --accent:#0d6efd;
-      --bg:#f7f9fb;
+      --accent:#3B82F6; /* Modern Vivid Blue */
+      --accent-hover:#2563EB;
+      --bg:#F8FAFC; /* Ultra Light Slate */
       --card:#ffffff;
-      --muted:#6c757d;
+      --text-main: #0F172A; /* Deep Navy/Slate */
+      --text-muted: #64748B;
+      --border-color: #E2E8F0;
+      /* Premium layered shadows */
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      --radius: 24px; /* More rounded modern look */
     }
     html,body{
       height:100%;
     }
     body {
-      background: var(--bg);
+      background-color: var(--bg);
+      /* Modern gradient mesh background */
+      background-image: radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.08) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.05) 0px, transparent 50%);
+      background-attachment: fixed;
       font-family: "Poppins", sans-serif;
+      color: var(--text-main);
+      line-height: 1.7; /* Typography: Increased line height for readability */
+      letter-spacing: 0.015em; /* Typography: Slight spacing for Poppins */
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
       margin:0;
     }
+    h1, h2, h3, h4, h5, h6 { font-family: "Raleway", sans-serif; font-weight: 800; color: #0F172A; letter-spacing: -0.03em; line-height: 1.2; }
 
     /* full-screen centered login */
     #login-section {
@@ -52,29 +67,54 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      background: linear-gradient(180deg, rgba(13,110,253,0.06), rgba(255,255,255,0.02));
+      background: transparent;
       padding: 2rem;
     }
     .login-card {
       width:100%;
-      max-width:520px;
+      max-width:480px;
       background:var(--card);
-      padding:2rem;
-      border-radius:.75rem;
-      box-shadow: 0 10px 30px rgba(12,16,40,0.08);
+      padding:3rem;
+      border-radius:var(--radius);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255,255,255,0.8);
       text-align:center;
+      position: relative;
+      overflow: hidden;
+    }
+    .login-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 6px;
+      background: linear-gradient(90deg, var(--accent), #60A5FA);
     }
     .login-card h2{ margin-bottom:1rem; font-weight:600;}
     .login-card .form-control{ margin-top:.5rem; }
+
+    /* Mode Selection */
+    #mode-selection-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+    }
+    .mode-card {
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .mode-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--accent); }
 
     /* sticky mini header inside wizard */
     #wizard-header {
       position: sticky;
       top: 0;
       z-index: 1050;
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(4px);
-      border-bottom:1px solid #eee;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: var(--shadow-sm);
+      border-bottom:1px solid rgba(226, 232, 240, 0.6);
     }
     #wizard-header .container {
       padding: .75rem 1rem;
@@ -83,16 +123,16 @@
       justify-content:space-between;
     }
     .progress {
-      height:10px;
-      background:#eee;
-      border-radius:999px;
-      overflow:hidden;
+      height: 8px;
+      background: #F1F5F9;
+      border-radius: 99px;
+      overflow: hidden;
     }
     .progress .progress-bar {
-      background:linear-gradient(90deg,var(--accent),#6610f2);
-      height:10px;
-      width:0%;
-      transition: width .45s ease;
+      background: linear-gradient(90deg, var(--accent), #60A5FA);
+      border-radius: 99px;
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     main.wizard-main{
@@ -109,11 +149,13 @@
     }
     .wizard-card {
       background:var(--card);
-      border-radius:.6rem;
-      padding:1.6rem;
-      box-shadow: 0 8px 24px rgba(12,16,40,0.06);
+      border-radius:var(--radius);
+      padding:3.5rem;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255,255,255,0.6);
       margin-bottom:1rem;
       overflow:hidden;
+      transition: box-shadow 0.3s ease;
     }
 
     .wizard-footer {
@@ -143,27 +185,101 @@
 
     /* Step number pill */
     .step-pill {
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      width:36px;height:36px;border-radius:999px;
-      background:var(--accent); color:#fff;
-      font-weight:600;
+      width: 42px; height: 42px;
+      background: linear-gradient(135deg, var(--accent), #2563EB);
+      color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+    .step-pill::after {
+      content: '';
+      position: absolute;
+      top: -4px; left: -4px; right: -4px; bottom: -4px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      opacity: 0.15;
+      z-index: -1;
     }
 
     /* content spacing */
-    .vocab-table td, .vocab-table th { vertical-align:middle; }
+    .vocab-table {
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+    .vocab-table thead th {
+      background: #F8FAFC;
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--border-color);
+      padding: 1.2rem;
+    }
+    .vocab-table td {
+      vertical-align:middle; padding: 1.2rem;
+      border-bottom: 1px solid var(--border-color);
+      color: #4B5563;
+    }
+    .vocab-table tr:last-child td { border-bottom: none; }
+    .vocab-word { color: #0EA5E9; font-weight: 700; font-family: "Raleway", sans-serif; font-size: 1.1rem; } /* Sky Blue 500 */
     @media (max-width:768px){
       .speaking-row, .vocab-word:hover {
         background-color: #e9f5ff !important;
         transition: background-color 0.3s ease;
       }
+    }
 
     @media (max-width:768px){
       .login-card { padding:1.2rem; margin: 0 8px; }
       .wizard-container{ padding:0 12px; }
       #wizard-header .container{ padding: .5rem; }
     }
+    
+    /* Button Polish */
+    .btn-primary { background: linear-gradient(180deg, var(--accent), #2563EB); border: none; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2); transition: all 0.2s; font-weight: 600; padding: 0.6rem 1.5rem; border-radius: 0.5rem; }
+    .btn-primary:hover { background: linear-gradient(180deg, #2563EB, #1D4ED8); transform: translateY(-1px); box-shadow: 0 6px 12px rgba(37, 99, 235, 0.25); }
+    
+    /* Form Control Polish */
+    .form-control {
+      padding: 0.85rem 1.1rem;
+      border-radius: 0.75rem;
+      border: 1px solid var(--border-color);
+      background-color: #F8FAFC;
+      box-shadow: none;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+    .form-control:focus {
+      background-color: #fff;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+    }
+
+    /* Brainstorm Toolbar Polish */
+    .bs-toolbar { background: #fff; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); border-radius: 1rem; }
+
+    /* Smooth Step Animation (Hardware Accelerated) */
+    .animate-step { animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes slideUpFade {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Timer Pulse Animation */
+    @keyframes pulse-soft {
+      0% { box-shadow: 0 0 0 0 rgba(0, 86, 210, 0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(0, 86, 210, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 86, 210, 0); }
+    }
+    #startTimerBtn, #startTimerBtnT2 { animation: pulse-soft 2s infinite; }
   </style>
 </head>
 
@@ -172,17 +288,47 @@
   <!-- LOGIN SECTION (FULLSCREEN) -->
   <section id="login-section" aria-label="Login section" data-aos="fade-up">
     <div class="login-card" role="dialog" aria-labelledby="loginTitle">
-      <h2 id="loginTitle">Enter Access Password</h2>
-      <p class="mb-3 text-muted">This wizard is password-protected. Enter the passphrase to continue.</p>
+      <h2 id="loginTitle" class="mb-4">Welcome Back</h2>
+      <p class="mb-4 text-muted">Please enter your access passphrase to unlock the learning wizard.</p>
 
       <div class="mb-3 text-start" data-aos="fade-right">
-        <label for="passwordInput" class="form-label">Passphrase</label>
+        <label for="passwordInput" class="form-label small text-uppercase fw-bold text-muted">Passphrase</label>
         <input id="passwordInput" type="password" class="form-control" placeholder="Enter passphrase">
         <div id="loginError" class="text-danger mt-2 hidden" role="alert">Incorrect passphrase. Try again.</div>
       </div>
 
-      <div class="d-grid mt-3" data-aos="fade-up" data-aos-delay="150">
-        <button id="loginBtn" class="btn btn-primary px-4">Unlock</button>
+      <div class="d-grid mt-4" data-aos="fade-up" data-aos-delay="150">
+        <button id="loginBtn" class="btn btn-primary px-4 py-2">Unlock Dashboard</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODE SELECTION SECTION -->
+  <section id="mode-selection-section" class="hidden" aria-label="Select Task Mode" data-aos="fade-up">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2>Select Writing Task</h2>
+        <p class="text-muted">Choose the module you want to teach today.</p>
+      </div>
+      <div class="row justify-content-center g-4">
+        <div class="col-md-5 col-lg-4">
+          <div class="card mode-card h-100 p-4 text-center" onclick="selectMode('task1')">
+            <div class="card-body">
+              <h3 class="card-title mb-3" style="color:var(--accent)">Task 1</h3>
+              <p class="card-text text-muted">Academic Report (Charts, Graphs, Diagrams)</p>
+              <button class="btn btn-outline-primary mt-3">Start Task 1</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 col-lg-4">
+          <div class="card mode-card h-100 p-4 text-center" onclick="selectMode('task2')">
+            <div class="card-body">
+              <h3 class="card-title text-success mb-3" style="color:#198754">Task 2</h3>
+              <p class="card-text text-muted">Essay Writing (Opinion, Discussion, Problem-Solution)</p>
+              <button class="btn btn-outline-success mt-3">Start Task 2</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -193,7 +339,7 @@
       <div class="d-flex align-items-center gap-3">
         <div class="step-pill" id="stepPill">1</div>
         <div>
-          <div id="stepTitle" style="font-weight:600">Step 1: Task Overview</div>
+          <div id="stepTitle" style="font-weight:800; font-family:'Raleway', sans-serif; font-size: 1.1rem; color: #1E293B;">Step 1: Task Overview</div>
           <small id="stepCounter" class="text-muted">1 / 7</small>
         </div>
       </div>
@@ -210,8 +356,10 @@
   <main class="wizard-main hidden">
     <div class="wizard-container">
 
+      <!-- TASK 1 WRAPPER -->
+      <div id="task1-wrapper" class="wizard-wrapper">
       <!-- STEP 1 - TASK OVERVIEW -->
-      <section id="step1" class="wizard-card" data-step="1" data-aos="fade-up">
+      <section id="step1" class="wizard-card" data-step="1">
         <div class="d-flex justify-content-between align-items-start">
           <div>
             <h3>Task Overview</h3>
@@ -234,14 +382,14 @@
 
         <!-- Tab Content -->
         <div class="tab-content pt-3" id="overviewTabContent">
-          <div class="tab-pane fade show active" id="audio-pane" role="tabpanel" aria-labelledby="audio-tab" data-aos="fade-up">
+          <div class="tab-pane fade show active" id="audio-pane" role="tabpanel" aria-labelledby="audio-tab">
             <p class="small text-muted">A concise audio walkthrough of approach & tips. The step marks complete when the audio ends.</p>
             <audio id="overviewAudio" controls style="width:100%;">
               <source src="materials/week-25-fri-wt1-audio.mp3" type="audio/mpeg">
               Your browser does not support the audio element.
             </audio>
           </div>
-          <div class="tab-pane fade" id="video-pane" role="tabpanel" aria-labelledby="video-tab" data-aos="fade-up">
+          <div class="tab-pane fade" id="video-pane" role="tabpanel" aria-labelledby="video-tab">
             <p class="small text-muted">A short video overview (or speaker notes). The step marks complete when the video ends.</p>
             <video id="overviewVideo" controls style="width:100%; border-radius:.4rem;">
               <source src="materials/random.mp4" type="video/mp4">
@@ -250,13 +398,13 @@
           </div>
         </div>
 
-        <div id="mediaCompleteBadge" class="mt-3 hidden" data-aos="zoom-in">
+        <div id="mediaCompleteBadge" class="mt-3 hidden">
           <span class="badge bg-success">Overview Completed ✓</span>
         </div>
       </section>
 
       <!-- STEP 2 - BRAINSTORM (3-MIN TIMER) -->
-      <section id="step2" class="wizard-card hidden" data-step="2" data-aos="fade-up">
+      <section id="step2" class="wizard-card hidden" data-step="2">
         <div class="d-flex justify-content-between align-items-start">
           <div>
             <h3>Brainstorm (3-minute focus)</h3>
@@ -268,14 +416,14 @@
         <hr>
 
         <div class="row g-3">
-          <div class="col-lg-7" data-aos="fade-right">
+          <div class="col-lg-7">
             <div class="mb-3">
               <h6>Task 1 Question</h6>
               <p class="small">The diagram below shows how the water cycle works. Write a report for a university lecturer describing the information given below.</p>
             </div>
           </div>
 
-          <div class="col-lg-5" data-aos="fade-left">
+          <div class="col-lg-5">
             <figure class="figure">
               <a href="materials/week-25-fri-wt1.png" class="glightbox">
                 <img src="materials/week-25-fri-wt1.png" alt="Task Chart" class="img-fluid rounded" />
@@ -296,18 +444,18 @@
       </section>
 
       <!-- STEP 3 - VOCABULARY TABLE -->
-      <section id="step3" class="wizard-card hidden" data-step="3" data-aos="fade-up">
+      <section id="step3" class="wizard-card hidden" data-step="3">
         <div class="d-flex justify-content-between">
           <div>
             <h3>Vocabulary Table</h3>
-            <p class="text-muted">High-level vocabulary to use in your Task 1 report.</p>
+            <p class="text-muted">High-level vocabulary to use in your Task 1 report. <span class="text-primary small">(Click word to listen)</span></p>
           </div>
           <div class="text-muted"><small>Use pronunciation &amp; examples</small></div>
         </div>
 
         <hr>
 
-        <div class="table-responsive" data-aos="fade-up" data-aos-delay="100">
+        <div class="table-responsive">
           <table class="table table-bordered vocab-table">
             <thead class="table-light">
               <tr>
@@ -336,7 +484,7 @@
           </table>
         </div>
 
-        <div class="d-flex gap-2 align-items-center mt-3" data-aos="fade-up" data-aos-delay="150">
+        <div class="d-flex gap-2 align-items-center mt-3">
           <label for="accentSelect" class="me-2 mb-0 small text-muted">Accent</label>
           <select id="accentSelect" class="form-select form-select-sm w-auto">
             <option value="en-GB">UK (en-GB)</option>
@@ -348,7 +496,7 @@
       </section>
 
       <!-- STEP 4 - INTRODUCTION & OVERVIEW -->
-      <section id="step4" class="wizard-card hidden" data-step="4" data-aos="fade-up">
+      <section id="step4" class="wizard-card hidden" data-step="4">
         <div class="d-flex justify-content-between">
           <div>
             <h3>Plan: Introduction &amp; Overview</h3>
@@ -360,7 +508,7 @@
         <hr>
 
         <div class="row g-3">
-          <div class="col-md-6" data-aos="fade-right">
+          <div class="col-md-6">
             <h6>Sample Introductions</h6>
             <div class="mb-2">
               <div class="p-2" style="background:#fbfbff;border-radius:.4rem;">
@@ -370,7 +518,7 @@
             </div>
           </div>
 
-          <div class="col-md-6" data-aos="fade-left">
+          <div class="col-md-6">
             <h6>Sample Overviews</h6>
             <div class="mb-2">
               <div class="p-2" style="background:#fffaf0;border-radius:.4rem;">
@@ -384,7 +532,7 @@
       </section>
 
       <!-- STEP 5 - BODY PARAGRAPH 1 -->
-      <section id="step5" class="wizard-card hidden" data-step="5" data-aos="fade-up">
+      <section id="step5" class="wizard-card hidden" data-step="5">
         <div class="d-flex justify-content-between">
           <div>
             <h3>Plan: Body Paragraph 1</h3>
@@ -395,7 +543,7 @@
 
         <hr>
 
-        <div class="checklist-container" data-aos="fade-up">
+        <div class="checklist-container">
           <ul>
             <li>At the initial stage, solar heat causes water stored in seas, rivers, and lakes to evaporate, forming invisible water vapour.</li>
             <li>Concurrently, moisture is released into the atmosphere through transpiration from plants and trees.</li>
@@ -406,7 +554,7 @@
       </section>
 
       <!-- STEP 6 - BODY PARAGRAPH 2 -->
-      <section id="step6" class="wizard-card hidden" data-step="6" data-aos="fade-up">
+      <section id="step6" class="wizard-card hidden" data-step="6">
         <div class="d-flex justify-content-between">
           <div>
             <h3>Plan: Body Paragraph 2</h3>
@@ -417,7 +565,7 @@
 
         <hr>
 
-        <div class="checklist-container" data-aos="fade-up">
+        <div class="checklist-container">
           <ul>
             <li>Subsequently, further cooling within the clouds leads to precipitation, primarily in the form of rainfall.</li>
             <li>Following this, rainwater flows over the land surface and is channelled downstream by rivers.</li>
@@ -428,12 +576,12 @@
       </section>
 
       <!-- STEP 7 - FINAL REVIEW & DOWNLOAD -->
-      <section id="step7" class="wizard-card hidden text-center" data-step="7" data-aos="fade-up">
+      <section id="step7" class="wizard-card hidden text-center" data-step="7">
         <h3>Final Review &amp; Download</h3>
         <p class="text-muted">Review your notes and download the tutor report or return home.</p>
 
         <div class="my-3">
-          <img src="materials/qrcode_todayieltstask.onrender.com.png" alt="QR code for today's task" width="200" class="img-fluid rounded" />
+          <img src="materials/qrcode_today-ielts-task.onrender.com.png" alt="QR code for today's task" width="200" class="img-fluid rounded" />
         </div>
 
         <div class="d-flex justify-content-center gap-3 mt-3">
@@ -446,14 +594,247 @@
           <div class="alert alert-success">Congratulations — your Task 1 plan is ready!</div>
         </div>
       </section>
+      </div><!-- END TASK 1 WRAPPER -->
+
+      <!-- TASK 2 WRAPPER -->
+      <div id="task2-wrapper" class="wizard-wrapper hidden">
+        <!-- STEP 1 - TASK OVERVIEW -->
+        <section class="wizard-card" data-step="1">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h3>Task 2 Overview</h3>
+              <p class="text-muted">Choose an overview media (audio/video) to get a guided briefing for your Task 2 Essay.</p>
+            </div>
+            <div class="text-end text-muted"><small>Estimated time: 1-2 min</small></div>
+          </div>
+          <hr>
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#audio-pane-t2" type="button" role="tab">Audio Overview</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#video-pane-t2" type="button" role="tab">Video Overview</button>
+            </li>
+          </ul>
+          <div class="tab-content pt-3">
+            <div class="tab-pane fade show active" id="audio-pane-t2" role="tabpanel">
+              <p class="small text-muted">A concise audio walkthrough of approach & tips.</p>
+              <audio controls style="width:100%;">
+                <source src="materials/week-26-mon-wt2-audio.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+            <div class="tab-pane fade" id="video-pane-t2" role="tabpanel">
+              <p class="small text-muted">A short video overview.</p>
+              <video controls style="width:100%; border-radius:.4rem;">
+                <source src="materials/week-26-mon-wt2-video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </section>
+
+        <!-- STEP 2 - BRAINSTORM -->
+        <section class="wizard-card hidden" data-step="2">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h3>Brainstorm (5-minute focus)</h3>
+              <p class="text-muted">Read the Task 2 question carefully. Plan your ideas and examples.</p>
+            </div>
+            <div class="text-muted text-end"><small>Focus timer</small></div>
+          </div>
+          <hr>
+          <div class="row g-3">
+            <div class="col-lg-8">
+              <div class="mb-3 p-3 bg-light rounded border">
+                <h6 class="text-primary">Task 2 Question</h6>
+                <p class="lead mb-0">Some people believe that car-free days are effective to reduce air pollution. However, others argue that there are other ways that are more effective.<br><br>Discuss both the views and give your opinion.</p>
+              </div>
+              
+              <!-- Brainstorming Toolbar -->
+              <div class="d-flex justify-content-between align-items-center mb-3 p-2 rounded bs-toolbar">
+                <div class="d-flex gap-2 align-items-center">
+                  <div class="btn-group btn-group-sm" role="group">
+                    <button class="btn btn-outline-primary active" id="toolTypeBtn" onclick="setBrainstormTool('type')" title="Type Mode"><i class="bi bi-keyboard-fill"></i> Type</button>
+                    <button class="btn btn-outline-primary" id="toolDrawBtn" onclick="setBrainstormTool('draw')" title="Draw Mode"><i class="bi bi-pencil-fill"></i> Draw</button>
+                  </div>
+                  <div id="drawOptions" class="d-flex gap-2 align-items-center hidden" style="border-left:1px solid #ccc; padding-left:8px;">
+                    <input type="color" id="bsColorPicker" class="form-control form-control-color form-control-sm" value="#0d6efd" title="Pen Color" onchange="updateBsStyle()">
+                    <input type="range" class="form-range" id="bsSizeSlider" min="1" max="20" value="2" style="width: 70px;" title="Brush Size" oninput="updateBsStyle()">
+                    <button class="btn btn-sm btn-outline-warning" id="bsHighlighterBtn" onclick="toggleBsHighlighter()" title="Highlighter"><i class="bi bi-highlights"></i></button>
+                  </div>
+                </div>
+                <div class="btn-group btn-group-sm" role="group">
+                  <button class="btn btn-outline-secondary" onclick="bsUndo()" title="Undo"><i class="bi bi-arrow-counterclockwise"></i></button>
+                  <button class="btn btn-outline-secondary" onclick="bsRedo()" title="Redo"><i class="bi bi-arrow-clockwise"></i></button>
+                  <button class="btn btn-outline-danger" onclick="clearBrainstormCanvas()" title="Clear Drawing"><i class="bi bi-trash"></i></button>
+                </div>
+              </div>
+
+              <div class="position-relative">
+                <textarea id="task2BrainstormArea" class="form-control" oninput="autoResize(this)" style="border: 2px dashed #ced4da; font-family: 'Courier New', monospace; font-size: 1.05rem; line-height: 1.6; resize: none; overflow:hidden; min-height: 300px; background: #fff; z-index: 1; position: relative;">INTRO-->
+BODY PARA 1-->
+BODY PARA 2-->
+BODY PARA 3(OPT)-->
+CON--></textarea>
+                <canvas id="brainstormCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; cursor: crosshair;"></canvas>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="card border-0 shadow-sm h-100" style="background: #f8f9fa;">
+                <div class="card-body text-center d-flex flex-column justify-content-center">
+                  <i class="bi bi-stopwatch text-primary mb-2" style="font-size: 2rem;"></i>
+                  <h5 class="card-title">Time Management</h5>
+                  <p class="card-text small text-muted">Spend 5 minutes planning. A good plan saves time during writing.</p>
+                  
+                  <div class="mt-3">
+                    <button id="startTimerBtnT2" class="btn btn-primary w-100">Start 5-Minute Timer</button>
+                  </div>
+                  <div id="timerOverlayT2" class="hidden mt-3 p-3 border rounded bg-white text-center">
+                <div id="timerDisplayT2" style="font-size:2rem;font-weight:700;">05:00</div>
+                <p class="small text-muted mt-2">Generate ideas: Reasons, Examples, Consequences.</p>
+              </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- STEP 3 - VOCABULARY -->
+        <section class="wizard-card hidden" data-step="3">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h3>Vocabulary Table</h3>
+              <p class="text-muted">High-level vocabulary for your essay. <span class="text-primary small">(Click word to listen)</span></p>
+            </div>
+            <div class="text-muted"><small>Use pronunciation &amp; examples</small></div>
+          </div>
+          <hr>
+          <div class="table-responsive">
+            <table class="table table-bordered vocab-table table-hover">
+              <thead class="table-light">
+                <tr><th style="width:25%;">Word</th><th style="width:45%;">Meaning</th><th style="width:30%;">Example</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class="vocab-word" role="button">Pernicious</td><td>Harmful, especially in a gradual way.</td><td>The pernicious effects of air pollution accumulate over time.</td></tr>
+                <tr><td class="vocab-word" role="button">Myopic</td><td>Short-sighted; lacking long-term thinking.</td><td>A myopic focus on car-free days overlooks sustainable alternatives.</td></tr>
+                <tr><td class="vocab-word" role="button">Anachronistic</td><td>Outdated and unsuitable for modern conditions.</td><td>Car-centric urban planning is increasingly anachronistic.</td></tr>
+                <tr><td class="vocab-word" role="button">Entrenched</td><td>Firmly established and difficult to change.</td><td>Entrenched reliance on private vehicles hinders environmental progress.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex gap-2 align-items-center mt-3">
+            <label class="me-2 mb-0 small text-muted">Accent</label>
+            <select id="accentSelectT2" class="form-select form-select-sm w-auto">
+              <option value="en-GB">UK (en-GB)</option>
+              <option value="en-IN">Indian (en-IN)</option>
+              <option value="en-US">US (en-US)</option>
+            </select>
+          </div>
+        </section>
+
+        <!-- STEP 4 - INTRODUCTION -->
+        <section class="wizard-card hidden" data-step="4">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h3>Plan: Introduction</h3>
+              <p class="text-muted">Paraphrase the question+state your position +(OPT)Thesis.</p>
+            </div>
+            <div class="text-muted"><small>Structure your opening</small></div>
+          </div>
+          <hr>
+          <div class="row g-3">
+            <div class="col-md-12">
+              <div class="p-3" style="background:#fbfbff;border-radius:.4rem;">
+                <strong>SAMPLE INTRODUCTION</strong>
+                <p class="small mb-0">Some people believe that banning private vehicles on certain days can reduce air pollution, while others argue that more permanent solutions are needed. <strong>In my opinion, long-term policies are a more effective approach to tackle air pollution than occasional car-free days</strong>.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- STEP 5 - CONCLUSION (Moved up) -->
+        <section class="wizard-card hidden" data-step="5">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h3>Plan: Conclusion</h3>
+              <p class="text-muted">Summarise your main points and restate your opinion.</p>
+            </div>
+            <div class="text-muted"><small>No new ideas here</small></div>
+          </div>
+          <hr>
+          <div class="p-3" style="background:#fffaf0;border-radius:.4rem;">
+            <strong>SAMPLE CONCLUSION</strong>
+            <p class="small mb-0">In conclusion, although car-free days can temporarily reduce pollution and increase public awareness, their impact is limited. <strong>I believe</strong> that long-term strategies such as improved public transport, cleaner vehicles, and better urban planning are far more effective in controlling air pollution.</p>
+          </div>
+        </section>
+
+        <!-- STEP 6 - BODY PARAGRAPH 1 (Renumbered) -->
+        <section class="wizard-card hidden" data-step="6">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h3>Plan: Body Paragraph 1</h3>
+              <p class="text-muted">View 1: Car-free days are effective</p>
+            </div>
+            <div class="text-muted"><small>Topic Sentence + Explanation + Example</small></div>
+          </div>
+          <hr>
+          <div class="checklist-container">
+            <ul>
+              <li><strong>Immediate reduction in traffic emissions:</strong> Fewer vehicles mean lower exhaust fumes.</li>
+              <li><strong>Encouragement of alternative transport:</strong> People are forced to use public transport or walk.</li>
+              <li><strong>Environmental awareness:</strong> People become more conscious of pollution problems.</li>
+              <li><strong>Improved urban environment:</strong> Streets become quieter and safer for pedestrians.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- STEP 7 - BODY PARAGRAPH 2 (Renumbered) -->
+        <section class="wizard-card hidden" data-step="7">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h3>Plan: Body Paragraph 2</h3>
+              <p class="text-muted">View 2: Other methods are more effective</p>
+            </div>
+            <div class="text-muted"><small>Topic Sentence + Explanation + Example</small></div>
+          </div>
+          <hr>
+          <div class="checklist-container">
+            <ul>
+              <li><strong>Permanent pollution control:</strong> Daily policies reduce pollution consistently.</li>
+              <li><strong>Better public transport systems:</strong> Reliable transport reduces car dependency.</li>
+              <li><strong>Cleaner vehicle technology:</strong> Electric vehicles produce fewer emissions.</li>
+              <li><strong>Urban planning improvements:</strong> Cities designed for short travel reduce pollution.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- STEP 8 - FINAL REVIEW -->
+        <section class="wizard-card hidden text-center" data-step="8">
+          <h3>Final Review &amp; Download</h3>
+          <p class="text-muted">Review your essay plan and download the tutor report.</p>
+          <div class="my-3">
+            <img src="materials/qrcode_today-ielts-task.onrender.com.png" alt="QR code" width="200" class="img-fluid rounded" />
+          </div>
+          <div class="d-flex justify-content-center gap-3 mt-3">
+            <a href="teacher-report.html" class="btn btn-warning">Tutor Report</a>
+            <button class="btn btn-secondary" onclick="location.reload()">Return to Home</button>
+            <button class="btn btn-success" onclick="finalize()">Mark Complete</button>
+          </div>
+          <div id="finalMessageT2" class="mt-3 hidden">
+            <div class="alert alert-success">Congratulations — your Task 2 plan is ready!</div>
+          </div>
+        </section>
+      </div><!-- END TASK 2 WRAPPER -->
 
       <!-- NAVIGATION FOOTER -->
       <div class="wizard-footer">
         <div>
-          <button id="prevBtn" class="btn btn-outline-secondary" onclick="prevStep()" aria-label="Previous step">← Previous</button>
+          <button id="prevBtn" class="btn btn-outline-secondary px-4 py-2" onclick="prevStep()" aria-label="Previous step">← Previous</button>
+          <button id="hiddenNextBtn" class="btn px-4 py-2" onclick="nextStep()" aria-label="Hidden next step" style="background: transparent; border-color: transparent; color: transparent; cursor: pointer;">Next</button>
         </div>
         <div>
-          <button id="nextBtn" class="btn btn-primary" onclick="nextStep()">Next →</button>
+          <button id="nextBtn" class="btn btn-primary px-4 py-2" onclick="nextStep()">Next →</button>
         </div>
       </div>
 
@@ -481,12 +862,14 @@
   <script>
     // ---------- Configuration ----------
     const CORRECT_PASS = "VII I MMVI"; // exact passphrase
-    const TOTAL_STEPS = 7;
+    let TOTAL_STEPS = 7;
+    let currentMode = 'task1'; // 'task1' or 'task2'
 
     // ---------- Elements ----------
     const loginSection = document.getElementById('login-section');
+    const modeSelectionSection = document.getElementById('mode-selection-section');
     const loginBtn = document.getElementById('loginBtn');
-    const loginHintBtn = document.getElementById('loginHintBtn');
+    // const loginHintBtn = document.getElementById('loginHintBtn');
     const passwordInput = document.getElementById('passwordInput');
     const loginError = document.getElementById('loginError');
 
@@ -505,25 +888,47 @@
     function show(el){ el.classList.remove('hidden'); }
     function hide(el){ el.classList.add('hidden'); }
 
+    // Enter key support for login
+    passwordInput.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter') loginBtn.click();
+    });
+
     // ---------- Login ----------
     loginBtn.addEventListener('click', () => {
       const val = passwordInput.value.trim();
       if (val === CORRECT_PASS) {
         hide(loginSection);
-        document.querySelector('.wizard-main').classList.remove('hidden');
-        show(wizardHeader);
-        gotoStep(1);
-        // Find the GLightbox instance created by main.js and refresh it
-        // to discover the newly visible links.
-        if (window.glightbox) {
-          window.glightbox.reload();
-        }
-        AOS.refresh();
+        show(modeSelectionSection); // Show mode selection instead of wizard directly
       } else {
         loginError.classList.remove('hidden');
         setTimeout(()=> loginError.classList.add('hidden'), 3000);
       }
     });
+
+    // ---------- Mode Selection ----------
+    window.selectMode = function(mode) {
+      currentMode = mode;
+      hide(modeSelectionSection);
+      document.querySelector('.wizard-main').classList.remove('hidden');
+      show(wizardHeader);
+
+      // Toggle Wrappers
+      if(mode === 'task1'){
+        qs('task1-wrapper').classList.remove('hidden');
+        qs('task2-wrapper').classList.add('hidden');
+        TOTAL_STEPS = 7;
+      } else {
+        qs('task1-wrapper').classList.add('hidden');
+        qs('task2-wrapper').classList.remove('hidden');
+        TOTAL_STEPS = 8;
+      }
+
+      gotoStep(1);
+      
+      // Refresh plugins
+      if (window.glightbox) { window.glightbox.reload(); }
+      setTimeout(() => AOS.refresh(), 100);
+    };
 
     // ---------- Step Navigation ----------
     function updateHeader() {
@@ -536,23 +941,36 @@
     }
 
     function getStepName(step){
-      switch(step){
-        case 1: return 'Task Overview';
-        case 2: return 'Brainstorm';
-        case 3: return 'Vocabulary';
-        case 4: return 'Introduction & Overview';
-        case 5: return 'Body Paragraph 1';
-        case 6: return 'Body Paragraph 2';
-        case 7: return 'Final Review';
-        default: return 'Step';
+      if(currentMode === 'task1'){
+        switch(step){
+          case 1: return 'Task Overview';
+          case 2: return 'Brainstorm';
+          case 3: return 'Vocabulary';
+          case 4: return 'Introduction & Overview';
+          case 5: return 'Body Paragraph 1';
+          case 6: return 'Body Paragraph 2';
+          case 7: return 'Final Review';
+        }
+      } else {
+        switch(step){
+          case 1: return 'Task 2 Overview';
+          case 2: return 'Brainstorm';
+          case 3: return 'Vocabulary';
+          case 4: return 'Introduction';
+          case 5: return 'Conclusion';
+          case 6: return 'Body Paragraph 1';
+          case 7: return 'Body Paragraph 2';
+          case 8: return 'Final Review';
+        }
       }
+      return 'Step';
     }
 
     function hideAllSteps(){
-      for(let i=1;i<=TOTAL_STEPS;i++){
-        const s = document.querySelector('[data-step="'+i+'"]');
-        if(s) s.classList.add('hidden');
-      }
+      // Hide all steps within the active wrapper
+      const wrapper = document.getElementById(currentMode + '-wrapper');
+      const steps = wrapper.querySelectorAll('.wizard-card');
+      steps.forEach(el => el.classList.add('hidden'));
     }
 
     function gotoStep(step){
@@ -560,8 +978,19 @@
       if(step > TOTAL_STEPS) step = TOTAL_STEPS;
       currentStep = step;
       hideAllSteps();
-      const el = document.querySelector('[data-step="'+step+'"]');
-      if(el) el.classList.remove('hidden');
+      
+      const wrapper = document.getElementById(currentMode + '-wrapper');
+      const el = wrapper.querySelector('[data-step="'+step+'"]');
+      if(el) {
+        el.classList.remove('hidden');
+        // Trigger smooth CSS animation
+        el.classList.add('animate-step');
+      }
+
+      // Resize canvas when entering Brainstorm step (Step 2 in Task 2)
+      if(currentMode === 'task2' && step === 2){
+        setTimeout(resizeBrainstormCanvas, 100);
+      }
 
       updateHeader();
       // Adjust nav buttons:
@@ -586,35 +1015,43 @@
     }
 
     // ---------- Timer Logic (Step 2) ----------
-    const startTimerBtn = qs('startTimerBtn');
-    const timerOverlay = qs('timerOverlay');
-    const timerDisplay = qs('timerDisplay');
+    // We need to handle T1 and T2 timers separately or dynamically
+    // Simple approach: attach listeners to both if they exist
 
-    startTimerBtn && startTimerBtn.addEventListener('click', () => {
-      // if timer already running, ignore
-      if (timerInterval) return;
+    function setupTimer(btnId, overlayId, displayId, duration) {
+      const btn = qs(btnId);
+      const overlay = qs(overlayId);
+      const display = qs(displayId);
+      
+      if(!btn) return;
 
-      timerRemaining = 180; // 3 minutes
-      show(timerOverlay);
-      updateTimerDisplay();
+      btn.addEventListener('click', () => {
+        if (timerInterval) return;
+        timerRemaining = duration;
+        show(overlay);
+        
+        const update = () => {
+          const min = Math.floor(timerRemaining / 60).toString().padStart(2,'0');
+          const sec = (timerRemaining % 60).toString().padStart(2,'0');
+          display.textContent = `${min}:${sec}`;
+        };
+        update();
 
-      timerInterval = setInterval(() => {
-        timerRemaining--;
-        updateTimerDisplay();
-
-        if (timerRemaining <= 0){
-          clearInterval(timerInterval);
-          timerInterval = null;
-          timerFinished();
-        }
-      }, 1000);
-    });
-
-    function updateTimerDisplay(){
-      const min = Math.floor(timerRemaining / 60).toString().padStart(2,'0');
-      const sec = (timerRemaining % 60).toString().padStart(2,'0');
-      timerDisplay.textContent = `${min}:${sec}`;
+        timerInterval = setInterval(() => {
+          timerRemaining--;
+          update();
+          if (timerRemaining <= 0){
+            clearInterval(timerInterval);
+            timerInterval = null;
+            timerFinished();
+          }
+        }, 1000);
+      });
     }
+
+    // Init timers
+    setupTimer('startTimerBtn', 'timerOverlay', 'timerDisplay', 180); // Task 1 (3 min)
+    setupTimer('startTimerBtnT2', 'timerOverlayT2', 'timerDisplayT2', 300); // Task 2 (5 min)
 
     function timerFinished(){
       // show finished alert and auto-progress to next step
@@ -666,8 +1103,10 @@
 
     // ---------- Save & Finalize ----------
     function finalize(){
-      // mark final completed
-      qs('finalMessage').classList.remove('hidden');
+      // mark final completed (generic selector might pick both, so scope it)
+      const msg = currentMode === 'task1' ? qs('finalMessage') : qs('finalMessageT2');
+      if(msg) msg.classList.remove('hidden');
+      
       document.getElementById('finishBtn').disabled = true;
       // optionally clear timer
       if(timerInterval){ clearInterval(timerInterval); timerInterval = null; }
@@ -769,6 +1208,140 @@
       if(e.altKey && e.key === 'ArrowLeft') prevStep();
       if(e.key === 'Escape') { /* no-op for now */ }
     });
+
+    // ---------- Brainstorming Canvas Logic (Task 2) ----------
+    let brainstormCanvas, bsCtx;
+    let isBsDrawing = false;
+    let bsHistory = [];
+    let bsStep = -1;
+    let isBsHighlighter = false;
+
+    function initBrainstormCanvas(){
+      brainstormCanvas = document.getElementById('brainstormCanvas');
+      if(!brainstormCanvas) return;
+      bsCtx = brainstormCanvas.getContext('2d');
+      
+      // Initial style
+      updateBsStyle();
+      
+      // Attempt initial resize
+      resizeBrainstormCanvas();
+
+      // Save initial blank state if history empty
+      if(bsStep === -1) saveBsState();
+
+      brainstormCanvas.addEventListener('mousedown', startBsDraw);
+      brainstormCanvas.addEventListener('mousemove', drawBs);
+      brainstormCanvas.addEventListener('mouseup', stopBsDraw);
+      brainstormCanvas.addEventListener('mouseout', stopBsDraw);
+    }
+
+    window.resizeBrainstormCanvas = function(){
+      if(!brainstormCanvas) initBrainstormCanvas(); 
+      if(!brainstormCanvas) return;
+      
+      const textarea = document.getElementById('task2BrainstormArea');
+      const rect = textarea.getBoundingClientRect();
+      
+      // Resize canvas to match textarea
+      if(rect.width > 0 && (brainstormCanvas.width !== rect.width || brainstormCanvas.height !== rect.height)){
+        brainstormCanvas.width = rect.width;
+        brainstormCanvas.height = rect.height;
+        updateBsStyle(); 
+        if(bsStep >= 0) loadBsState(); 
+      }
+    };
+
+    window.updateBsStyle = function(){
+      if(!bsCtx) return;
+      const color = document.getElementById('bsColorPicker').value;
+      const size = document.getElementById('bsSizeSlider').value;
+      bsCtx.lineCap = 'round';
+      if(isBsHighlighter){
+        bsCtx.strokeStyle = 'rgba(255, 255, 0, 0.4)'; 
+        bsCtx.lineWidth = 20;
+      } else {
+        bsCtx.strokeStyle = color;
+        bsCtx.lineWidth = size;
+      }
+    };
+
+    window.toggleBsHighlighter = function(){
+      isBsHighlighter = !isBsHighlighter;
+      document.getElementById('bsHighlighterBtn').classList.toggle('active');
+      updateBsStyle();
+    };
+
+    function saveBsState(){
+      bsStep++;
+      if(bsStep < bsHistory.length){ bsHistory.length = bsStep; }
+      bsHistory.push(brainstormCanvas.toDataURL());
+    }
+
+    window.bsUndo = function(){
+      if(bsStep > 0){ bsStep--; loadBsState(); }
+    };
+    window.bsRedo = function(){
+      if(bsStep < bsHistory.length - 1){ bsStep++; loadBsState(); }
+    };
+
+    function loadBsState(){
+      const img = new Image();
+      img.src = bsHistory[bsStep];
+      img.onload = () => {
+        bsCtx.clearRect(0, 0, brainstormCanvas.width, brainstormCanvas.height);
+        bsCtx.drawImage(img, 0, 0);
+      };
+    }
+
+    function startBsDraw(e){
+      isBsDrawing = true;
+      bsCtx.beginPath();
+      const rect = brainstormCanvas.getBoundingClientRect();
+      bsCtx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+    }
+    function drawBs(e){
+      if(!isBsDrawing) return;
+      const rect = brainstormCanvas.getBoundingClientRect();
+      bsCtx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+      bsCtx.stroke();
+    }
+    function stopBsDraw(){ 
+      if(isBsDrawing){ isBsDrawing = false; saveBsState(); }
+    }
+    
+    window.clearBrainstormCanvas = function(){
+      if(!bsCtx || !brainstormCanvas) return;
+      bsCtx.clearRect(0, 0, brainstormCanvas.width, brainstormCanvas.height);
+      saveBsState();
+    }
+
+    window.setBrainstormTool = function(tool){
+      const canvas = document.getElementById('brainstormCanvas');
+      const typeBtn = document.getElementById('toolTypeBtn');
+      const drawBtn = document.getElementById('toolDrawBtn');
+      const options = document.getElementById('drawOptions');
+
+      if(tool === 'type'){
+        canvas.style.pointerEvents = 'none';
+        typeBtn.classList.add('active');
+        drawBtn.classList.remove('active');
+        hide(options);
+      } else {
+        canvas.style.pointerEvents = 'auto';
+        typeBtn.classList.remove('active');
+        drawBtn.classList.add('active');
+        show(options);
+        resizeBrainstormCanvas(); 
+      }
+    };
+
+    // Auto-resize logic
+    function autoResize(el) {
+      el.style.height = 'auto';
+      el.style.height = el.scrollHeight + 'px';
+      if(window.resizeBrainstormCanvas) window.resizeBrainstormCanvas();
+    }
   </script>
 
 </body>

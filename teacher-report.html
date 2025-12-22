@@ -53,26 +53,55 @@
     .text-success { color: var(--success-color) !important; }
     .text-danger { color: var(--danger-color) !important; }
     .text-warning { color: var(--warning-color) !important; }
+
+    /* Login / Hero Styles matching index.html */
+    #login-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, rgba(26, 115, 232, 0.06), rgba(255,255,255,0.02));
+      padding: 2rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 9999;
+    }
+    .login-card {
+      width: 100%;
+      max-width: 520px;
+      background: var(--card-bg);
+      padding: 2.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 40px rgba(12,16,40,0.08);
+      text-align: center;
+      border: 1px solid rgba(0,0,0,0.04);
+    }
   </style>
 </head>
 <body class="p-4" style="background-color: var(--bg-color);">
   <!-- LOGIN SECTION -->
-  <div id="login-section">
-    <div class="d-flex align-items-center justify-content-center min-vh-100" style="background: var(--secondary-color);">
-      <div class="card text-center p-4 p-md-5" style="max-width: 450px; border:none; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px);">
-        <h1 class="mb-2 text-white">Tutor Report</h1>
-        <p class="text-white-50 mb-4">Enter the password to view the live dashboard.</p>
-        <div class="form-floating mb-3">
-          <input type="password" class="form-control" id="password-input" placeholder="Password">
-          <label for="password-input">Password</label>
-        </div>
-        <button id="login-btn" class="btn btn-primary btn-lg w-100">View Report</button>
-        <div id="error-alert" class="alert alert-danger mt-3" style="display: none;">
-          Incorrect password. Please try again.
-        </div>
+  <section id="login-section">
+    <div class="login-card">
+      <div class="mb-4">
+        <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-2 mb-3" style="background-color: rgba(26, 115, 232, 0.1); color: var(--primary-color);">Admin Access</span>
+        <h1 class="h2 mb-2" style="font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--secondary-color);">Tutor Dashboard</h1>
+        <p class="text-muted">Enter your secure passphrase to access live student reports.</p>
+      </div>
+
+      <div class="form-floating mb-3 text-start">
+        <input type="password" class="form-control" id="password-input" placeholder="Password">
+        <label for="password-input">Passphrase</label>
+      </div>
+
+      <button id="login-btn" class="btn btn-primary btn-lg w-100 py-3 fw-bold" style="background-color: var(--primary-color); border: none; box-shadow: 0 4px 12px rgba(26, 115, 232, 0.2);">Unlock Dashboard</button>
+
+      <div id="error-alert" class="alert alert-danger mt-3 small" style="display: none;">
+        <i class="bi bi-exclamation-circle me-2"></i>Incorrect password. Please try again.
       </div>
     </div>
-  </div>
+  </section>
 
   <div id="report-section" class="container-fluid" style="display: none;">
     <header class="text-center mb-5">
@@ -135,46 +164,45 @@
         </table>
       </div>
     </div>
-  </div>
 
-  <style>
-    .kpi-card {
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .kpi-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-    }
-    .kpi-card .card-title {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text-color);
-    }
-    .kpi-icon {
-      font-size: 1.5rem;
-      color: var(--primary-color);
-      opacity: 0.7;
-    }
-    .kpi-value {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--primary-color);
-      margin-top: 0.5rem;
-      margin-bottom: 0;
-    }
-    .sortable { cursor: pointer; }
-    .sortable:hover { background-color: rgba(255,255,255,0.1); }
-  </style>
-  </div>
+    <!-- ACTION BUTTONS -->
+    <div id="action-buttons" class="container mt-4 d-flex justify-content-center flex-wrap gap-3">
+      <button id="questionAnalysisBtn" class="btn btn-primary"><i class="bi bi-bar-chart-line me-2"></i>Question Analysis</button>
+      <button id="findCommonErrorBtn" class="btn btn-info text-white"><i class="bi bi-search me-2"></i>Find Common Error</button>
+      <button id="clearAllBtn" class="btn btn-danger"><i class="bi bi-trash me-2"></i>Clear All Results</button>
+    </div>
 
-  <!-- ACTION BUTTONS & MODAL -->
-  <div id="action-buttons" class="container mt-4 d-flex justify-content-center flex-wrap gap-3" style="display: none;">
-    <button id="questionAnalysisBtn" class="btn btn-primary"><i class="bi bi-bar-chart-line me-2"></i>Question Analysis</button>
-    <button id="findCommonErrorBtn" class="btn btn-info text-white"><i class="bi bi-search me-2"></i>Find Common Error</button>
-    <button id="clearAllBtn" class="btn btn-danger"><i class="bi bi-trash me-2"></i>Clear All Results</button>
+    <style>
+      .kpi-card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .kpi-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+      }
+      .kpi-card .card-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-color);
+      }
+      .kpi-icon {
+        font-size: 1.5rem;
+        color: var(--primary-color);
+        opacity: 0.7;
+      }
+      .kpi-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-top: 0.5rem;
+        margin-bottom: 0;
+      }
+      .sortable { cursor: pointer; }
+      .sortable:hover { background-color: rgba(255,255,255,0.1); }
+    </style>
   </div>
 
   <!-- Modal for Common Error -->
@@ -275,7 +303,6 @@
     // --- Login Logic ---
     const loginSection = document.getElementById('login-section');
     const reportSection = document.getElementById('report-section');
-    const actionButtons = document.getElementById('action-buttons');
     const loginBtn = document.getElementById('login-btn');
     const passwordInput = document.getElementById('password-input');
     const errorAlert = document.getElementById('error-alert');
@@ -284,7 +311,6 @@
       if (passwordInput.value === '3753') {
         loginSection.style.display = 'none';
         document.body.style.backgroundColor = 'var(--bg-color)'; // Reset body background
-        actionButtons.style.display = 'block';
         reportSection.style.display = 'block';
         errorAlert.style.display = 'none';
       } else {
@@ -292,24 +318,26 @@
       }
     });
 
+    // Allow Enter key to trigger login
+    passwordInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        loginBtn.click();
+      }
+    });
+
     // --- Data Store ---
     let allRecords = []; // To store all records for analysis
     const QUESTIONS = [ // Mirroring quiz.html to get question text
-      { q:"1. Which of the following is a simple sentence?", options:["A. Although inflation decreased, consumer confidence remained low.","B. Inflation decreased, and spending patterns shifted.","C. Inflation decreased significantly in 2023.","D. Inflation decreased because government policies tightened."], correct:"C" },
-      { q:"2. Which sentence is a compound sentence?", options:["A. The course was challenging although it improved my writing skills.","B. The course improved my writing skills because the tasks were rigorous.","C. The course improved my writing skills, but the workload was demanding.","D. The course improving my writing skills during the semester."], correct:"C" },
-      { q:"3. Which sentence is a complex sentence?", options:["A. The library expanded its digital section last year.","B. The library expanded its digital section, and students benefited.","C. The library expanded its digital section because demand increased.","D. The library expanded its digital section and introduced new services."], correct:"C" },
-      { q:"4. Choose the correct complex transformation of the simple sentence: “Many students dropped out.”", options:["A. Many students dropped out, and the school faced criticism.","B. Many students dropped out although support was available.","C. Because fees increased sharply, many students dropped out.","D. Many students dropped out and struggled academically."], correct:"C" },
-      { q:"5. Pick the compound version of the simple sentence: “Technology is advancing rapidly.”", options:["A. As technology is advancing rapidly, industries must adapt.","B. Technology is advancing rapidly, which has transformed industries.","C. Technology is advancing rapidly, and industries must adapt.","D. Technology is advancing rapidly although industries must adapt."], correct:"C" },
-      { q:"6. A line graph shows electricity consumption rising steadily from 2000 to 2020. Which is the most accurate summary?", options:["A. Electricity use fluctuated dramatically.","B. Electricity use followed a consistent upward trend.","C. Electricity use remained largely unchanged.","D. Electricity use declined steadily."], correct:"B" },
-      { q:"7. A chart shows that Country A produced twice as much steel as Country B in 2021. Which interpretation is correct?", options:["A. Country A had marginally higher steel output.","B. Country A and B produced roughly equal amounts of steel.","C. Country A’s steel production was significantly greater than Country B’s.","D. Country B produced more steel than Country A."], correct:"C" },
-      { q:"8. Data shows that public transport usage fell from 65% to 40% over a decade. What is the most accurate observation?", options:["A. Public transport usage nearly halved.","B. Public transport usage remained stable.","C. Public transport usage peaked at 90%.","D. Public transport usage increased sharply."], correct:"A" },
-      { q:"9. A graph shows water consumption rising sharply in 2015 but stabilising from 2016–2020. Which interpretation is accurate?", options:["A. Consumption surged initially before plateauing.","B. Consumption fluctuated continuously.","C. Consumption fell dramatically after 2015.","D. Consumption remained consistently low."], correct:"A" },
-      { q:"10. A table shows unemployment rates: 8% (2018), 6% (2019), 7% (2020). What is the best description?", options:["A. Unemployment declined steadily.","B. Unemployment fluctuated mildly.","C. Unemployment increased dramatically.","D. Unemployment remained unchanged."], correct:"B" },
-      { q:"11. What does “prerequisite” mean?", options:["A. A minor inconvenience","B. A requirement that must be fulfilled beforehand","C. A suggestion with no obligation","D. A sudden change in results"], correct:"B" },
-      { q:"12. What does “colloquially” mean?", options:["A. Spoken in everyday informal language","B. Spoken in formal academic style","C. Spoken in a foreign language","D. Spoken using technical terminology"], correct:"A" },
-      { q:"13. What is the closest meaning of “systemic”?", options:["A. Related to random events","B. Affecting only individuals","C. Deeply rooted within an entire system","D. Temporary and superficial"], correct:"C" },
-      { q:"14. What does “exacerbate” mean?", options:["A. To make a problem worse","B. To measure something accurately","C. To hide the real cause of a problem","D. To introduce a new policy"], correct:"A" },
-      { q:"15. What is the meaning of “paradigm”?", options:["A. A sudden failure","B. A model or framework for understanding something","C. A minor detail","D. A large financial cost"], correct:"B" }
+      { q:"1. Choose the grammatically correct passive form: “Researchers have recently conducted several studies on climate change.”", options:["A. Several studies have been conduct on climate change recently.","B. Several studies were being conducted on climate change recently.","C. Several studies have recently conducting on climate change.","D. Several studies have recently been conducted on climate change."], correct:"D" },
+      { q:"2. Which sentence correctly uses a gerund after a reporting verb?", hint:"Some reporting verbs (e.g. <i>recommend, suggest, avoid</i>) are followed by <b>verb + ing</b>, not <i>to + verb</i>.", options:["A. The committee recommended to revise the policy immediately.","B. The committee recommended revise the policy immediately.","C. The committee recommended to revising the policy immediately.","D. The committee recommended revising the policy immediately."], correct:"D" },
+      { q:"3. Identify the sentence that is grammatically correct and academically appropriate.", options:["A. There are many factors cause unemployment in cities.","B. There are many factors which cause unemployment in cities.","C. There are many factors that causing unemployment in cities.","D. There are many factors that cause unemployment in cities."], correct:"D" },
+      { q:"4. Choose the correctly structured complex sentence with logical subordination.", options:["A. Public transport was improved, congestion was reduced.","B. Public transport was improved and congestion reducing.","C. Public transport was improved, reducing congestion in cities.","D. Public transport was improved because congestion had become severe."], correct:"D" },
+      { q:"5. Which option demonstrates correct control of clause structure?", hint:"When using <i>while</i>, check that <b>both clauses are complete and grammatically balanced</b>.", options:["A. While the economy expanded, unemployment reducing.","B. While the economy expanded, unemployment reduce.","C. While the economy expanded, unemployment was reduce.","D. While the economy expanded, unemployment was reduced."], correct:"D" },
+      { q:"6. Choose the sentence with correct infinitive usage.", hint:"After verbs like <i>aim, plan, decide</i>, use <b>to + base verb</b>.", options:["A. The government aims reducing inequality through education.","B. The government aims reduce inequality through education.","C. The government aims to reducing inequality through education.","D. The government aims to reduce inequality through education."], correct:"D" },
+      { q:"7. Which sentence reflects accurate grammatical control expected in IELTS Task 2?", options:["A. The data analysed by experts reveal a clear trend.","B. The data was analysed and reveal a clear trend.","C. The data analysed reveals clear trend.","D. The data analysed by experts reveal a clear trend."], correct:"D" },
+      { q:"8. A line graph shows that internet usage rose sharply between 2005 and 2010, before levelling off until 2020. Which statement is MOST accurate?", options:["A. Internet usage declined steadily after 2010.","B. Internet usage fluctuated considerably throughout the period.","C. Internet usage continued to rise at the same pace after 2010.","D. Internet usage increased rapidly initially and then stabilised."], correct:"D" },
+      { q:"9. What does the word “adamant” most precisely mean?", options:["A. Willing to negotiate under pressure","B. Uncertain about one’s stance","C. Open to alternative viewpoints","D. Refusing to change one’s mind; unyielding"], correct:"D" },
+      { q:"10. What is the closest meaning of “allure” in academic context?", options:["A. A logical explanation","B. A temporary trend","C. A financial incentive","D. The power to attract or charm"], correct:"D" }
     ];
 
     // --- Table Element ---
@@ -515,8 +543,9 @@
         if (successRate < 50) progressBarClass = 'bg-danger';
 
         analysisHtml += `
-          <li class="list-group-item list-group-item-action" style="cursor: pointer;" data-question-index="${index}">
+          <li class="list-group-item list-group-item-action" style="cursor: pointer;" data-question-index="${index}" title="${q.hint ? 'Click to see answer distribution. Hint available.' : 'Click to see answer distribution.'}">
             <div class="fw-bold">Q${index + 1}: ${q.q.substring(0, 80)}...</div>
+            ${q.hint ? `<div class="text-muted small mt-1"><i class="bi bi-lightbulb text-warning"></i> <strong>Hint:</strong> ${q.hint}</div>` : ''}
             <div class="d-flex align-items-center mt-2">
               <div class="progress" style="height: 20px; flex-grow: 1;">
                 <div class="progress-bar ${progressBarClass}" role="progressbar" style="width: ${successRate.toFixed(1)}%;" aria-valuenow="${successRate.toFixed(1)}" aria-valuemin="0" aria-valuemax="100">

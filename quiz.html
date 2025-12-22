@@ -157,23 +157,42 @@
       color: var(--muted);
       font-weight: 600;
     }
-
-    .progress {
-      height:8px;
-      background:#edf2ff;
-      border-radius: 999px;
+    
+    /* Segmented Progress Bar */
+    .progress-nav {
+      display: flex;
+      gap: 4px;
       flex: 1;
-      overflow: hidden;
       margin-left: 12px;
+      height: 8px;
+    }
+    .nav-segment {
+      flex: 1;
+      background: #edf2ff;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .nav-segment:hover { background: #dbe4ff; }
+    .nav-segment.answered { background: var(--accent); }
+    .nav-segment.skipped { background: #ffc107; } /* Yellow for skipped/missed */
+    .nav-segment.current {
+      background: var(--accent-600);
+      transform: scaleY(1.5);
+      box-shadow: 0 2px 4px rgba(13,134,230,0.2);
     }
 
-    .progress > i {
-      display:block;
-      height:100%;
-      width:0%;
-      background: linear-gradient(90deg,var(--accent),var(--accent-600));
-      transition: width .35s ease;
+    /* Stack Animation for Single Question */
+    .stack-anim {
+      animation: stackEnter 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      transform-origin: center bottom;
     }
+    @keyframes stackEnter {
+      0% { opacity: 0; transform: translateY(40px) scale(0.9); filter: blur(4px); }
+      100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+    }
+
+    .q-card h3 { margin-top:0; font-size: 18px; color: #0b2a4a; margin-bottom: 16px; }
 
     .question-area {
       margin-top: 18px;
@@ -255,6 +274,20 @@
       color: white;
       box-shadow: 0 8px 30px rgba(15,149,255,0.14);
     }
+    
+    /* Hide Previous Button as requested */
+    #backBtn { display: none; }
+
+    .submit-section {
+      text-align: center;
+      padding: 60px 0 20px 0;
+      opacity: 0.3;
+      transition: opacity 0.3s;
+    }
+    .submit-section.ready { opacity: 1; }
+    
+    /* Hide legacy elements */
+    /* #questionText, #optionsList, .navigation { display: none !important; } REMOVED to restore single view */
 
     .final-screen {
       display:none;
@@ -282,6 +315,45 @@
     /* subtle transitions for views */
     .view { opacity:0; transform: translateY(14px); transition: all .36s ease; }
     .view.show { opacity:1; transform: translateY(0); }
+
+    /* Toast Notification */
+    .toast-notification {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: rgba(11, 42, 74, 0.9);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 99px;
+      font-size: 14px;
+      font-weight: 500;
+      text-align: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      pointer-events: none;
+      width: max-content;
+      max-width: 90%;
+    }
+    .toast-notification.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Timer Urgency Animation */
+    .timer-urgent {
+      color: #dc3545 !important; /* A standard danger red */
+      animation: pulse 1.2s infinite cubic-bezier(0.5, 0, 0.5, 1);
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
   </style>
 </head>
 <body>
@@ -315,30 +387,31 @@
     <!-- QUIZ VIEW -->
     <div id="quizView" class="quiz view" aria-hidden="true" role="region" aria-label="Quiz area">
       <div class="q-head">
-        <div style="display:flex; align-items:center;">
+        <div style="display:flex; align-items:center; flex: 1; margin-right: 20px;">
           <div class="q-number" id="qNumber">Question 1 / 15</div>
-          <div class="progress" aria-hidden="true"><i id="progressFill"></i></div>
+          <div id="progressNav" class="progress-nav" role="progressbar" aria-label="Question navigation"></div>
         </div>
         <div style="display:flex; align-items:center; gap: 16px;">
           <div id="timerDisplay" style="font-weight: 700; color: var(--accent-600); font-size: 18px; display:flex; align-items:center; gap: 6px;">
               <i class="bi bi-clock"></i>
-              <span id="timerText">05:00</span>
+              <span id="timerText">03:00</span>
           </div>
           <div style="min-width:110px; text-align:right; color:var(--muted); font-weight:700;" id="studentLabel">—</div>
         </div>
       </div>
 
       <div class="question-area">
-        <div class="question-text" id="questionText"></div>
+        <!-- Content injected via JS for animation -->
+      </div>
 
-        <div class="options" id="optionsList" role="listbox" aria-labelledby="questionText"></div>
-
-        <div class="navigation">
-          <button id="backBtn" class="btn btn-secondary">← Previous</button>
-          <button id="nextBtn" class="btn btn-primary">Next →</button>
-        </div>
+      <div class="navigation">
+        <button id="backBtn" class="btn btn-secondary">← Previous</button>
+        <button id="nextBtn" class="btn btn-primary">Next →</button>
       </div>
     </div>
+
+    <!-- Toast Notification Element -->
+    <div id="skipToast" class="toast-notification"></div>
 
     <!-- FINAL SCREEN -->
     <div id="finalView" class="final-screen view" aria-hidden="true">
@@ -346,7 +419,7 @@
       <p id="finalMsg">You answered <span id="correctAnswersCount">0</span> questions correctly. Your teacher will see your name on the live dashboard.</p>
       <div style="margin-top:24px;" class="d-flex justify-content-center gap-3">
         <button id="doneBtn" class="btn btn-primary">Done</button>
-        <a href="materials/week-25-fri-wt1.pdf" download="week-25-fri-wt1.pdf" class="btn btn-secondary">Download PDF</a>
+        <a href="materials/WEEK-26_MON_WT-2.pdf" download="WEEK-26_MON_WT-2.pdf" class="btn btn-secondary">Download PDF</a>
       </div>
     </div>
   </div>
@@ -375,32 +448,28 @@
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
 
-  // === Quiz data (15 questions) ===
+  // === Quiz data (10 questions) ===
   const QUESTIONS = [
-    { q:"1. Which of the following is a simple sentence?", options:["A. Although inflation decreased, consumer confidence remained low.","B. Inflation decreased, and spending patterns shifted.","C. Inflation decreased significantly in 2023.","D. Inflation decreased because government policies tightened."], correct:"C" },
-    { q:"2. Which sentence is a compound sentence?", options:["A. The course was challenging although it improved my writing skills.","B. The course improved my writing skills because the tasks were rigorous.","C. The course improved my writing skills, but the workload was demanding.","D. The course improving my writing skills during the semester."], correct:"C" },
-    { q:"3. Which sentence is a complex sentence?", options:["A. The library expanded its digital section last year.","B. The library expanded its digital section, and students benefited.","C. The library expanded its digital section because demand increased.","D. The library expanded its digital section and introduced new services."], correct:"C" },
-    { q:"4. Choose the correct complex transformation of the simple sentence: “Many students dropped out.”", options:["A. Many students dropped out, and the school faced criticism.","B. Many students dropped out although support was available.","C. Because fees increased sharply, many students dropped out.","D. Many students dropped out and struggled academically."], correct:"C" },
-    { q:"5. Pick the compound version of the simple sentence: “Technology is advancing rapidly.”", options:["A. As technology is advancing rapidly, industries must adapt.","B. Technology is advancing rapidly, which has transformed industries.","C. Technology is advancing rapidly, and industries must adapt.","D. Technology is advancing rapidly although industries must adapt."], correct:"C" },
-    { q:"6. A line graph shows electricity consumption rising steadily from 2000 to 2020. Which is the most accurate summary?", options:["A. Electricity use fluctuated dramatically.","B. Electricity use followed a consistent upward trend.","C. Electricity use remained largely unchanged.","D. Electricity use declined steadily."], correct:"B" },
-    { q:"7. A chart shows that Country A produced twice as much steel as Country B in 2021. Which interpretation is correct?", options:["A. Country A had marginally higher steel output.","B. Country A and B produced roughly equal amounts of steel.","C. Country A’s steel production was significantly greater than Country B’s.","D. Country B produced more steel than Country A."], correct:"C" },
-    { q:"8. Data shows that public transport usage fell from 65% to 40% over a decade. What is the most accurate observation?", options:["A. Public transport usage nearly halved.","B. Public transport usage remained stable.","C. Public transport usage peaked at 90%.","D. Public transport usage increased sharply."], correct:"A" },
-    { q:"9. A graph shows water consumption rising sharply in 2015 but stabilising from 2016–2020. Which interpretation is accurate?", options:["A. Consumption surged initially before plateauing.","B. Consumption fluctuated continuously.","C. Consumption fell dramatically after 2015.","D. Consumption remained consistently low."], correct:"A" },
-    { q:"10. A table shows unemployment rates: 8% (2018), 6% (2019), 7% (2020). What is the best description?", options:["A. Unemployment declined steadily.","B. Unemployment fluctuated mildly.","C. Unemployment increased dramatically.","D. Unemployment remained unchanged."], correct:"B" },
-    { q:"11. What does “prerequisite” mean?", options:["A. A minor inconvenience","B. A requirement that must be fulfilled beforehand","C. A suggestion with no obligation","D. A sudden change in results"], correct:"B" },
-    { q:"12. What does “colloquially” mean?", options:["A. Spoken in everyday informal language","B. Spoken in formal academic style","C. Spoken in a foreign language","D. Spoken using technical terminology"], correct:"A" },
-    { q:"13. What is the closest meaning of “systemic”?", options:["A. Related to random events","B. Affecting only individuals","C. Deeply rooted within an entire system","D. Temporary and superficial"], correct:"C" },
-    { q:"14. What does “exacerbate” mean?", options:["A. To make a problem worse","B. To measure something accurately","C. To hide the real cause of a problem","D. To introduce a new policy"], correct:"A" },
-    { q:"15. What is the meaning of “paradigm”?", options:["A. A sudden failure","B. A model or framework for understanding something","C. A minor detail","D. A large financial cost"], correct:"B" }
+    { q:"1. Choose the grammatically correct passive form: “Researchers have recently conducted several studies on climate change.”", options:["A. Several studies have been conduct on climate change recently.","B. Several studies were being conducted on climate change recently.","C. Several studies have recently conducting on climate change.","D. Several studies have recently been conducted on climate change."], correct:"D" },
+    { q:"2. Which sentence correctly uses a gerund after a reporting verb?", hint:"Some reporting verbs (e.g. <i>recommend, suggest, avoid</i>) are followed by <b>verb + ing</b>, not <i>to + verb</i>.", options:["A. The committee recommended to revise the policy immediately.","B. The committee recommended revise the policy immediately.","C. The committee recommended to revising the policy immediately.","D. The committee recommended revising the policy immediately."], correct:"D" },
+    { q:"3. Identify the sentence that is grammatically correct and academically appropriate.", options:["A. There are many factors cause unemployment in cities.","B. There are many factors which cause unemployment in cities.","C. There are many factors that causing unemployment in cities.","D. There are many factors that cause unemployment in cities."], correct:"D" },
+    { q:"4. Choose the correctly structured complex sentence with logical subordination.", options:["A. Public transport was improved, congestion was reduced.","B. Public transport was improved and congestion reducing.","C. Public transport was improved, reducing congestion in cities.","D. Public transport was improved because congestion had become severe."], correct:"D" },
+    { q:"5. Which option demonstrates correct control of clause structure?", hint:"When using <i>while</i>, check that <b>both clauses are complete and grammatically balanced</b>.", options:["A. While the economy expanded, unemployment reducing.","B. While the economy expanded, unemployment reduce.","C. While the economy expanded, unemployment was reduce.","D. While the economy expanded, unemployment was reduced."], correct:"D" },
+    { q:"6. Choose the sentence with correct infinitive usage.", hint:"After verbs like <i>aim, plan, decide</i>, use <b>to + base verb</b>.", options:["A. The government aims reducing inequality through education.","B. The government aims reduce inequality through education.","C. The government aims to reducing inequality through education.","D. The government aims to reduce inequality through education."], correct:"D" },
+    { q:"7. Which sentence reflects accurate grammatical control expected in IELTS Task 2?", options:["A. The data analysed by experts reveal a clear trend.","B. The data was analysed and reveal a clear trend.","C. The data analysed reveals clear trend.","D. The data analysed by experts reveal a clear trend."], correct:"D" },
+    { q:"8. A line graph shows that internet usage rose sharply between 2005 and 2010, before levelling off until 2020. Which statement is MOST accurate?", options:["A. Internet usage declined steadily after 2010.","B. Internet usage fluctuated considerably throughout the period.","C. Internet usage continued to rise at the same pace after 2010.","D. Internet usage increased rapidly initially and then stabilised."], correct:"D" },
+    { q:"9. What does the word “adamant” most precisely mean?", options:["A. Willing to negotiate under pressure","B. Uncertain about one’s stance","C. Open to alternative viewpoints","D. Refusing to change one’s mind; unyielding"], correct:"D" },
+    { q:"10. What is the closest meaning of “allure” in academic context?", options:["A. A logical explanation","B. A temporary trend","C. A financial incentive","D. The power to attract or charm"], correct:"D" }
   ];
 
   // State
   let studentName = "";
   let idx = 0;
+  const skippedQuestions = new Set(); // Track explicitly skipped questions
   const answers = Array(QUESTIONS.length).fill(null); // store selected letter "A"/"B"/...
   const studentLabelEl = document.getElementById("studentLabel");
   let quizTimerInterval = null;
-  let timeRemaining = 300; // 5 minutes
+  let timeRemaining = 180; // 3 minutes
   let isQuizActive = false;
 
   // Elements
@@ -410,14 +479,13 @@
   const nameInput = document.getElementById("studentName");
   const nameWrap = document.getElementById("nameWrap");
   const qNumber = document.getElementById("qNumber");
-  const progressFill = document.getElementById("progressFill");
-  const questionText = document.getElementById("questionText");
-  const optionsList = document.getElementById("optionsList");
+  const progressNav = document.getElementById("progressNav");
   const nextBtn = document.getElementById("nextBtn");
   const backBtn = document.getElementById("backBtn");
   const doneBtn = document.getElementById("doneBtn");
   const correctAnswersCountEl = document.getElementById("correctAnswersCount");
   const timerTextEl = document.getElementById("timerText");
+  const skipToast = document.getElementById("skipToast");
 
   // Helper: uppercase and sanitize student name for key
   function sanitizeName(n){
@@ -454,6 +522,7 @@
       quizView.style.display = "block";
       setTimeout(()=> quizView.classList.add("show"), 10);
       loadQuestion(idx);
+      // renderQuizList(); // Removed
       startTimer();
     }, 200);
   }
@@ -461,7 +530,7 @@
   // Timer Logic
   function startTimer() {
     isQuizActive = true;
-    timeRemaining = 300; // 5 minutes
+    timeRemaining = 180; // 3 minutes
     updateTimerDisplay();
 
     quizTimerInterval = setInterval(() => {
@@ -473,6 +542,7 @@
         isQuizActive = false;
         alert("Time's up! Your quiz will be submitted automatically.");
         disableQuizControls();
+        // disableQuizControls(); // Not strictly needed if we submit immediately
         submitQuiz();
       }
     }, 1000);
@@ -482,26 +552,76 @@
     const min = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
     const sec = (timeRemaining % 60).toString().padStart(2, '0');
     timerTextEl.textContent = `${min}:${sec}`;
+
+    if (timeRemaining < 60 && isQuizActive) {
+      document.getElementById('timerDisplay').classList.add('timer-urgent');
+    } else {
+      document.getElementById('timerDisplay').classList.remove('timer-urgent');
+    }
   }
 
   function disableQuizControls() {
-    optionsList.querySelectorAll('.opt').forEach(opt => opt.disabled = true);
+    document.querySelectorAll('.opt').forEach(opt => opt.disabled = true);
     nextBtn.disabled = true;
     backBtn.disabled = true;
+  }
+
+  // Render the segmented progress bar
+  function renderProgressNav() {
+    progressNav.innerHTML = "";
+    QUESTIONS.forEach((_, i) => {
+      const seg = document.createElement("div");
+      seg.className = "nav-segment";
+      
+      if (i === idx) seg.classList.add("current");
+      else if (answers[i] !== null) seg.classList.add("answered");
+      else if (skippedQuestions.has(i)) seg.classList.add("skipped"); // Yellow if explicitly skipped
+
+      // Allow jumping to any question
+      seg.title = `Go to Question ${i + 1}`;
+      seg.addEventListener("click", () => {
+        if (i !== idx) transitionToQuestion(i);
+      });
+      
+      progressNav.appendChild(seg);
+    });
   }
 
   // Load question
   function loadQuestion(i){
     idx = i;
+
     // update head
     qNumber.textContent = `Question ${idx+1} / ${QUESTIONS.length}`;
-    const pct = Math.round(((idx) / QUESTIONS.length) * 100);
-    progressFill.style.width = pct + "%";
+    renderProgressNav();
+
+    // Create fresh content container for animation
+    const qArea = document.querySelector('.question-area');
+    qArea.innerHTML = ""; // Clear previous
+    
+    const contentWrap = document.createElement("div");
+    contentWrap.className = "stack-anim";
 
     // fill question and options
     const q = QUESTIONS[idx];
-    questionText.textContent = q.q;
-    optionsList.innerHTML = "";
+    
+    const qText = document.createElement("div");
+    qText.className = "question-text";
+    qText.textContent = q.q;
+    contentWrap.appendChild(qText);
+
+    // Add Hint if available
+    if(q.hint){
+      const hintDiv = document.createElement("div");
+      hintDiv.style.cssText = "background:rgba(255,193,7,0.12); color:#856404; padding:12px 16px; border-radius:12px; margin-bottom:20px; font-size:14px; display:flex; gap:10px; align-items:start; border:1px solid rgba(255,193,7,0.2);";
+      hintDiv.innerHTML = `<i class="bi bi-lightbulb-fill" style="margin-top:2px; color:#ffc107;"></i><div><strong>Hint:</strong> ${q.hint}</div>`;
+      contentWrap.appendChild(hintDiv);
+    }
+
+    const optsList = document.createElement("div");
+    optsList.className = "options";
+    optsList.setAttribute("role", "listbox");
+
     q.options.forEach((optText, j)=>{
       const letter = String.fromCharCode(65 + j); // A,B,C...
       const opt = document.createElement("button");
@@ -514,58 +634,112 @@
       
       opt.addEventListener("click", ()=>{
         // clear selection siblings
-        optionsList.querySelectorAll(".opt").forEach(o=>o.classList.remove("selected"));
+        const wasSkipped = skippedQuestions.has(idx);
+        const isFirstAttempt = answers[idx] === null && !wasSkipped;
+
+        optsList.querySelectorAll(".opt").forEach(o=>o.classList.remove("selected"));
         opt.classList.add("selected");
         answers[idx] = letter;
-        // show next button if present
+        
+        // Update button text immediately
+        nextBtn.textContent = (idx === QUESTIONS.length - 1) ? "Submit" : "Next →";
+
+        if (wasSkipped) skippedQuestions.delete(idx);
+        renderProgressNav(); // Update nav to show answered state
+
+        // Auto-advance logic (Typeform style) - ONLY on first attempt
+        if (isFirstAttempt && idx < QUESTIONS.length - 1) {
+          setTimeout(() => {
+            // Only advance if user hasn't manually moved yet
+            if (idx === i) {
+              transitionToQuestion(idx + 1);
+            }
+          }, 350); // Short delay for smooth feel
+        }
       });
-      optionsList.appendChild(opt);
+      optsList.appendChild(opt);
     });
+    
+    contentWrap.appendChild(optsList);
+    qArea.appendChild(contentWrap);
 
     // update buttons visibility
-    backBtn.style.visibility = (idx === 0) ? "hidden" : "visible";
-    nextBtn.textContent = (idx === QUESTIONS.length - 1) ? "Submit" : "Next →";
+    // backBtn is hidden via CSS, but we keep logic just in case
+    // If no answer, Next acts as Skip
+    nextBtn.textContent = (idx === QUESTIONS.length - 1) ? "Submit" : (answers[idx] ? "Next →" : "Skip");
+  }
+
+  // Helper for smooth transition
+  function transitionToQuestion(targetIdx) {
+    // Just call loadQuestion, the animation is handled inside it via CSS class reset
+    loadQuestion(targetIdx);
   }
 
   // Navigation
   backBtn.addEventListener("click", ()=>{
     if(idx > 0){
-      // small transition
-      quizView.classList.remove("show");
-      setTimeout(()=> { loadQuestion(idx-1); quizView.classList.add("show"); }, 160);
+      transitionToQuestion(idx - 1);
     }
   });
 
-  nextBtn.addEventListener("click", ()=>{
-    if(answers[idx] === null){
-      // if unanswered, treat as missed but still allow moving forward after a subtle nudge
-      // nudge animation
-      optionsList.animate([{transform:"translateX(0)"},{transform:"translateX(-8px)"},{transform:"translateX(8px)"},{transform:"translateX(0)"}], {duration:220});
-      return;
-    }
+  let toastTimeout;
+  function showToast(msg) {
+    skipToast.textContent = msg;
+    skipToast.classList.add("show");
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
+      skipToast.classList.remove("show");
+    }, 4000);
+  }
 
+  nextBtn.addEventListener("click", ()=>{
+    // If no answer selected, mark as skipped
+    if (answers[idx] === null) {
+      skippedQuestions.add(idx);
+      const name = studentName || "Student";
+      showToast(`${name}, you have skipped question ${idx + 1}, tap on the yellow color bar to quickly jump to that question`);
+    }
     if(idx < QUESTIONS.length - 1){
-      quizView.classList.remove("show");
-      setTimeout(()=> { loadQuestion(idx+1); quizView.classList.add("show"); }, 160);
+      transitionToQuestion(idx + 1);
     } else {
       // final submit
       submitQuiz();
     }
   });
 
+  // Mobile Swipe Logic
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  quizView.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, {passive: true});
+
+  quizView.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, {passive: true});
+
+  function handleSwipe() {
+    // Swipe Left (Right to Left) -> Next/Skip
+    if (touchStartX - touchEndX > 50) {
+      nextBtn.click();
+    }
+  }
+
   // keyboard shortcuts: number or letter to choose, enter to next
   document.addEventListener("keydown", (e)=>{
     if(!isQuizActive || welcomeView.style.display !== "none") return; // only during active quiz
     if(["1","2","3","4","5","6","7","8","9"].includes(e.key) && (parseInt(e.key) <= QUESTIONS[idx].options.length)){
       const choiceIndex = parseInt(e.key)-1;
-      const optButtons = optionsList.querySelectorAll(".opt");
+      const optButtons = document.querySelectorAll(".opt");
       if(optButtons[choiceIndex]) optButtons[choiceIndex].click();
     }
-    if(e.key.toLowerCase() >= 'a' && e.key.toLowerCase() <= 'd'){
+    if(e.key.length === 1 && e.key.toLowerCase() >= 'a' && e.key.toLowerCase() <= 'd'){
       const ch = e.key.toUpperCase();
       const letterIndex = ch.charCodeAt(0)-65;
       if(letterIndex >=0 && letterIndex < QUESTIONS[idx].options.length){
-        const optButtons = optionsList.querySelectorAll(".opt");
+        const optButtons = document.querySelectorAll(".opt");
         if(optButtons[letterIndex]) optButtons[letterIndex].click();
       }
     }
@@ -575,6 +749,18 @@
       e.preventDefault();
       // mimic next button click
       nextBtn.click();
+    }
+    // Disabled keyboard shortcuts for now as they rely on single-question view logic
+    // or need complex logic to find "current" card in scroll view.
+    // Keeping it simple as requested.
+  });
+
+  // Prevent accidental tab close while quiz is active
+  window.addEventListener('beforeunload', (e) => {
+    if (isQuizActive) {
+      // Standard way to trigger the browser's confirmation dialog
+      e.preventDefault();
+      e.returnValue = 'Are you sure you want to leave? Your progress will be lost.';
     }
   });
 
@@ -656,6 +842,7 @@
         // reset state
         idx = 0;
         for(let i=0;i<answers.length;i++) answers[i] = null;
+        skippedQuestions.clear();
         nameInput.value = "";
         studentName = "";
         studentLabelEl.textContent = "—";
@@ -664,7 +851,8 @@
         nextBtn.disabled = false;
         backBtn.disabled = false;
         isQuizActive = false;
-        timeRemaining = 300;
+        timeRemaining = 180;
+        document.getElementById('timerDisplay').classList.remove('timer-urgent');
       }, 10);
     }, 160);
   });
