@@ -310,6 +310,28 @@
       .hero-sub { font-size: 14px }
       .name-input { font-size: 18px }
       .question-text { font-size: 20px }
+      
+      /* Mobile Progress Bar Optimization */
+      .q-head {
+        flex-direction: column-reverse;
+        align-items: stretch;
+        gap: 0;
+      }
+      .q-head-main {
+        margin-right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+      }
+      .progress-nav {
+        margin-left: 0;
+        margin-top: 12px;
+        height: 10px;
+      }
+      .q-head-meta {
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
     }
 
     /* subtle transitions for views */
@@ -353,6 +375,14 @@
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.05); }
     }
+    
+    /* Helper classes to replace inline styles for responsiveness */
+    .q-head-main {
+      display:flex; align-items:center; flex: 1; margin-right: 20px;
+    }
+    .q-head-meta {
+      display:flex; align-items:center; gap: 16px;
+    }
 
   </style>
 </head>
@@ -387,11 +417,11 @@
     <!-- QUIZ VIEW -->
     <div id="quizView" class="quiz view" aria-hidden="true" role="region" aria-label="Quiz area">
       <div class="q-head">
-        <div style="display:flex; align-items:center; flex: 1; margin-right: 20px;">
+        <div class="q-head-main">
           <div class="q-number" id="qNumber">Question 1 / 15</div>
           <div id="progressNav" class="progress-nav" role="progressbar" aria-label="Question navigation"></div>
         </div>
-        <div style="display:flex; align-items:center; gap: 16px;">
+        <div class="q-head-meta">
           <div id="timerDisplay" style="font-weight: 700; color: var(--accent-600); font-size: 18px; display:flex; align-items:center; gap: 6px;">
               <i class="bi bi-clock"></i>
               <span id="timerText">03:00</span>
@@ -709,21 +739,34 @@
 
   // Mobile Swipe Logic
   let touchStartX = 0;
+  let touchStartY = 0;
   let touchEndX = 0;
+  let touchEndY = 0;
   
   quizView.addEventListener('touchstart', e => {
     touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
   }, {passive: true});
 
   quizView.addEventListener('touchend', e => {
     touchEndX = e.changedTouches[0].screenX;
+    touchEndY = e.changedTouches[0].screenY;
     handleSwipe();
   }, {passive: true});
 
   function handleSwipe() {
-    // Swipe Left (Right to Left) -> Next/Skip
-    if (touchStartX - touchEndX > 50) {
-      nextBtn.click();
+    const xDiff = touchStartX - touchEndX;
+    const yDiff = touchStartY - touchEndY;
+
+    // Check if horizontal movement is dominant (to avoid scrolling triggers) and significant (>50px)
+    if (Math.abs(xDiff) > Math.abs(yDiff) && Math.abs(xDiff) > 50) {
+      if (xDiff > 0) {
+        // Swipe Left (Right to Left) -> Next/Skip
+        nextBtn.click();
+      } else {
+        // Swipe Right (Left to Right) -> Previous
+        backBtn.click();
+      }
     }
   }
 
