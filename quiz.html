@@ -324,19 +324,31 @@
         width: 100%;
       }
       .progress-nav {
-        margin-left: 0;
-        margin-top: 12px;
-        height: 10px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 0;
+        padding: 12px 16px;
+        background: #fff;
+        z-index: 9999;
+        border-top: 1px solid rgba(0,0,0,0.05);
+        box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+        height: auto;
+        border-radius: 0;
       }
       .q-head-meta {
         justify-content: space-between;
         margin-bottom: 12px;
       }
+      .navigation {
+        padding-bottom: 60px; /* Ensure buttons aren't covered by fixed progress bar */
+      }
     }
 
     /* subtle transitions for views */
     .view { opacity:0; transform: translateY(14px); transition: all .36s ease; }
-    .view.show { opacity:1; transform: translateY(0); }
+    .view.show { opacity:1; transform: none; }
 
     /* Toast Notification */
     .toast-notification {
