@@ -309,13 +309,13 @@
       .hero-title { font-size: 26px }
       .hero-sub { font-size: 14px }
       .name-input { font-size: 18px }
-      .question-text { font-size: 20px }
+      .question-text { font-size: 19px }
       
       /* Mobile Progress Bar Optimization */
       .q-head {
         flex-direction: column-reverse;
         align-items: stretch;
-        gap: 0;
+        gap: 10px;
       }
       .q-head-main {
         margin-right: 0;
@@ -324,25 +324,31 @@
         width: 100%;
       }
       .progress-nav {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: 0;
-        padding: 12px 16px;
-        background: #fff;
-        z-index: 9999;
-        border-top: 1px solid rgba(0,0,0,0.05);
-        box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
-        height: auto;
-        border-radius: 0;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        height: 6px;
+        margin: 6px 0 10px 0;
+      }
+      .nav-segment {
+        border-radius: 3px;
       }
       .q-head-meta {
         justify-content: space-between;
         margin-bottom: 12px;
       }
-      .navigation {
-        padding-bottom: 60px; /* Ensure buttons aren't covered by fixed progress bar */
+    }
+
+    @media (max-width: 480px) {
+      .q-number {
+        font-size: 13px;
+      }
+      .nav-segment.current {
+        transform: scaleY(1.8);
+      }
+      .opt {
+        padding: 14px;
+        font-size: 15px;
       }
     }
 
