@@ -309,37 +309,49 @@
       .hero-title { font-size: 26px }
       .hero-sub { font-size: 14px }
       .name-input { font-size: 18px }
-      .question-text { font-size: 19px }
-      
-      /* Mobile Progress Bar Optimization */
-      .q-head {
-        flex-direction: column-reverse;
-        align-items: stretch;
-        gap: 10px;
+      .question-text { font-size: 20px }
+    }
+
+    /* Phone-specific layout fix for the header and progress bar */
+    @media (max-width: 480px) {
+      .question-text {
+        font-size: 19px;
       }
-      .q-head-main {
-        margin-right: 0;
+      .q-head {
         flex-direction: column;
         align-items: stretch;
-        width: 100%;
-      }
-      .progress-nav {
+        gap: 8px;
+        /* Sticky header for mobile */
         position: sticky;
         top: 0;
-        z-index: 10;
-        height: 6px;
-        margin: 6px 0 10px 0;
+        background: var(--card);
+        z-index: 20;
+        padding: 8px 16px 6px 16px;
+        margin: 0 -24px; /* Counteract card padding for full width */
+        box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        /* Safe area for notched phones */
+        padding-top: calc(8px + constant(safe-area-inset-top));
+        padding-top: calc(8px + env(safe-area-inset-top));
       }
-      .nav-segment {
-        border-radius: 3px;
+      .q-head-main {
+        flex-direction: column;
+        margin-right: 0;
       }
       .q-head-meta {
         justify-content: space-between;
-        margin-bottom: 12px;
+        width: 100%;
       }
-    }
-
-    @media (max-width: 480px) {
+      .progress-nav {
+        width: 100%;
+        min-width: 100%;
+        height: 6px;
+        margin-top: 6px;
+        margin-left: 0;
+      }
+      .nav-segment {
+        flex: 1 1 0;
+        border-radius: 3px;
+      }
       .q-number {
         font-size: 13px;
       }
@@ -349,6 +361,9 @@
       .opt {
         padding: 14px;
         font-size: 15px;
+      }
+      .question-area {
+        padding-top: 8px; /* Add space below sticky header */
       }
     }
 
