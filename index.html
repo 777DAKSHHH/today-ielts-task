@@ -27,260 +27,8 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-  <style>
-    /* ---- Wizard-specific inline styles ---- */
-    :root{
-      --accent:#3B82F6; /* Modern Vivid Blue */
-      --accent-hover:#2563EB;
-      --bg:#F8FAFC; /* Ultra Light Slate */
-      --card:#ffffff;
-      --text-main: #0F172A; /* Deep Navy/Slate */
-      --text-muted: #64748B;
-      --border-color: #E2E8F0;
-      /* Premium layered shadows */
-      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-      --radius: 24px; /* More rounded modern look */
-    }
-    html,body{
-      height:100%;
-    }
-    body {
-      background-color: var(--bg);
-      /* Modern gradient mesh background */
-      background-image: radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.08) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.05) 0px, transparent 50%);
-      background-attachment: fixed;
-      font-family: "Poppins", sans-serif;
-      color: var(--text-main);
-      line-height: 1.7; /* Typography: Increased line height for readability */
-      letter-spacing: 0.015em; /* Typography: Slight spacing for Poppins */
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      margin:0;
-    }
-    h1, h2, h3, h4, h5, h6 { font-family: "Raleway", sans-serif; font-weight: 800; color: #0F172A; letter-spacing: -0.03em; line-height: 1.2; }
-
-    /* full-screen centered login */
-    #login-section {
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: transparent;
-      padding: 2rem;
-    }
-    .login-card {
-      width:100%;
-      max-width:480px;
-      background:var(--card);
-      padding:3rem;
-      border-radius:var(--radius);
-      box-shadow: var(--shadow-lg);
-      border: 1px solid rgba(255,255,255,0.8);
-      text-align:center;
-      position: relative;
-      overflow: hidden;
-    }
-    .login-card::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 6px;
-      background: linear-gradient(90deg, var(--accent), #60A5FA);
-    }
-    .login-card h2{ margin-bottom:1rem; font-weight:600;}
-    .login-card .form-control{ margin-top:.5rem; }
-
-    /* Mode Selection */
-    #mode-selection-section {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--bg);
-    }
-    .mode-card {
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .mode-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--accent); }
-
-    /* sticky mini header inside wizard */
-    #wizard-header {
-      position: sticky;
-      top: 0;
-      z-index: 1050;
-      background: rgba(255,255,255,0.8);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      box-shadow: var(--shadow-sm);
-      border-bottom:1px solid rgba(226, 232, 240, 0.6);
-    }
-    #wizard-header .container {
-      padding: .75rem 1rem;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-    }
-    .progress {
-      height: 8px;
-      background: #F1F5F9;
-      border-radius: 99px;
-      overflow: hidden;
-    }
-    .progress .progress-bar {
-      background: linear-gradient(90deg, var(--accent), #60A5FA);
-      border-radius: 99px;
-      box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
-      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    main.wizard-main{
-      min-height: calc(100vh - 64px);
-      display:flex;
-      align-items:flex-start;
-      justify-content:center;
-      padding:2.5rem 1rem;
-    }
-    .wizard-container{
-      width:100%;
-      max-width:980px;
-      background:transparent;
-    }
-    .wizard-card {
-      background:var(--card);
-      border-radius:var(--radius);
-      padding:3.5rem;
-      box-shadow: var(--shadow-lg);
-      border: 1px solid rgba(255,255,255,0.6);
-      margin-bottom:1rem;
-      overflow:hidden;
-      transition: box-shadow 0.3s ease;
-    }
-
-    .wizard-footer {
-      display:flex;
-      justify-content:space-between;
-      gap:1rem;
-      align-items:center;
-      margin-top:.5rem;
-    }
-
-    .hidden{ display:none !important; }
-
-    /* Timer overlay */
-    #timerOverlay {
-      margin-top:1rem;
-      padding:1rem;
-      border-radius:.5rem;
-      background:linear-gradient(180deg,#fff,#fbfdff);
-      border:1px solid #eef3ff;
-      text-align:center;
-    }
-    #timerDisplay {
-      font-size:2rem;
-      font-weight:700;
-      letter-spacing:.6px;
-    }
-
-    /* Step number pill */
-    .step-pill {
-      width: 42px; height: 42px;
-      background: linear-gradient(135deg, var(--accent), #2563EB);
-      color: #fff;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 700;
-      font-size: 16px;
-      position: relative;
-      z-index: 1;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-    }
-    .step-pill::after {
-      content: '';
-      position: absolute;
-      top: -4px; left: -4px; right: -4px; bottom: -4px;
-      border-radius: 50%;
-      border: 2px solid var(--accent);
-      opacity: 0.15;
-      z-index: -1;
-    }
-
-    /* content spacing */
-    .vocab-table {
-      border-collapse: separate;
-      border-spacing: 0;
-      border: 1px solid var(--border-color);
-      border-radius: 1rem;
-      overflow: hidden;
-    }
-    .vocab-table thead th {
-      background: #F8FAFC;
-      color: var(--text-muted);
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
-      border-bottom: 1px solid var(--border-color);
-      padding: 1.2rem;
-    }
-    .vocab-table td {
-      vertical-align:middle; padding: 1.2rem;
-      border-bottom: 1px solid var(--border-color);
-      color: #4B5563;
-    }
-    .vocab-table tr:last-child td { border-bottom: none; }
-    .vocab-word { color: #0EA5E9; font-weight: 700; font-family: "Raleway", sans-serif; font-size: 1.1rem; } /* Sky Blue 500 */
-    @media (max-width:768px){
-      .speaking-row, .vocab-word:hover {
-        background-color: #e9f5ff !important;
-        transition: background-color 0.3s ease;
-      }
-    }
-
-    @media (max-width:768px){
-      .login-card { padding:1.2rem; margin: 0 8px; }
-      .wizard-container{ padding:0 12px; }
-      #wizard-header .container{ padding: .5rem; }
-    }
-    
-    /* Button Polish */
-    .btn-primary { background: linear-gradient(180deg, var(--accent), #2563EB); border: none; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2); transition: all 0.2s; font-weight: 600; padding: 0.6rem 1.5rem; border-radius: 0.5rem; }
-    .btn-primary:hover { background: linear-gradient(180deg, #2563EB, #1D4ED8); transform: translateY(-1px); box-shadow: 0 6px 12px rgba(37, 99, 235, 0.25); }
-    
-    /* Form Control Polish */
-    .form-control {
-      padding: 0.85rem 1.1rem;
-      border-radius: 0.75rem;
-      border: 1px solid var(--border-color);
-      background-color: #F8FAFC;
-      box-shadow: none;
-      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    }
-    .form-control:focus {
-      background-color: #fff;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
-    }
-
-    /* Brainstorm Toolbar Polish */
-    .bs-toolbar { background: #fff; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); border-radius: 1rem; }
-
-    /* Smooth Step Animation (Hardware Accelerated) */
-    .animate-step { animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-    @keyframes slideUpFade {
-      0% { opacity: 0; transform: translateY(10px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Timer Pulse Animation */
-    @keyframes pulse-soft {
-      0% { box-shadow: 0 0 0 0 rgba(0, 86, 210, 0.4); }
-      70% { box-shadow: 0 0 0 10px rgba(0, 86, 210, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(0, 86, 210, 0); }
-    }
-    #startTimerBtn, #startTimerBtnT2 { animation: pulse-soft 2s infinite; }
-  </style>
+  <!-- Wizard Custom CSS File -->
+  <link href="assets/css/wizard.css" rel="stylesheet">
 </head>
 
 <body class="starter-page-page">
@@ -365,7 +113,7 @@
             <h3>Task Overview</h3>
             <p class="text-muted">Choose an overview media (audio/video) to get a guided briefing for your Task 1.</p>
           </div>
-          <div class="text-end text-muted"><small>Estimated time: 1-2 min</small></div>
+          <div class="text-end text-muted"><small>Estimated time: 2-3 min</small></div>
         </div>
 
         <hr>
@@ -401,14 +149,35 @@
         <div id="mediaCompleteBadge" class="mt-3 hidden">
           <span class="badge bg-success">Overview Completed ✓</span>
         </div>
+
+        <!-- Task Info & Image Analysis -->
+        <div class="row g-3 mt-4 pt-3 border-top">
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded border h-100">
+              <h6 class="text-primary fw-bold mb-2"><i class="bi bi-file-earmark-text-fill"></i> Task Type</h6>
+              <p class="mb-0"><strong>Flow Chart / Process Diagram</strong></p>
+              <p class="small text-muted mb-0">Requires describing a linear process step-by-step using appropriate sequence connectors and passive verb forms.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded border h-100">
+              <h6 class="text-primary fw-bold mb-2"><i class="bi bi-search"></i> Image Analysis</h6>
+              <ul class="list-unstyled mb-0 small" style="line-height: 1.6;">
+                <li><strong>• Start Point:</strong> Selecting a suitable workplace &amp; arranging an interview.</li>
+                <li><strong>• End Point:</strong> University credits awarded upon final report submission.</li>
+                <li><strong>• Number of Stages:</strong> 6 sequential stages.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <!-- STEP 2 - BRAINSTORM (3-MIN TIMER) -->
+      <!-- STEP 2 - BRAINSTORM -->
       <section id="step2" class="wizard-card hidden" data-step="2">
         <div class="d-flex justify-content-between align-items-start">
           <div>
             <h3>Brainstorm (3-minute focus)</h3>
-            <p class="text-muted">Read the Task 1 question and study the chart. Use the timer to focus on planning.</p>
+            <p class="text-muted">Read the Task 1 question and study the flowchart. Use the timer to focus on planning.</p>
           </div>
           <div class="text-muted text-end"><small>Focus timer</small></div>
         </div>
@@ -417,74 +186,99 @@
 
         <div class="row g-3">
           <div class="col-lg-7">
-            <div class="mb-3">
-              <h6>Task 1 Question</h6>
-              <p class="small">The diagram below shows how the water cycle works. Write a report for a university lecturer describing the information given below.</p>
+            <div class="mb-3 p-3 bg-light rounded border">
+              <h6 class="text-primary fw-bold mb-2">IELTS Academic Writing Task 1 Question</h6>
+              <p class="mb-3">The flowchart below shows the process involved in completing the work experience requirement for university students.</p>
+              <p class="mb-3"><strong>Summarise the information by selecting and reporting the main features, and make comparisons where relevant.</strong></p>
+              <p class="small text-muted mb-0"><em>Write at least 150 words.</em></p>
             </div>
           </div>
 
           <div class="col-lg-5">
             <figure class="figure">
-              <a href="materials/week-25-fri-wt1.png" class="glightbox">
-                <img src="materials/week-25-fri-wt1.png" alt="Task Chart" class="img-fluid rounded" />
+              <a href="materials/flowchart-for-task-1.png" class="glightbox">
+                <img src="materials/flowchart-for-task-1.png" alt="Task Chart" class="img-fluid rounded border" />
               </a>
-              <figcaption class="figure-caption small text-muted">Click image to enlarge.</figcaption>
+              <figcaption class="figure-caption small text-muted text-center mt-2">Click flowchart to enlarge.</figcaption>
             </figure>
 
             <div class="mt-3">
               <button id="startTimerBtn" class="btn btn-primary w-100">Start 3-Minute Timer</button>
             </div>
 
-            <div id="timerOverlay" class="hidden" aria-live="polite">
-              <div id="timerDisplay">03:00</div>
-              <p class="small text-muted mt-2">Think about trends! Jot main points: comparisons, extremes, exceptions.</p>
+            <div id="timerOverlay" class="hidden text-center p-3 border rounded bg-white mt-3" aria-live="polite">
+              <div id="timerDisplay" style="font-size:2.2rem; font-weight:700; color:var(--primary-color);">03:00</div>
+              <p class="small text-muted mt-2 mb-0">Identify the stages! Jot main points: connections, sequence flow, and inputs.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- STEP 3 - VOCABULARY TABLE -->
+      <!-- STEP 3 - VOCABULARY & VERBS -->
       <section id="step3" class="wizard-card hidden" data-step="3">
         <div class="d-flex justify-content-between">
           <div>
-            <h3>Vocabulary Table</h3>
-            <p class="text-muted">High-level vocabulary to use in your Task 1 report. <span class="text-primary small">(Click word to listen)</span></p>
+            <h3>Vocabulary &amp; Process Verbs</h3>
+            <p class="text-muted">High-level verbs and key transition vocabulary. <span class="text-primary small">(Click words to hear pronunciation)</span></p>
           </div>
-          <div class="text-muted"><small>Use pronunciation &amp; examples</small></div>
+          <div class="text-muted"><small>Listen &amp; Practice</small></div>
         </div>
 
         <hr>
 
-        <div class="table-responsive">
-          <table class="table table-bordered vocab-table">
-            <thead class="table-light">
-              <tr>
-                <th style="width:25%;">Word</th>
-                <th style="width:45%;">Meaning</th>
-                <th style="width:30%;">Example</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="vocab-word" role="button" tabindex="0">Percolates</td>
-                <td>To slowly pass or seep through a porous substance.</td>
-                <td>A portion of rainwater percolates through porous rock to form underground water reserves.</td>
-              </tr>
-              <tr>
-                <td class="vocab-word" role="button" tabindex="0">Concurrently</td>
-                <td>Happening at the same time as something else.</td>
-                <td>Water evaporates from the sea, while moisture is concurrently released through transpiration from plants.</td>
-              </tr>
-              <tr>
-                <td class="vocab-word" role="button" tabindex="0">Permeates</td>
-                <td>Spreads or flows through something.</td>
-                <td>Water permeates underground rock layers before resurfacing.</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <h6 class="text-primary fw-bold mb-2">High-Level Verbs for Process Charts</h6>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover small text-center align-middle">
+                <thead class="table-light">
+                  <tr><th style="width:50%;">Simple Verb</th><th style="width:50%;" class="text-success">Band 9 Alternative</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>do</td><td class="vocab-word fw-bold text-success" role="button">Undertake</td></tr>
+                  <tr><td>get</td><td class="vocab-word fw-bold text-success" role="button">Obtain</td></tr>
+                  <tr><td>send</td><td class="vocab-word fw-bold text-success" role="button">Submit</td></tr>
+                  <tr><td>finish</td><td class="vocab-word fw-bold text-success" role="button">Complete</td></tr>
+                  <tr><td>begin</td><td class="vocab-word fw-bold text-success" role="button">Commence</td></tr>
+                  <tr><td>end</td><td class="vocab-word fw-bold text-success" role="button">Culminate in</td></tr>
+                  <tr><td>join</td><td class="vocab-word fw-bold text-success" role="button">Participate in</td></tr>
+                  <tr><td>arrange</td><td class="vocab-word fw-bold text-success" role="button">Schedule</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <h6 class="text-primary fw-bold mb-2">Core Transition Vocabulary</h6>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover small align-middle">
+                <thead class="table-light">
+                  <tr><th style="width:30%;">Word</th><th style="width:70%;">IELTS Example</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="vocab-word fw-bold" role="button">Concurrently</td>
+                    <td>Students submit weekly logs; <em>concurrently</em>, supervisors prepare assessments.</td>
+                  </tr>
+                  <tr>
+                    <td class="vocab-word fw-bold" role="button">Subsequently</td>
+                    <td>Once accepted, the student <em>subsequently</em> seeks formal professor approval.</td>
+                  </tr>
+                  <tr>
+                    <td class="vocab-word fw-bold" role="button">Thereafter</td>
+                    <td>The interview is conducted, and <em>thereafter</em> the schedule is finalized.</td>
+                  </tr>
+                  <tr>
+                    <td class="vocab-word fw-bold" role="button">Culminates</td>
+                    <td>The work placement program eventually <em>culminates</em> in the credits award.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
 
-        <div class="d-flex gap-2 align-items-center mt-3">
+        <div class="d-flex gap-2 align-items-center mt-3 pt-2 border-top">
           <label for="accentSelect" class="me-2 mb-0 small text-muted">Accent</label>
           <select id="accentSelect" class="form-select form-select-sm w-auto">
             <option value="en-GB">UK (en-GB)</option>
@@ -492,7 +286,6 @@
             <option value="en-US">US (en-US)</option>
           </select>
         </div>
-
       </section>
 
       <!-- STEP 4 - INTRODUCTION & OVERVIEW -->
@@ -500,83 +293,185 @@
         <div class="d-flex justify-content-between">
           <div>
             <h3>Plan: Introduction &amp; Overview</h3>
-            <p class="text-muted">Use these sample introductions and overviews to build your report.</p>
+            <p class="text-muted">High-scoring models to frame your Task 1 report.</p>
           </div>
-          <div class="text-muted"><small>Paraphrase the prompt</small></div>
+          <div class="text-muted"><small>Paraphrase &amp; Summarize</small></div>
         </div>
 
         <hr>
 
         <div class="row g-3">
           <div class="col-md-6">
-            <h6>Sample Introductions</h6>
-            <div class="mb-2">
-              <div class="p-2" style="background:#fbfbff;border-radius:.4rem;">
-                <strong>SAMPLE INTRODUCTION</strong>
-                <p class="small mb-0">The cycle illustrates the way in which the water operates in nature.</p>
+            <div class="p-3 h-100 border-start border-primary border-3 bg-light rounded">
+              <strong class="text-primary d-block mb-2">1. Sample Introduction</strong>
+              <blockquote class="blockquote small mb-0" style="font-size: 0.95rem; line-height: 1.6;">
+                "The diagram depicts the various stages that university students must complete in order to satisfy the work experience requirement."
+              </blockquote>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="p-3 h-100 border-start border-warning border-3 bg-light rounded">
+              <strong class="text-warning d-block mb-2">2. Sample Overview</strong>
+              <blockquote class="blockquote small mb-0" style="font-size: 0.95rem; line-height: 1.6;">
+                "Overall, the process consists of six sequential stages, commencing with the application for a suitable workplace and culminating in the submission of the final report. Notably, students must obtain approval, complete weekly reporting requirements, and undergo an evaluation before finishing the programme."
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 5 - BODY PARAGRAPH BIFURCATION -->
+      <section id="step5" class="wizard-card hidden" data-step="5">
+        <div class="d-flex justify-content-between">
+          <div>
+            <h3>Plan: Body Paragraph Bifurcation</h3>
+            <p class="text-muted">Divide the flowchart stages logically to write two balanced paragraphs.</p>
+          </div>
+          <div class="text-muted"><small>Group your data</small></div>
+        </div>
+
+        <hr>
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="card border-0 bg-light p-4 h-100">
+              <h5 class="text-primary mb-3"><i class="bi bi-1-circle-fill"></i> Body Paragraph 1</h5>
+              <div class="mb-3">
+                <span class="badge bg-primary mb-2">Covers</span>
+                <p class="small text-muted mb-0 fw-bold">Application • Approval • Schedule</p>
+              </div>
+              <div>
+                <span class="badge bg-secondary mb-2">Key Actions to Describe</span>
+                <ul class="small text-muted ps-3 mb-0" style="line-height: 1.6;">
+                  <li>Select a suitable workplace</li>
+                  <li>Arrange an interview with the employer</li>
+                  <li>Submit formal application</li>
+                  <li>Receive official acceptance</li>
+                  <li>Obtain professor's approval</li>
+                  <li>Schedule minimum working hours</li>
+                </ul>
               </div>
             </div>
           </div>
 
           <div class="col-md-6">
-            <h6>Sample Overviews</h6>
-            <div class="mb-2">
-              <div class="p-2" style="background:#fffaf0;border-radius:.4rem;">
-                <strong>SAMPLE OVERVIEW</strong>
-                <p class="small mb-0">Overall, this is a natural cyclical system comprising three main stages, beginning with evaporation and ending with the return of water to the sea. A particularly striking feature is the sun, which acts as the primary driving force by supplying the heat energy required to initiate and sustain the entire cycle.</p>
+            <div class="card border-0 bg-light p-4 h-100">
+              <h5 class="text-primary mb-3"><i class="bi bi-2-circle-fill"></i> Body Paragraph 2</h5>
+              <div class="mb-3">
+                <span class="badge bg-primary mb-2">Covers</span>
+                <p class="small text-muted mb-0 fw-bold">Weekly Reports • Evaluation • Final Report</p>
+              </div>
+              <div>
+                <span class="badge bg-secondary mb-2">Key Actions to Describe</span>
+                <ul class="small text-muted ps-3 mb-0" style="line-height: 1.6;">
+                  <li>Weekly report submission</li>
+                  <li>Undergo final evaluation stage</li>
+                  <li>Supervisor evaluation form completion</li>
+                  <li>Final report submission</li>
+                  <li>University credits awarded</li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
-
       </section>
 
-      <!-- STEP 5 - BODY PARAGRAPH 1 -->
-      <section id="step5" class="wizard-card hidden" data-step="5">
-        <div class="d-flex justify-content-between">
-          <div>
-            <h3>Plan: Body Paragraph 1</h3>
-            <p class="text-muted">Evaporation, transpiration, and cloud formation</p>
-          </div>
-          <div class="text-muted"><small>Focus on the initial stages</small></div>
-        </div>
-
-        <hr>
-
-        <div class="checklist-container">
-          <ul>
-            <li>At the initial stage, solar heat causes water stored in seas, rivers, and lakes to evaporate, forming invisible water vapour.</li>
-            <li>Concurrently, moisture is released into the atmosphere through transpiration from plants and trees.</li>
-            <li>As the vapour rises, it cools and undergoes condensation, resulting in the formation of clouds.</li>
-            <li>These clouds are then displaced by wind towards inland and elevated regions.</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- STEP 6 - BODY PARAGRAPH 2 -->
+      <!-- STEP 6 - STAGE-WISE EXPLANATION -->
       <section id="step6" class="wizard-card hidden" data-step="6">
         <div class="d-flex justify-content-between">
           <div>
-            <h3>Plan: Body Paragraph 2</h3>
-            <p class="text-muted">Precipitation, surface flow, and groundwater movement</p>
+            <h3>Stage-wise Explanation</h3>
+            <p class="text-muted">A step-by-step breakdown of actions required at each process stage.</p>
           </div>
-          <div class="text-muted"><small>Focus on the return flow</small></div>
+          <div class="text-muted"><small>Task 1 Flowchart</small></div>
         </div>
 
         <hr>
 
-        <div class="checklist-container">
-          <ul>
-            <li>Subsequently, further cooling within the clouds leads to precipitation, primarily in the form of rainfall.</li>
-            <li>Following this, rainwater flows over the land surface and is channelled downstream by rivers.</li>
-            <li>At the same time, a portion of water percolates through porous rock, forming underground water reserves.</li>
-            <li>Ultimately, groundwater and surface water re-enter lakes, rivers, and seas, thereby completing the cycle and allowing the process to recommence.</li>
-          </ul>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="p-3 border rounded bg-white shadow-sm h-100">
+              <h6 class="text-primary fw-bold border-bottom pb-2">Paragraph 1 Flow (Stages 1-3)</h6>
+              <ol class="small text-muted ps-3 mb-0" style="line-height: 1.8;">
+                <li class="mb-2"><strong>Application:</strong> Students first select a potential workplace and arrange an interview before submitting their application.</li>
+                <li class="mb-2"><strong>Approval:</strong> Upon receiving employer acceptance, the student must obtain the professor's signature and approval.</li>
+                <li class="mb-0"><strong>Scheduling:</strong> The student and supervisor schedule and agree on the minimum working hours.</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="p-3 border rounded bg-white shadow-sm h-100">
+              <h6 class="text-primary fw-bold border-bottom pb-2">Paragraph 2 Flow (Stages 4-6)</h6>
+              <ol class="small text-muted ps-3 mb-0" style="line-height: 1.8;">
+                <li class="mb-2"><strong>Weekly Reports:</strong> Throughout the placement, student progress reports must be submitted on a weekly basis.</li>
+                <li class="mb-2"><strong>Evaluation:</strong> At the end of the term, a final supervisor evaluation form is filled out.</li>
+                <li class="mb-0"><strong>Final Report:</strong> The process concludes with the final report submission, and academic credits are awarded.</li>
+              </ol>
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- STEP 7 - FINAL REVIEW & DOWNLOAD -->
-      <section id="step7" class="wizard-card hidden text-center" data-step="7">
+      <!-- STEP 7 - GRAMMAR & COHESIVE DEVICES -->
+      <section id="step7" class="wizard-card hidden" data-step="7">
+        <div class="d-flex justify-content-between">
+          <div>
+            <h3>Grammar &amp; Cohesive Devices</h3>
+            <p class="text-muted">Learn essential sequence connectors, passive voice structures, and avoid common errors.</p>
+          </div>
+          <div class="text-muted"><small>Band 9 Grammar Pack</small></div>
+        </div>
+
+        <hr>
+
+        <div class="row g-3">
+          <div class="col-md-4">
+            <div class="p-3 bg-light rounded border h-100">
+              <h6 class="text-primary fw-bold mb-2">High-Level Passive Voice</h6>
+              <p class="small text-muted mb-2">Avoid saying <em>"They do..."</em> or <em>"They submit..."</em>. Use process passives:</p>
+              <div class="d-flex flex-wrap gap-2">
+                <span class="badge bg-white text-secondary border">is submitted</span>
+                <span class="badge bg-white text-secondary border">is approved</span>
+                <span class="badge bg-white text-secondary border">is arranged</span>
+                <span class="badge bg-white text-secondary border">is completed</span>
+                <span class="badge bg-white text-secondary border">is evaluated</span>
+                <span class="badge bg-white text-secondary border">is awarded</span>
+                <span class="badge bg-white text-secondary border">is obtained</span>
+                <span class="badge bg-white text-secondary border">is scheduled</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="p-3 bg-light rounded border h-100">
+              <h6 class="text-primary fw-bold mb-2">Best Cohesive Devices</h6>
+              <ul class="list-unstyled small text-muted mb-0" style="line-height: 1.6;">
+                <li><strong>• Start:</strong> Initially, At the outset, Commences with...</li>
+                <li><strong>• Next:</strong> Subsequently, Following this, Thereafter, Afterwards...</li>
+                <li><strong>• Sim:</strong> Meanwhile, At the same time...</li>
+                <li><strong>• End:</strong> Eventually, Concludes with, Ultimately, Finally...</li>
+                <li><strong>• Connectors:</strong> Prior to, Before, After, Once, Subsequently</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="p-3 bg-light rounded border h-100">
+              <h6 class="text-danger fw-bold mb-2">Common Errors Fixed</h6>
+              <ul class="list-unstyled small text-muted mb-0" style="line-height: 1.6;">
+                <li class="mb-2">❌ <em>The students first choose workplace.</em><br>✅ Initially, students choose a potential workplace from an approved list.</li>
+                <li class="mb-2">❌ <em>Then they submit.</em><br>✅ Subsequently, the application is submitted for approval.</li>
+                <li>❌ <em>At last they finish.</em><br>✅ Ultimately, the process concludes with the submission of the final report.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 8 - FINAL REVIEW & DOWNLOAD -->
+      <section id="step8" class="wizard-card hidden text-center" data-step="8">
         <h3>Final Review &amp; Download</h3>
         <p class="text-muted">Review your notes and download the tutor report or return home.</p>
 
@@ -648,7 +543,9 @@
             <div class="col-lg-8">
               <div class="mb-3 p-3 bg-light rounded border">
                 <h6 class="text-primary">Task 2 Question</h6>
-                <p class="lead mb-0">Some people believe that car-free days are effective to reduce air pollution. However, others argue that there are other ways that are more effective.<br><br>Discuss both the views and give your opinion.</p>
+                <p class="lead mb-0">More and more people are choosing to eat ready-made meals rather than freshly cooked food.<br><br>
+                <strong>• Why is this?</strong><br>
+                <strong>• Do the advantages of this trend outweigh the disadvantages?</strong></p>
               </div>
               
               <!-- Brainstorming Toolbar -->
@@ -661,13 +558,18 @@
                   <div id="drawOptions" class="d-flex gap-2 align-items-center hidden" style="border-left:1px solid #ccc; padding-left:8px;">
                     <input type="color" id="bsColorPicker" class="form-control form-control-color form-control-sm" value="#0d6efd" title="Pen Color" onchange="updateBsStyle()">
                     <input type="range" class="form-range" id="bsSizeSlider" min="1" max="20" value="2" style="width: 70px;" title="Brush Size" oninput="updateBsStyle()">
-                    <button class="btn btn-sm btn-outline-warning" id="bsHighlighterBtn" onclick="toggleBsHighlighter()" title="Highlighter"><i class="bi bi-highlights"></i></button>
+                    <div class="btn-group btn-group-sm" role="group">
+                      <button class="btn btn-sm btn-outline-primary active" id="bsPenBtn" onclick="setBsDrawMode('pencil')" title="Pen"><i class="bi bi-pencil-fill"></i></button>
+                      <button class="btn btn-sm btn-outline-warning" id="bsHighlighterBtn" onclick="setBsDrawMode('highlighter')" title="Highlighter"><i class="bi bi-highlights"></i></button>
+                      <button class="btn btn-sm btn-outline-dark" id="bsEraserBtn" onclick="setBsDrawMode('eraser')" title="Eraser"><i class="bi bi-eraser-fill"></i></button>
+                    </div>
                   </div>
                 </div>
                 <div class="btn-group btn-group-sm" role="group">
                   <button class="btn btn-outline-secondary" onclick="bsUndo()" title="Undo"><i class="bi bi-arrow-counterclockwise"></i></button>
                   <button class="btn btn-outline-secondary" onclick="bsRedo()" title="Redo"><i class="bi bi-arrow-clockwise"></i></button>
                   <button class="btn btn-outline-danger" onclick="clearBrainstormCanvas()" title="Clear Drawing"><i class="bi bi-trash"></i></button>
+                  <button class="btn btn-outline-success" onclick="downloadBrainstorm()" title="Save/Download Notes"><i class="bi bi-download"></i> Save</button>
                 </div>
               </div>
 
@@ -691,9 +593,9 @@ CON--></textarea>
                     <button id="startTimerBtnT2" class="btn btn-primary w-100">Start 5-Minute Timer</button>
                   </div>
                   <div id="timerOverlayT2" class="hidden mt-3 p-3 border rounded bg-white text-center">
-                <div id="timerDisplayT2" style="font-size:2rem;font-weight:700;">05:00</div>
-                <p class="small text-muted mt-2">Generate ideas: Reasons, Examples, Consequences.</p>
-              </div>
+                    <div id="timerDisplayT2" style="font-size:2rem;font-weight:700;">05:00</div>
+                    <p class="small text-muted mt-2">Generate ideas: Reasons, Examples, Consequences.</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -716,10 +618,12 @@ CON--></textarea>
                 <tr><th style="width:25%;">Word</th><th style="width:45%;">Meaning</th><th style="width:30%;">Example</th></tr>
               </thead>
               <tbody>
-                <tr><td class="vocab-word" role="button">Pernicious</td><td>Harmful, especially in a gradual way.</td><td>The pernicious effects of air pollution accumulate over time.</td></tr>
-                <tr><td class="vocab-word" role="button">Myopic</td><td>Short-sighted; lacking long-term thinking.</td><td>A myopic focus on car-free days overlooks sustainable alternatives.</td></tr>
-                <tr><td class="vocab-word" role="button">Anachronistic</td><td>Outdated and unsuitable for modern conditions.</td><td>Car-centric urban planning is increasingly anachronistic.</td></tr>
-                <tr><td class="vocab-word" role="button">Entrenched</td><td>Firmly established and difficult to change.</td><td>Entrenched reliance on private vehicles hinders environmental progress.</td></tr>
+                <tr><td class="vocab-word fw-bold" role="button">Anathema</td><td>Something intensely disliked or avoided.</td><td>For many health experts, excessive reliance on processed food is an <strong>anathema</strong> to healthy living.</td></tr>
+                <tr><td class="vocab-word fw-bold" role="button">Ineluctable</td><td>Impossible to avoid or escape.</td><td>Urbanisation and fast-paced schedules have made the demand for convenience foods almost <strong>ineluctable</strong>.</td></tr>
+                <tr><td class="vocab-word fw-bold" role="button">Redound</td><td>To contribute or lead to an outcome (positive or negative).</td><td>This shift may <strong>redound</strong> to the benefit of busy professionals but harm public health in the long term.</td></tr>
+                <tr><td class="vocab-word fw-bold" role="button">Salubrious</td><td>Health-promoting; healthy or wholesome.</td><td>Freshly prepared home meals are generally considered far more <strong>salubrious</strong> than processed alternatives.</td></tr>
+                <tr><td class="vocab-word fw-bold" role="button">Profligacy</td><td>Reckless wastefulness or extravagance.</td><td>The excessive single-use plastic packaging found in prepared meals reflects environmental <strong>profligacy</strong>.</td></tr>
+                <tr><td class="vocab-word fw-bold" role="button">Sagacious</td><td>Wise, showing keen judgment and foresight.</td><td>A <strong>sagacious</strong> government would encourage healthier eating habits by subsidizing raw organic ingredients.</td></tr>
               </tbody>
             </table>
           </div>
@@ -738,74 +642,155 @@ CON--></textarea>
           <div class="d-flex justify-content-between">
             <div>
               <h3>Plan: Introduction</h3>
-              <p class="text-muted">Paraphrase the question+state your position +(OPT)Thesis.</p>
+              <p class="text-muted">Paraphrase the question, state your position, and outline your main points.</p>
             </div>
             <div class="text-muted"><small>Structure your opening</small></div>
           </div>
           <hr>
           <div class="row g-3">
             <div class="col-md-12">
-              <div class="p-3" style="background:#fbfbff;border-radius:.4rem;">
-                <strong>SAMPLE INTRODUCTION</strong>
-                <p class="small mb-0">Some people believe that banning private vehicles on certain days can reduce air pollution, while others argue that more permanent solutions are needed. <strong>In my opinion, long-term policies are a more effective approach to tackle air pollution than occasional car-free days</strong>.</p>
+              <div class="p-4" style="background:#fbfbff; border-radius:.6rem; border-left: 4px solid var(--primary-color);">
+                <strong class="text-primary d-block mb-2">SAMPLE INTRODUCTION</strong>
+                <p class="small mb-0" style="line-height:1.6; font-size:1rem;">In today's fast-paced society, convenience has become a major factor influencing people's eating habits. As a result, an increasing number of individuals prefer ready-made meals instead of preparing fresh food at home. <strong>Although this trend offers considerable convenience and saves valuable time, I believe its disadvantages, particularly the adverse effects on health and traditional lifestyles, outweigh its benefits.</strong></p>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- STEP 5 - CONCLUSION (Moved up) -->
+        <!-- STEP 5 - CONCLUSION -->
         <section class="wizard-card hidden" data-step="5">
           <div class="d-flex justify-content-between">
             <div>
               <h3>Plan: Conclusion</h3>
-              <p class="text-muted">Summarise your main points and restate your opinion.</p>
+              <p class="text-muted">Summarise your main points and restate your final opinion.</p>
             </div>
             <div class="text-muted"><small>No new ideas here</small></div>
           </div>
           <hr>
-          <div class="p-3" style="background:#fffaf0;border-radius:.4rem;">
-            <strong>SAMPLE CONCLUSION</strong>
-            <p class="small mb-0">In conclusion, although car-free days can temporarily reduce pollution and increase public awareness, their impact is limited. <strong>I believe</strong> that long-term strategies such as improved public transport, cleaner vehicles, and better urban planning are far more effective in controlling air pollution.</p>
+          <div class="p-4" style="background:#fffaf0; border-radius:.6rem; border-left: 4px solid var(--warning-color);">
+            <strong class="text-warning d-block mb-2">SAMPLE CONCLUSION</strong>
+            <p class="small mb-0" style="line-height:1.6; font-size:1rem;">In conclusion, the growing popularity of ready-made meals is mainly driven by busy lifestyles, greater convenience, rising incomes, and improved product quality. <strong>While these meals save time and simplify daily life, I believe the negative impacts on health, cooking culture, and the environment make this trend more harmful than beneficial.</strong></p>
           </div>
         </section>
 
-        <!-- STEP 6 - BODY PARAGRAPH 1 (Renumbered) -->
+        <!-- STEP 6 - BODY PARAGRAPH 1 -->
         <section class="wizard-card hidden" data-step="6">
           <div class="d-flex justify-content-between">
             <div>
               <h3>Plan: Body Paragraph 1</h3>
-              <p class="text-muted">View 1: Car-free days are effective</p>
+              <p class="text-muted">Focus: Why are people choosing ready-made meals?</p>
             </div>
-            <div class="text-muted"><small>Topic Sentence + Explanation + Example</small></div>
+            <div class="text-muted"><small>Reasons &amp; Supporting Examples</small></div>
           </div>
           <hr>
-          <div class="checklist-container">
-            <ul>
-              <li><strong>Immediate reduction in traffic emissions:</strong> Fewer vehicles mean lower exhaust fumes.</li>
-              <li><strong>Encouragement of alternative transport:</strong> People are forced to use public transport or walk.</li>
-              <li><strong>Environmental awareness:</strong> People become more conscious of pollution problems.</li>
-              <li><strong>Improved urban environment:</strong> Streets become quieter and safer for pedestrians.</li>
-            </ul>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="card h-100 border-0 bg-light p-3">
+                <h6 class="text-primary fw-bold mb-2">1. Busy Lifestyles &amp; Time Constraints</h6>
+                <p class="small text-muted mb-2" style="line-height: 1.5;">People work longer hours. Cooking requires planning, shopping, and cleaning, which consumes valuable time. Prepared meals provide an instant solution.</p>
+                <div class="bg-white p-2 rounded border small text-secondary">
+                  <strong>Example:</strong> A software engineer who finishes work at 8 p.m. heats a frozen meal in 5 minutes instead of cooking from scratch for an hour.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card h-100 border-0 bg-light p-3">
+                <h6 class="text-primary fw-bold mb-2">2. Greater Convenience &amp; Accessibility</h6>
+                <p class="small text-muted mb-2" style="line-height: 1.5;">Supermarkets stock thousands of options and food delivery apps deliver prepared meals in minutes, allowing access to diverse cuisines without cooking skills.</p>
+                <div class="bg-white p-2 rounded border small text-secondary">
+                  <strong>Example:</strong> Instead of preparing pasta from scratch, a family simply orders a hot Italian meal through a food delivery application.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card h-100 border-0 bg-light p-3">
+                <h6 class="text-primary fw-bold mb-2">3. Rising Incomes &amp; Lifestyle Changes</h6>
+                <p class="small text-muted mb-2" style="line-height: 1.5;">People are willing to pay extra for convenience. Dual-income households prioritize leisure time over money, making prepared meals a staple of urban lifestyles.</p>
+                <div class="bg-white p-2 rounded border small text-secondary">
+                  <strong>Example:</strong> A career-focused couple buys premium pre-made dinners several times a week because they value relaxation after work.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card h-100 border-0 bg-light p-3">
+                <h6 class="text-primary fw-bold mb-2">4. Improved Quality &amp; Product Variety</h6>
+                <p class="small text-muted mb-2" style="line-height: 1.5;">Food manufacturers now offer organic, low-sodium, and premium international cuisines. Better vacuum packaging preserves the taste and nutritive value.</p>
+                <div class="bg-white p-2 rounded border small text-secondary">
+                  <strong>Example:</strong> Consumers purchase balanced microwave meals with fresh vegetables and lean meats rather than resorting to fast food.
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
-        <!-- STEP 7 - BODY PARAGRAPH 2 (Renumbered) -->
+        <!-- STEP 7 - BODY PARAGRAPH 2 -->
         <section class="wizard-card hidden" data-step="7">
           <div class="d-flex justify-content-between">
             <div>
               <h3>Plan: Body Paragraph 2</h3>
-              <p class="text-muted">View 2: Other methods are more effective</p>
+              <p class="text-muted">Focus: Advantages vs. Disadvantages (Do the benefits outweigh the drawbacks?)</p>
             </div>
-            <div class="text-muted"><small>Topic Sentence + Explanation + Example</small></div>
+            <div class="text-muted"><small>Weighing both sides</small></div>
           </div>
           <hr>
-          <div class="checklist-container">
-            <ul>
-              <li><strong>Permanent pollution control:</strong> Daily policies reduce pollution consistently.</li>
-              <li><strong>Better public transport systems:</strong> Reliable transport reduces car dependency.</li>
-              <li><strong>Cleaner vehicle technology:</strong> Electric vehicles produce fewer emissions.</li>
-              <li><strong>Urban planning improvements:</strong> Cities designed for short travel reduce pollution.</li>
-            </ul>
+          <div class="row g-3">
+            <!-- ADVANTAGES COLUMN -->
+            <div class="col-md-6">
+              <div class="p-3 border-start border-success border-3 bg-white shadow-sm rounded h-100">
+                <h5 class="text-success mb-3" style="font-size:1.1rem;"><i class="bi bi-plus-circle-fill"></i> Advantages of this Trend</h5>
+                <ul class="list-unstyled mb-0 small">
+                  <li class="mb-3">
+                    <span class="fw-bold d-block text-success-emphasis">1. Saves Significant Time</span>
+                    <span class="text-muted">Less time spent preparing food and cleaning dishes, freeing up hours for rest, family, or studying.</span>
+                    <span class="d-block small text-secondary italic mt-1"><strong>Example:</strong> A doctor on long shifts rests instead of preparing food.</span>
+                  </li>
+                  <li class="mb-3">
+                    <span class="fw-bold d-block text-success-emphasis">2. Offers Convenience &amp; Flexibility</span>
+                    <span class="text-muted">Meals are available instantly anytime, which is beneficial during unexpected schedule shifts or emergencies.</span>
+                    <span class="d-block small text-secondary italic mt-1"><strong>Example:</strong> Parents coming home late quickly feed their family by heating ready-made options.</span>
+                  </li>
+                  <li class="mb-3">
+                    <span class="fw-bold d-block text-success-emphasis">3. Provides Greater Food Variety</span>
+                    <span class="text-muted">Allows easy access to international cuisines without having to master complex culinary skills.</span>
+                    <span class="d-block small text-secondary italic mt-1"><strong>Example:</strong> Eating Japanese sushi one day and Mexican burritos the next.</span>
+                  </li>
+                  <li class="mb-0">
+                    <span class="fw-bold d-block text-success-emphasis">4. Reduces Domestic Food Waste</span>
+                    <span class="text-muted">Pre-packaged meals are pre-portioned, avoiding leftover raw ingredients from spoiling in the fridge.</span>
+                    <span class="d-block small text-secondary italic mt-1"><strong>Example:</strong> A single individual avoids throwing away unused vegetables and meats.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- DISADVANTAGES COLUMN -->
+            <div class="col-md-6">
+              <div class="p-3 border-start border-danger border-3 bg-white shadow-sm rounded h-100">
+                <h5 class="text-danger mb-3" style="font-size:1.1rem;"><i class="bi bi-dash-circle-fill"></i> Disadvantages of this Trend</h5>
+                <ul class="list-unstyled mb-0 small">
+                  <li class="mb-3">
+                    <span class="fw-bold d-block text-danger-emphasis">1. Adverse Health Consequences</span>
+                    <span class="text-muted">Prepared foods often contain high levels of sodium, sugar, and preservatives, raising risks of lifestyle diseases.</span>
+                    <span class="d-block small text-secondary italic mt-1"><strong>Example:</strong> Frequent consumption of frozen meals can trigger high blood pressure.</span>
+                  </li>
+                  <li class="mb-3">
+                    <span class="fw-bold d-block text-danger-emphasis">2. Higher Long-Term Expenditures</span>
+                    <span class="text-muted">Buying individual prepared meals is significantly costlier than preparing ingredients in bulk.</span>
+                    <span class="d-block small text-secondary italic mt-1"><strong>Example:</strong> Purchasing prepared lunches daily adds hundreds of dollars to monthly expenses.</span>
+                  </li>
+                  <li class="mb-3">
+                    <span class="fw-bold d-block text-danger-emphasis">3. Weakens Cooking Culture &amp; Traditions</span>
+                    <span class="text-muted">Younger generations miss out on learning basic cooking skills, and family eating becomes less interactive.</span>
+                    <span class="d-block small text-secondary italic mt-1"><strong>Example:</strong> Traditional family recipes are lost as children grow up on pre-made food.</span>
+                  </li>
+                  <li class="mb-0">
+                    <span class="fw-bold d-block text-danger-emphasis">4. Creates Environmental Issues</span>
+                    <span class="text-muted">Generates a massive amount of single-use plastic waste and carbon emissions from shipping processed foods.</span>
+                    <span class="d-block small text-secondary italic mt-1"><strong>Example:</strong> Plastic packaging from heated meals severely adds to landfill dumps.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -842,6 +827,14 @@ CON--></textarea>
   </main>
 
 
+  <!-- Presentation Mode Elements -->
+  <canvas id="highlighterCanvas"></canvas>
+  <div id="presentationControls" class="hidden">
+    <button id="highlighterToggleBtn" class="btn btn-outline-warning btn-sm"><i class="bi bi-pencil-fill"></i> Highlighter</button>
+    <button id="clearHighlightsBtn" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i> Clear</button>
+    <button id="exitPresentationBtn" class="btn btn-outline-light btn-sm"><i class="bi bi-x-circle"></i> Exit</button>
+  </div>
+
   <!-- Preloader (keep original file's element, but wizard doesn't rely on it) -->
   <div id="preloader" class="hidden"></div>
 
@@ -858,491 +851,8 @@ CON--></textarea>
   <!-- Main JS File (kept as in your template) -->
   <script src="assets/js/main.js"></script>
 
-  <!-- INLINE WIZARD LOGIC -->
-  <script>
-    // ---------- Configuration ----------
-    const CORRECT_PASS = "VII I MMVI"; // exact passphrase
-    let TOTAL_STEPS = 7;
-    let currentMode = 'task1'; // 'task1' or 'task2'
-
-    // ---------- Elements ----------
-    const loginSection = document.getElementById('login-section');
-    const modeSelectionSection = document.getElementById('mode-selection-section');
-    const loginBtn = document.getElementById('loginBtn');
-    // const loginHintBtn = document.getElementById('loginHintBtn');
-    const passwordInput = document.getElementById('passwordInput');
-    const loginError = document.getElementById('loginError');
-
-    const wizardHeader = document.getElementById('wizard-header');
-    const stepPill = document.getElementById('stepPill');
-    const stepTitle = document.getElementById('stepTitle');
-    const stepCounter = document.getElementById('stepCounter');
-    const progressBar = document.getElementById('progressBar');
-
-    let currentStep = 1;
-    let timerInterval = null;
-    let timerRemaining = 0;
-
-    // Utility
-    function qs(id){ return document.getElementById(id); }
-    function show(el){ el.classList.remove('hidden'); }
-    function hide(el){ el.classList.add('hidden'); }
-
-    // Enter key support for login
-    passwordInput.addEventListener('keydown', (e) => {
-      if(e.key === 'Enter') loginBtn.click();
-    });
-
-    // ---------- Login ----------
-    loginBtn.addEventListener('click', () => {
-      const val = passwordInput.value.trim();
-      if (val === CORRECT_PASS) {
-        hide(loginSection);
-        show(modeSelectionSection); // Show mode selection instead of wizard directly
-      } else {
-        loginError.classList.remove('hidden');
-        setTimeout(()=> loginError.classList.add('hidden'), 3000);
-      }
-    });
-
-    // ---------- Mode Selection ----------
-    window.selectMode = function(mode) {
-      currentMode = mode;
-      hide(modeSelectionSection);
-      document.querySelector('.wizard-main').classList.remove('hidden');
-      show(wizardHeader);
-
-      // Toggle Wrappers
-      if(mode === 'task1'){
-        qs('task1-wrapper').classList.remove('hidden');
-        qs('task2-wrapper').classList.add('hidden');
-        TOTAL_STEPS = 7;
-      } else {
-        qs('task1-wrapper').classList.add('hidden');
-        qs('task2-wrapper').classList.remove('hidden');
-        TOTAL_STEPS = 8;
-      }
-
-      gotoStep(1);
-      
-      // Refresh plugins
-      if (window.glightbox) { window.glightbox.reload(); }
-      setTimeout(() => AOS.refresh(), 100);
-    };
-
-    // ---------- Step Navigation ----------
-    function updateHeader() {
-      stepPill.textContent = currentStep;
-      stepTitle.textContent = `Step ${currentStep}: ${getStepName(currentStep)}`;
-      stepCounter.textContent = `${currentStep} / ${TOTAL_STEPS}`;
-
-      const pct = Math.round(((currentStep - 1) / (TOTAL_STEPS - 1)) * 100);
-      progressBar.style.width = pct + '%';
-    }
-
-    function getStepName(step){
-      if(currentMode === 'task1'){
-        switch(step){
-          case 1: return 'Task Overview';
-          case 2: return 'Brainstorm';
-          case 3: return 'Vocabulary';
-          case 4: return 'Introduction & Overview';
-          case 5: return 'Body Paragraph 1';
-          case 6: return 'Body Paragraph 2';
-          case 7: return 'Final Review';
-        }
-      } else {
-        switch(step){
-          case 1: return 'Task 2 Overview';
-          case 2: return 'Brainstorm';
-          case 3: return 'Vocabulary';
-          case 4: return 'Introduction';
-          case 5: return 'Conclusion';
-          case 6: return 'Body Paragraph 1';
-          case 7: return 'Body Paragraph 2';
-          case 8: return 'Final Review';
-        }
-      }
-      return 'Step';
-    }
-
-    function hideAllSteps(){
-      // Hide all steps within the active wrapper
-      const wrapper = document.getElementById(currentMode + '-wrapper');
-      const steps = wrapper.querySelectorAll('.wizard-card');
-      steps.forEach(el => el.classList.add('hidden'));
-    }
-
-    function gotoStep(step){
-      if(step < 1) step = 1;
-      if(step > TOTAL_STEPS) step = TOTAL_STEPS;
-      currentStep = step;
-      hideAllSteps();
-      
-      const wrapper = document.getElementById(currentMode + '-wrapper');
-      const el = wrapper.querySelector('[data-step="'+step+'"]');
-      if(el) {
-        el.classList.remove('hidden');
-        // Trigger smooth CSS animation
-        el.classList.add('animate-step');
-      }
-
-      // Resize canvas when entering Brainstorm step (Step 2 in Task 2)
-      if(currentMode === 'task2' && step === 2){
-        setTimeout(resizeBrainstormCanvas, 100);
-      }
-
-      updateHeader();
-      // Adjust nav buttons:
-      document.getElementById('prevBtn').style.visibility = (currentStep === 1) ? 'hidden' : 'visible';
-      document.getElementById('nextBtn').style.visibility = (currentStep === TOTAL_STEPS) ? 'hidden' : 'visible';
-
-      // Scroll into view the wizard container
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      AOS.refresh();
-    }
-
-    function nextStep(){
-      if(currentStep < TOTAL_STEPS){
-        gotoStep(currentStep + 1);
-      }
-    }
-    function prevStep(){
-      if(currentStep > 1){
-        gotoStep(currentStep - 1);
-      }
-    }
-
-    // ---------- Timer Logic (Step 2) ----------
-    // We need to handle T1 and T2 timers separately or dynamically
-    // Simple approach: attach listeners to both if they exist
-
-    function setupTimer(btnId, overlayId, displayId, duration) {
-      const btn = qs(btnId);
-      const overlay = qs(overlayId);
-      const display = qs(displayId);
-      
-      if(!btn) return;
-
-      btn.addEventListener('click', () => {
-        if (timerInterval) return;
-        timerRemaining = duration;
-        show(overlay);
-        
-        const update = () => {
-          const min = Math.floor(timerRemaining / 60).toString().padStart(2,'0');
-          const sec = (timerRemaining % 60).toString().padStart(2,'0');
-          display.textContent = `${min}:${sec}`;
-        };
-        update();
-
-        timerInterval = setInterval(() => {
-          timerRemaining--;
-          update();
-          if (timerRemaining <= 0){
-            clearInterval(timerInterval);
-            timerInterval = null;
-            timerFinished();
-          }
-        }, 1000);
-      });
-    }
-
-    // Init timers
-    setupTimer('startTimerBtn', 'timerOverlay', 'timerDisplay', 180); // Task 1 (3 min)
-    setupTimer('startTimerBtnT2', 'timerOverlayT2', 'timerDisplayT2', 300); // Task 2 (5 min)
-
-    function timerFinished(){
-      // show finished alert and auto-progress to next step
-      alert('Timer complete — great job! Moving to the next step.');
-      nextStep();
-    }
-
-    // ---------- Media Completion (Step 1) ----------
-    const overviewAudio = qs('overviewAudio');
-    const overviewVideo = qs('overviewVideo');
-    const mediaCompleteBadge = qs('mediaCompleteBadge');
-
-    function markMediaComplete(){
-      if(mediaCompleteBadge) show(mediaCompleteBadge);
-    }
-
-    overviewAudio && overviewAudio.addEventListener('ended', markMediaComplete);
-    overviewVideo && overviewVideo.addEventListener('ended', markMediaComplete);
-
-
-    // ---------- Text-to-Speech for Vocabulary (Step 3) ----------
-    function speak(text, lang, onEndCallback){
-      if(!('speechSynthesis' in window)){
-        alert('Speech synthesis not supported on this browser.');
-        return;
-      }
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = lang || 'en-GB';
-      if (onEndCallback) {
-        u.onend = onEndCallback;
-      }
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(u);
-    }
-    
-    document.querySelectorAll('.vocab-word').forEach(wordCell => {
-      wordCell.style.cursor = 'pointer';
-      wordCell.addEventListener('click', () => {
-        const word = wordCell.textContent.trim();
-        const row = wordCell.parentElement;
-        row.classList.add('speaking-row');
-        const accent = qs('accentSelect').value;
-        speak(word, accent, () => {
-          // Remove highlight after speaking is finished
-          setTimeout(() => row.classList.remove('speaking-row'), 300);
-        });
-      });
-    });
-
-    // ---------- Save & Finalize ----------
-    function finalize(){
-      // mark final completed (generic selector might pick both, so scope it)
-      const msg = currentMode === 'task1' ? qs('finalMessage') : qs('finalMessageT2');
-      if(msg) msg.classList.remove('hidden');
-      
-      document.getElementById('finishBtn').disabled = true;
-      // optionally clear timer
-      if(timerInterval){ clearInterval(timerInterval); timerInterval = null; }
-      // lock navigation
-      document.getElementById('nextBtn').disabled = true;
-      document.getElementById('prevBtn').disabled = true;
-      // save state
-      localStorage.setItem('ielts_finalized', '1');
-    }
-
-    // ---------- Presentation Mode (for Smartboard Teaching) ----------
-    const presentationModeBtn = qs('presentationModeBtn');
-    const presentationControls = qs('presentationControls');
-    const exitPresentationBtn = qs('exitPresentationBtn');
-    const highlighterToggleBtn = qs('highlighterToggleBtn');
-    const clearHighlightsBtn = qs('clearHighlightsBtn');
-    const canvas = qs('highlighterCanvas');
-    const ctx = canvas.getContext('2d');
-    let isHighlighterActive = false;
-    let isDrawing = false;
-
-    function enterPresentationMode() {
-      document.documentElement.requestFullscreen();
-      show(presentationControls);
-      hide(qs('wizard-footer'));
-    }
-
-    function exitPresentationMode() {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-      }
-      hide(presentationControls);
-      show(qs('wizard-footer'));
-      clearHighlights();
-      isHighlighterActive = false;
-      highlighterToggleBtn.classList.remove('active');
-      canvas.style.pointerEvents = 'none';
-    }
-
-    function toggleHighlighter() {
-      isHighlighterActive = !isHighlighterActive;
-      highlighterToggleBtn.classList.toggle('active');
-      canvas.style.pointerEvents = isHighlighterActive ? 'auto' : 'none';
-    }
-
-    function clearHighlights() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-
-    function setupCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      ctx.strokeStyle = 'rgba(255, 255, 0, 0.4)'; // Yellow highlighter
-      ctx.lineWidth = 20;
-      ctx.lineCap = 'round';
-
-      canvas.addEventListener('mousedown', (e) => {
-        if (!isHighlighterActive) return;
-        isDrawing = true;
-        ctx.beginPath();
-        ctx.moveTo(e.clientX, e.clientY);
-      });
-
-      canvas.addEventListener('mousemove', (e) => {
-        if (!isDrawing || !isHighlighterActive) return;
-        ctx.lineTo(e.clientX, e.clientY);
-        ctx.stroke();
-      });
-
-      canvas.addEventListener('mouseup', () => isDrawing = false);
-      canvas.addEventListener('mouseout', () => isDrawing = false);
-    }
-
-    presentationModeBtn.addEventListener('click', enterPresentationMode);
-    exitPresentationBtn.addEventListener('click', exitPresentationMode);
-    highlighterToggleBtn.addEventListener('click', toggleHighlighter);
-    clearHighlightsBtn.addEventListener('click', clearHighlights);
-    window.addEventListener('resize', setupCanvas);
-
-    // ---------- Init AOS & initial UI ----------
-    document.addEventListener('DOMContentLoaded', function(){
-      // Initialize AOS (already included in vendor scripts)
-      if(window.AOS){
-        AOS.init({ duration: 500, once: false, easing: 'ease-out-cubic' });
-      }
-
-      // Hide header on first load; user must login
-      wizardHeader.classList.add('hidden');
-      // Hide all step sections initially (they will be revealed when logged in)
-      hideAllSteps();
-
-      // Setup presentation mode canvas
-      setupCanvas();
-    });
-
-    // Make some helpful keyboard shortcuts (for power users)
-    document.addEventListener('keydown', (e) => {
-      if(e.altKey && e.key === 'ArrowRight') nextStep();
-      if(e.altKey && e.key === 'ArrowLeft') prevStep();
-      if(e.key === 'Escape') { /* no-op for now */ }
-    });
-
-    // ---------- Brainstorming Canvas Logic (Task 2) ----------
-    let brainstormCanvas, bsCtx;
-    let isBsDrawing = false;
-    let bsHistory = [];
-    let bsStep = -1;
-    let isBsHighlighter = false;
-
-    function initBrainstormCanvas(){
-      brainstormCanvas = document.getElementById('brainstormCanvas');
-      if(!brainstormCanvas) return;
-      bsCtx = brainstormCanvas.getContext('2d');
-      
-      // Initial style
-      updateBsStyle();
-      
-      // Attempt initial resize
-      resizeBrainstormCanvas();
-
-      // Save initial blank state if history empty
-      if(bsStep === -1) saveBsState();
-
-      brainstormCanvas.addEventListener('mousedown', startBsDraw);
-      brainstormCanvas.addEventListener('mousemove', drawBs);
-      brainstormCanvas.addEventListener('mouseup', stopBsDraw);
-      brainstormCanvas.addEventListener('mouseout', stopBsDraw);
-    }
-
-    window.resizeBrainstormCanvas = function(){
-      if(!brainstormCanvas) initBrainstormCanvas(); 
-      if(!brainstormCanvas) return;
-      
-      const textarea = document.getElementById('task2BrainstormArea');
-      const rect = textarea.getBoundingClientRect();
-      
-      // Resize canvas to match textarea
-      if(rect.width > 0 && (brainstormCanvas.width !== rect.width || brainstormCanvas.height !== rect.height)){
-        brainstormCanvas.width = rect.width;
-        brainstormCanvas.height = rect.height;
-        updateBsStyle(); 
-        if(bsStep >= 0) loadBsState(); 
-      }
-    };
-
-    window.updateBsStyle = function(){
-      if(!bsCtx) return;
-      const color = document.getElementById('bsColorPicker').value;
-      const size = document.getElementById('bsSizeSlider').value;
-      bsCtx.lineCap = 'round';
-      if(isBsHighlighter){
-        bsCtx.strokeStyle = 'rgba(255, 255, 0, 0.4)'; 
-        bsCtx.lineWidth = 20;
-      } else {
-        bsCtx.strokeStyle = color;
-        bsCtx.lineWidth = size;
-      }
-    };
-
-    window.toggleBsHighlighter = function(){
-      isBsHighlighter = !isBsHighlighter;
-      document.getElementById('bsHighlighterBtn').classList.toggle('active');
-      updateBsStyle();
-    };
-
-    function saveBsState(){
-      bsStep++;
-      if(bsStep < bsHistory.length){ bsHistory.length = bsStep; }
-      bsHistory.push(brainstormCanvas.toDataURL());
-    }
-
-    window.bsUndo = function(){
-      if(bsStep > 0){ bsStep--; loadBsState(); }
-    };
-    window.bsRedo = function(){
-      if(bsStep < bsHistory.length - 1){ bsStep++; loadBsState(); }
-    };
-
-    function loadBsState(){
-      const img = new Image();
-      img.src = bsHistory[bsStep];
-      img.onload = () => {
-        bsCtx.clearRect(0, 0, brainstormCanvas.width, brainstormCanvas.height);
-        bsCtx.drawImage(img, 0, 0);
-      };
-    }
-
-    function startBsDraw(e){
-      isBsDrawing = true;
-      bsCtx.beginPath();
-      const rect = brainstormCanvas.getBoundingClientRect();
-      bsCtx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
-    }
-    function drawBs(e){
-      if(!isBsDrawing) return;
-      const rect = brainstormCanvas.getBoundingClientRect();
-      bsCtx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
-      bsCtx.stroke();
-    }
-    function stopBsDraw(){ 
-      if(isBsDrawing){ isBsDrawing = false; saveBsState(); }
-    }
-    
-    window.clearBrainstormCanvas = function(){
-      if(!bsCtx || !brainstormCanvas) return;
-      bsCtx.clearRect(0, 0, brainstormCanvas.width, brainstormCanvas.height);
-      saveBsState();
-    }
-
-    window.setBrainstormTool = function(tool){
-      const canvas = document.getElementById('brainstormCanvas');
-      const typeBtn = document.getElementById('toolTypeBtn');
-      const drawBtn = document.getElementById('toolDrawBtn');
-      const options = document.getElementById('drawOptions');
-
-      if(tool === 'type'){
-        canvas.style.pointerEvents = 'none';
-        typeBtn.classList.add('active');
-        drawBtn.classList.remove('active');
-        hide(options);
-      } else {
-        canvas.style.pointerEvents = 'auto';
-        typeBtn.classList.remove('active');
-        drawBtn.classList.add('active');
-        show(options);
-        resizeBrainstormCanvas(); 
-      }
-    };
-
-    // Auto-resize logic
-    function autoResize(el) {
-      el.style.height = 'auto';
-      el.style.height = el.scrollHeight + 'px';
-      if(window.resizeBrainstormCanvas) window.resizeBrainstormCanvas();
-    }
-  </script>
+  <!-- Extracted Wizard Logic -->
+  <script src="assets/js/wizard.js"></script>
 
 </body>
 </html>
