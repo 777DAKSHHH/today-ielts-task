@@ -1,6 +1,3 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getDatabase, ref, onValue, remove } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
-
 // --- Firebase Config ---
 const firebaseConfig = {
   apiKey: "AIzaSy***Q",
@@ -13,9 +10,9 @@ const firebaseConfig = {
   measurementId: "G-R9G2YGSBM9"
 };
 
-// --- Initialize Firebase ---
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+// Initialize Firebase Compat UMD SDK
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.database(app);
 
 // --- Login Logic ---
 const loginSection = document.getElementById('login-section');
@@ -71,8 +68,8 @@ const mostCommonErrorEl = document.getElementById('mostCommonError');
 const lastUpdatedEl = document.getElementById('lastUpdated');
 
 // --- Real-time Listener ---
-const resultsRef = ref(db, "quizResults");
-onValue(resultsRef, (snapshot) => {
+const resultsRef = db.ref("quizResults");
+resultsRef.on("value", (snapshot) => {
   const data = snapshot.val() || {};
   allRecords = Object.values(data); // Store for analysis
   renderTable(allRecords);
@@ -247,7 +244,7 @@ if (clearAllBtn) {
     const pass = prompt("To clear all data, please enter the admin passcode:");
     if (pass === '3753') {
       if (confirm("Are you sure you want to permanently delete ALL quiz results? This cannot be undone.")) {
-        await remove(resultsRef);
+        await resultsRef.remove();
         alert("All quiz results have been cleared.");
       }
     } else if (pass !== null) { // User entered something but it was wrong
@@ -399,3 +396,97 @@ function showAnswerDistribution(questionIndex) {
   modalBody.innerHTML = distributionHtml;
   if (answerDistributionModal) answerDistributionModal.show();
 }
+
+// --- Active Listening Guesses Listener ---
+const guessesRef = db.ref("guesses");
+const guessTableBody = document.getElementById("guessTableBody");
+const clearGuessesBtn = document.getElementById("clearGuessesBtn");
+
+guessesRef.on("value", (snapshot) => {
+  const data = snapshot.val() || {};
+  renderGuessTable(Object.values(data));
+});
+
+if (clearGuessesBtn) {
+  clearGuessesBtn.addEventListener("click", () => {
+    if (confirm("Are you sure you want to clear all student guess submissions?")) {
+      guessesRef.remove()
+      .then(() => alert("Student guesses cleared!"))
+      .catch(err => alert("Error clearing guesses: " + err.message));
+    }
+  });
+}
+
+function renderGuessTable(guesses) {
+  if (!guessTableBody) return;
+  guessTableBody.innerHTML = "";
+
+  if (guesses.length === 0) {
+    guessTableBody.innerHTML = `<tr><td colspan="6" class="text-muted p-4">No student guess submissions yet.</td></tr>`;
+    return;
+  }
+
+  guesses.forEach(item => {
+    const accuracy = calculateGuessAccuracy(item.task, item.taskType, item.context);
+    
+    // Format timestamp nicely
+    let timeStr = "-";
+    if (item.timestamp) {
+      const date = new Date(item.timestamp);
+      timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    const taskLabel = item.task === 'task1' ? 'Task 1' : 'Task 2';
+    
+    // Badge color for accuracy
+    let badgeClass = 'bg-danger';
+    if (accuracy >= 80) badgeClass = 'bg-success';
+    else if (accuracy >= 50) badgeClass = 'bg-warning text-dark';
+
+    const row = `
+      <tr class="animate-fade-in">
+        <td class="fw-bold text-start">${item.studentName}</td>
+        <td><span class="badge bg-secondary">${taskLabel}</span></td>
+        <td><span class="small fw-semibold text-secondary">${item.taskType}</span></td>
+        <td><span class="badge ${badgeClass} fs-6">${accuracy}%</span></td>
+        <td class="text-start text-wrap small" style="max-width: 320px;">${item.context}</td>
+        <td class="small text-muted">${timeStr}</td>
+      </tr>`;
+    guessTableBody.insertAdjacentHTML("beforeend", row);
+  });
+}
+
+function calculateGuessAccuracy(task, guessType, context) {
+  let score = 0;
+  
+  // 1. Task Type Match (50%)
+  if (task === 'task1') {
+    // Expected Task 1 is Flowchart
+    if (guessType.toLowerCase().includes('flowchart') || guessType.toLowerCase().includes('process')) {
+      score += 50;
+    }
+  } else {
+    // Expected Task 2 is Advantages/Disadvantages
+    if (guessType.toLowerCase().includes('advantages')) {
+      score += 50;
+    }
+  }
+
+  // 2. Keyword Match (50% max - 10% per keyword)
+  const text = (context || '').toLowerCase();
+  const keywordsT1 = ['workplace', 'approval', 'evaluation', 'report', 'schedule', 'stages'];
+  const keywordsT2 = ['ready-made', 'convenience', 'cook', 'meals', 'health', 'lifestyle', 'time'];
+  
+  const targetKeywords = (task === 'task1') ? keywordsT1 : keywordsT2;
+  let matches = 0;
+  
+  targetKeywords.forEach(kw => {
+    if (text.includes(kw)) {
+      matches++;
+    }
+  });
+
+  score += Math.min(50, matches * 10);
+  return score;
+}
+

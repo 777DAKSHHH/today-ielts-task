@@ -1,7 +1,24 @@
+// === Firebase config ===
+const firebaseConfig = {
+  apiKey: "AIzaSy***Q",
+  authDomain: "ielts-live-dashboard.firebaseapp.com",
+  databaseURL: "https://ielts-live-dashboard-default-rtdb.firebaseio.com",
+  projectId: "ielts-live-dashboard",
+  storageBucket: "ielts-live-dashboard.firebasestorage.app",
+  messagingSenderId: "1044694021318",
+  appId: "1:1044694021318:web:70f1ac1ba0787d37da93c7"
+};
+
+// Initialize Firebase using compat UMD syntax
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.database(app);
+
 // ---------- Configuration ----------
 const CORRECT_PASS = "VII I MMVI"; // exact passphrase
-let TOTAL_STEPS = 7;
+let TOTAL_STEPS = 8;
 let currentMode = 'task1'; // 'task1' or 'task2'
+let t1OverviewUnlocked = true;
+let t2OverviewUnlocked = true;
 
 // ---------- Elements ----------
 const loginSection = document.getElementById('login-section');
@@ -123,8 +140,32 @@ function hideAllSteps(){
 window.gotoStep = function(step){
   if(step < 1) step = 1;
   if(step > TOTAL_STEPS) step = TOTAL_STEPS;
+
+  // Staged Reveal Verification Check
+  if(currentMode === 'task1' && currentStep === 1 && step > 1 && !t1OverviewUnlocked){
+    alert("Please complete the Active Listening Guess Box and dictation recall in Step 1 to unlock the task details!");
+    return;
+  }
+  if(currentMode === 'task2' && currentStep === 1 && step > 1 && !t2OverviewUnlocked){
+    alert("Please complete the Active Listening Guess Box, recall, and stance in Step 1 to unlock the Task 2 details!");
+    return;
+  }
+
   currentStep = step;
   hideAllSteps();
+
+  if (step === 1 && currentMode === 'task1') {
+    const analysisBlock = qs('task1AnalysisBlock');
+    if (analysisBlock) {
+      if (t1OverviewUnlocked) {
+        analysisBlock.classList.remove('locked-section');
+        analysisBlock.classList.add('unlocked-section');
+      } else {
+        analysisBlock.classList.add('locked-section');
+        analysisBlock.classList.remove('unlocked-section');
+      }
+    }
+  }
   
   const wrapper = document.getElementById(currentMode + '-wrapper');
   if (wrapper) {
@@ -218,6 +259,17 @@ function markMediaComplete(){
 
 if (overviewAudio) overviewAudio.addEventListener('ended', markMediaComplete);
 if (overviewVideo) overviewVideo.addEventListener('ended', markMediaComplete);
+
+const overviewAudioT2 = qs('overviewAudioT2');
+const overviewVideoT2 = qs('overviewVideoT2');
+const mediaCompleteBadgeT2 = qs('mediaCompleteBadgeT2');
+
+function markMediaCompleteT2(){
+  if(mediaCompleteBadgeT2) show(mediaCompleteBadgeT2);
+}
+
+if (overviewAudioT2) overviewAudioT2.addEventListener('ended', markMediaCompleteT2);
+if (overviewVideoT2) overviewVideoT2.addEventListener('ended', markMediaCompleteT2);
 
 // ---------- Text-to-Speech for Vocabulary (Step 3) ----------
 function speak(text, voiceNameOrLang, onEndCallback){
@@ -638,6 +690,40 @@ document.addEventListener('DOMContentLoaded', function(){
 
   // Setup presentation mode canvas
   setupCanvas();
+
+  // Initialize interactive sequencing game
+  initSequencingGameT1();
+
+  // Populate QR codes and links dynamically
+  let baseOrigin = window.location.origin;
+  if (!baseOrigin || baseOrigin.startsWith('file:') || baseOrigin === 'null') {
+    // Fallback to the live Render domain so scanning from a phone works even when opened locally
+    baseOrigin = "https://today-ielts-task.onrender.com";
+  }
+
+  const guessUrlT1 = baseOrigin + "/guess.html?task=task1";
+  const guessUrlT2 = baseOrigin + "/guess.html?task=task2";
+  
+  const qrCodeApiUrlT1 = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(guessUrlT1)}`;
+  const qrCodeApiUrlT2 = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(guessUrlT2)}`;
+  
+  const qrT1 = qs('qrCodeImgT1');
+  const qrT2 = qs('qrCodeImgT2');
+  const linkT1 = qs('guessLinkT1');
+  const linkT2 = qs('guessLinkT2');
+  
+  if (qrT1) qrT1.src = qrCodeApiUrlT1;
+  if (qrT2) qrT2.src = qrCodeApiUrlT2;
+  if (linkT1) linkT1.href = guessUrlT1;
+  if (linkT2) linkT2.href = guessUrlT2;
+
+  // Auto-mode selector via URL query parameter (for direct navigation shortcuts)
+  const urlParams = new URLSearchParams(window.location.search);
+  const modeParam = urlParams.get('mode');
+  if (modeParam === 'task1' || modeParam === 'task2') {
+    if (loginSection) hide(loginSection);
+    selectMode(modeParam);
+  }
 });
 
 // Make some helpful keyboard shortcuts (for power users)
@@ -645,3 +731,212 @@ document.addEventListener('keydown', (e) => {
   if(e.altKey && e.key === 'ArrowRight') nextStep();
   if(e.altKey && e.key === 'ArrowLeft') prevStep();
 });
+
+// ---------- Task 1 Active Listening & Guess Box ----------
+let guessListeners = {};
+
+window.listenForStudentGuessT1 = function() {
+  const name = qs('unlockNameInputT1').value.trim();
+  const feedback = qs('unlockFeedbackT1');
+  
+  if (name.length < 2) {
+    if (feedback) feedback.innerHTML = '<i class="bi bi-clock-history"></i> Waiting for name...';
+    return;
+  }
+
+  const sanitized = name.replace(/[.#$\[\]]/g, "_");
+  const guessRef = db.ref('guesses/' + sanitized);
+  
+  // Turn off previous observer
+  guessRef.off('value');
+
+  if (feedback) feedback.innerHTML = '<i class="bi bi-arrow-repeat spin"></i> Checking guess in database...';
+  
+  guessListeners['T1'] = guessRef.on('value', (snapshot) => {
+    const val = snapshot.val();
+    if (val && val.task === 'task1') {
+      if (feedback) feedback.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> Submission found! Unlocking...';
+      unlockTask1();
+    } else {
+      if (feedback) feedback.innerHTML = '<i class="bi bi-exclamation-circle-fill text-warning"></i> No guess submitted yet. Please scan and submit via phone.';
+    }
+  });
+};
+
+window.unlockTask1 = function() {
+  t1OverviewUnlocked = true;
+  const analysisBlock = qs('task1AnalysisBlock');
+  if (analysisBlock) {
+    analysisBlock.classList.remove('locked-section');
+    analysisBlock.classList.add('unlocked-section');
+  }
+  
+  // Enable next step automatically
+  const nextBtn = document.getElementById('nextBtn');
+  if (nextBtn) nextBtn.style.visibility = 'visible';
+
+  alert("Cognitive check passed! Flowchart analysis is unlocked and active.");
+};
+
+// ---------- Task 2 Active Listening & Stance Selector ----------
+window.listenForStudentGuessT2 = function() {
+  const name = qs('unlockNameInputT2').value.trim();
+  const feedback = qs('unlockFeedbackT2');
+  
+  if (name.length < 2) {
+    if (feedback) feedback.innerHTML = '<i class="bi bi-clock-history"></i> Waiting for name...';
+    return;
+  }
+
+  const sanitized = name.replace(/[.#$\[\]]/g, "_");
+  const guessRef = db.ref('guesses/' + sanitized);
+  
+  // Turn off previous observer
+  guessRef.off('value');
+
+  if (feedback) feedback.innerHTML = '<i class="bi bi-arrow-repeat spin"></i> Checking guess in database...';
+
+  guessListeners['T2'] = guessRef.on('value', (snapshot) => {
+    const val = snapshot.val();
+    if (val && val.task === 'task2') {
+      if (feedback) feedback.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> Submission found! Unlocking...';
+      unlockTask2(val.taskType, val.context);
+    } else {
+      if (feedback) feedback.innerHTML = '<i class="bi bi-exclamation-circle-fill text-warning"></i> No guess submitted yet. Please scan and submit via phone.';
+    }
+  });
+};
+
+window.unlockTask2 = function(stance, thesis) {
+  t2OverviewUnlocked = true;
+  
+  // Pre-fill student's stance and thesis statement directly into Task 2 Step 2 brainstorming textarea
+  const brainstormArea = qs('task2BrainstormArea');
+  if (brainstormArea) {
+    const formattedThesis = `[STUDENT ACTIVE BRIEFING THESIS]\nMy Prediction: ${stance.toUpperCase()}\nNotes/Guess from Phone:\n"${thesis}"\n\n`;
+    brainstormArea.value = formattedThesis + brainstormArea.value;
+  }
+
+  // Enable next step automatically
+  const nextBtn = document.getElementById('nextBtn');
+  if (nextBtn) nextBtn.style.visibility = 'visible';
+
+  alert("Cognitive stance lock passed! Brainstorm canvas and lesson details are unlocked.");
+};
+
+// ---------- Task 1 Flowchart Sequencing Challenge ----------
+const TASK1_FLOWCHART_STAGES = [
+  { id: 1, text: "Select workplace & submit application" },
+  { id: 2, text: "Obtain professor approval" },
+  { id: 3, text: "Schedule minimum working hours" },
+  { id: 4, text: "Submit weekly progress reports" },
+  { id: 5, text: "Complete supervisor evaluation" },
+  { id: 6, text: "Submit final report & receive credits" }
+];
+let userTimelineT1 = [];
+
+window.initSequencingGameT1 = function() {
+  userTimelineT1 = [];
+  const scrambledContainer = qs('scrambledStagesT1');
+  const timelineContainer = qs('orderedTimelineT1');
+  const feedback = qs('sequencingFeedbackT1');
+  
+  if (!scrambledContainer) return;
+  scrambledContainer.innerHTML = '';
+  timelineContainer.innerHTML = '<span class="text-muted small italic" id="timelineEmptyHintT1">Timeline is empty. Click stages above to build it.</span>';
+  if (feedback) feedback.className = 'small mb-0';
+  if (feedback) feedback.textContent = '';
+
+  // Scramble the stages
+  const scrambled = [...TASK1_FLOWCHART_STAGES].sort(() => Math.random() - 0.5);
+  
+  scrambled.forEach(stage => {
+    const badge = document.createElement('span');
+    badge.className = 'badge bg-primary scrambled-badge';
+    badge.textContent = stage.text;
+    badge.onclick = () => selectStageT1(stage, badge);
+    scrambledContainer.appendChild(badge);
+  });
+};
+
+function selectStageT1(stage, badgeEl) {
+  // Add to timeline
+  userTimelineT1.push(stage);
+  
+  // Hide from scrambled grid
+  badgeEl.style.display = 'none';
+  
+  // Update timeline UI
+  const timelineContainer = qs('orderedTimelineT1');
+  const emptyHint = qs('timelineEmptyHintT1');
+  if (emptyHint) emptyHint.style.display = 'none';
+  
+  const stepIndex = userTimelineT1.length;
+  const timelineBadge = document.createElement('span');
+  timelineBadge.className = 'badge bg-success timeline-badge';
+  timelineBadge.innerHTML = `${stepIndex}. ${stage.text}`;
+  timelineContainer.appendChild(timelineBadge);
+  
+  // Check sequence when all stages are selected
+  if (userTimelineT1.length === TASK1_FLOWCHART_STAGES.length) {
+    verifySequenceT1();
+  }
+}
+
+function verifySequenceT1() {
+  const feedback = qs('sequencingFeedbackT1');
+  let isCorrect = true;
+  
+  for (let i = 0; i < TASK1_FLOWCHART_STAGES.length; i++) {
+    if (userTimelineT1[i].id !== TASK1_FLOWCHART_STAGES[i].id) {
+      isCorrect = false;
+      break;
+    }
+  }
+  
+  if (isCorrect) {
+    feedback.className = 'small text-success fw-bold';
+    feedback.innerHTML = '<i class="bi bi-check-circle-fill"></i> Flowchart Sequence Verified! Correct order locked.';
+  } else {
+    feedback.className = 'small text-danger fw-bold';
+    feedback.innerHTML = '<i class="bi bi-x-circle-fill"></i> Incorrect chronological sequence. Resetting game...';
+    setTimeout(initSequencingGameT1, 2000);
+  }
+}
+
+// ---------- Vocabulary Ear-Trainer Hunt ----------
+let heardVocabT1 = new Set();
+let heardVocabT2 = new Set();
+
+window.toggleVocabHeard = function(cardEl, word, mode) {
+  const targetSet = (mode === 'T1') ? heardVocabT1 : heardVocabT2;
+  const totalCount = (mode === 'T1') ? 4 : 6;
+  const badgeId = (mode === 'T1') ? 'vocabTrainerBadgeT1' : 'vocabTrainerBadgeT2';
+  
+  if (targetSet.has(word)) {
+    targetSet.delete(word);
+    cardEl.classList.remove('heard');
+    cardEl.querySelector('.status-icon').innerHTML = '<i class="bi bi-circle"></i> Unheard';
+  } else {
+    targetSet.add(word);
+    cardEl.classList.add('heard');
+    cardEl.querySelector('.status-icon').innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> Heard ✓';
+    
+    // Play pronunciation trigger automatically as well (to keep audio synced)
+    const selectId = (mode === 'T2') ? 'accentSelectT2' : 'accentSelect';
+    const selectEl = qs(selectId);
+    const accent = selectEl ? selectEl.value : 'en-GB';
+    speak(word, accent);
+  }
+  
+  const badge = qs(badgeId);
+  if (badge) {
+    badge.textContent = `Lexical Hunt: ${targetSet.size}/${totalCount} Found`;
+    if (targetSet.size === totalCount) {
+      badge.className = 'badge bg-success';
+      badge.innerHTML = '<i class="bi bi-patch-check-fill"></i> Lexical Mastery Badge Unlocked!';
+    } else {
+      badge.className = 'badge bg-secondary';
+    }
+  }
+};

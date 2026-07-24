@@ -1,10 +1,7 @@
 // -------------------------
 // Typeform-style Quiz (Clone)
-// Firebase (v11 modular)
+// Firebase UMD Compat Syntax
 // -------------------------
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 
 // === Firebase config ===
 const firebaseConfig = {
@@ -17,21 +14,114 @@ const firebaseConfig = {
   appId: "1:1044694021318:web:70f1ac1ba0787d37da93c7"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+// Initialize Firebase Compat
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.database(app);
 
-// === Quiz data (10 questions) ===
+// === Quiz data (10 questions on today's IELTS lessons) ===
 const QUESTIONS = [
-  { q:"1. Choose the grammatically correct passive form: “Researchers have recently conducted several studies on climate change.”", options:["A. Several studies have been conduct on climate change recently.","B. Several studies were being conducted on climate change recently.","C. Several studies have recently conducting on climate change.","D. Several studies have recently been conducted on climate change."], correct:"D" },
-  { q:"2. Which sentence correctly uses a gerund after a reporting verb?", hint:"Some reporting verbs (e.g. <i>recommend, suggest, avoid</i>) are followed by <b>verb + ing</b>, not <i>to + verb</i>.", options:["A. The committee recommended to revise the policy immediately.","B. The committee recommended revise the policy immediately.","C. The committee recommended to revising the policy immediately.","D. The committee recommended revising the policy immediately."], correct:"D" },
-  { q:"3. Identify the sentence that is grammatically correct and academically appropriate.", options:["A. There are many factors cause unemployment in cities.","B. There are many factors which cause unemployment in cities.","C. There are many factors that causing unemployment in cities.","D. There are many factors that cause unemployment in cities."], correct:"D" },
-  { q:"4. Choose the correctly structured complex sentence with logical subordination.", options:["A. Public transport was improved, congestion was reduced.","B. Public transport was improved and congestion reducing.","C. Public transport was improved, reducing congestion in cities.","D. Public transport was improved because congestion had become severe."], correct:"D" },
-  { q:"5. Which option demonstrates correct control of clause structure?", hint:"When using <i>while</i>, check that <b>both clauses are complete and grammatically balanced</b>.", options:["A. While the economy expanded, unemployment reducing.","B. While the economy expanded, unemployment reduce.","C. While the economy expanded, unemployment was reduce.","D. While the economy expanded, unemployment was reduced."], correct:"D" },
-  { q:"6. Choose the sentence with correct infinitive usage.", hint:"After verbs like <i>aim, plan, decide</i>, use <b>to + base verb</b>.", options:["A. The government aims reducing inequality through education.","B. The government aims reduce inequality through education.","C. The government aims to reducing inequality through education.","D. The government aims to reduce inequality through education."], correct:"D" },
-  { q:"7. Which sentence reflects accurate grammatical control expected in IELTS Task 2?", options:["A. The data analysed by experts reveal a clear trend.","B. The data was analysed and reveal a clear trend.","C. The data analysed reveals clear trend.","D. The data analysed by experts reveal a clear trend."], correct:"D" },
-  { q:"8. A line graph shows that internet usage rose sharply between 2005 and 2010, before levelling off until 2020. Which statement is MOST accurate?", options:["A. Internet usage declined steadily after 2010.","B. Internet usage fluctuated considerably throughout the period.","C. Internet usage continued to rise at the same pace after 2010.","D. Internet usage increased rapidly initially and then stabilised."], correct:"D" },
-  { q:"9. What does the word “adamant” most precisely mean?", options:["A. Willing to negotiate under pressure","B. Uncertain about one’s stance","C. Open to alternative viewpoints","D. Refusing to change one’s mind; unyielding"], correct:"D" },
-  { q:"10. What is the closest meaning of “allure” in academic context?", options:["A. A logical explanation","B. A temporary trend","C. A financial incentive","D. The power to attract or charm"], correct:"D" }
+  { 
+    q: "1. Which option provides the most appropriate academic alternative to: 'Students do the work experience requirement'?", 
+    options: [
+      "A. Students make the work experience requirement.",
+      "B. Students complete the work experience requirement.",
+      "C. Students undertake the work experience requirement.",
+      "D. Students perform the work experience requirement."
+    ], 
+    correct: "C" 
+  },
+  { 
+    q: "2. Select the grammatically correct passive sentence describing a stage in the flowchart:", 
+    hint: "For process flows, use the structure: <b>Once [action] is/are [past participle], the next step is...</b>",
+    options: [
+      "A. Once employer acceptance obtained, the schedule is finalized.",
+      "B. Once employer acceptance is obtained, the schedule is finalized.",
+      "C. Once employer acceptance is obtain, the schedule is finalized.",
+      "D. Once employer acceptance is obtaining, the schedule is finalize."
+    ], 
+    correct: "B" 
+  },
+  { 
+    q: "3. Fill in the blank with the correct Band 9 vocabulary: 'For many health advocates, the excessive consumption of processed foods is an __________ to healthy living.'", 
+    options: [
+      "A. allure",
+      "B. alternative",
+      "C. allowance",
+      "D. anathema"
+    ], 
+    correct: "D" 
+  },
+  { 
+    q: "4. Which sequence connector is most suitable for describing two stages in the flowchart that happen at the same time?", 
+    options: [
+      "A. Subsequently",
+      "B. Concurrently",
+      "C. Initially",
+      "D. Prior to"
+    ], 
+    correct: "B" 
+  },
+  { 
+    q: "5. What is the precise meaning of the word 'ineluctable' in the context of ready-made meals?", 
+    hint: "Recall: <i>'Demanding schedules have made the reliance on convenience foods ineluctable.'</i>",
+    options: [
+      "A. Something highly health-promoting",
+      "B. Wise and showing good judgment",
+      "C. Impossible to avoid or escape",
+      "D. Easily ignored or rejected"
+    ], 
+    correct: "C" 
+  },
+  { 
+    q: "6. Which option shows proper academic hedging when discussing the drawbacks of ready-made meals?", 
+    options: [
+      "A. Ready meals will immediately cause chronic illnesses in all consumers.",
+      "B. Ready meals are definitely dangerous and should be banned.",
+      "C. Excessive consumption of prepared meals may contribute to negative health outcomes.",
+      "D. Preservatives in prepared meals always destroy public health."
+    ], 
+    correct: "C" 
+  },
+  { 
+    q: "7. In the student work experience flowchart, what is the logical progression of the first three stages?", 
+    options: [
+      "A. Submit weekly progress reports ➔ Obtain professor approval ➔ Final evaluation",
+      "B. Select workplace & apply ➔ Obtain professor approval ➔ Finalize schedule",
+      "C. Finalize schedule ➔ Start weekly reports ➔ Complete professor approval",
+      "D. Employer interview ➔ Select workplace ➔ Complete final report"
+    ], 
+    correct: "B" 
+  },
+  { 
+    q: "8. What is the meaning of 'salubrious' in the sentence: 'Freshly prepared home meals are far more salubrious than processed foods'?", 
+    options: [
+      "A. Health-promoting; wholesome",
+      "B. Expensive; luxurious",
+      "C. Highly processed; convenience-focused",
+      "D. Quick and easy to clean up"
+    ], 
+    correct: "A" 
+  },
+  { 
+    q: "9. Identify the correct meaning of 'profligacy' in an IELTS essay about pre-packaged meals:", 
+    options: [
+      "A. Wise choices and conservation",
+      "B. Reckless wastefulness or extravagance (e.g., plastic packaging)",
+      "C. Financial affordability",
+      "D. Nutritious value"
+    ], 
+    correct: "B" 
+  },
+  { 
+    q: "10. What is the best Band 9 alternative for 'end' in: 'The six-stage work experience program ends with the final report'?", 
+    options: [
+      "A. commences with",
+      "B. participates in",
+      "C. schedules",
+      "D. culminates in"
+    ], 
+    correct: "D" 
+  }
 ];
 
 // State
@@ -389,8 +479,8 @@ async function submitQuiz(){
   };
 
   try {
-    const targetRef = ref(db, `quizResults/${studentKey}`);
-    await set(targetRef, payload);
+    const targetRef = db.ref(`quizResults/${studentKey}`);
+    await targetRef.set(payload);
 
     if (quizView) quizView.classList.remove("show");
     setTimeout(()=>{

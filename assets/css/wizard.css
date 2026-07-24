@@ -369,3 +369,60 @@ main.wizard-main {
   align-items: center;
   gap: 10px;
 }
+
+/* Staged Reveal / Blur lock styling */
+.locked-section {
+  filter: blur(8px);
+  pointer-events: none;
+  opacity: 0.4;
+  transition: filter 0.5s ease, opacity 0.5s ease;
+}
+.unlocked-section {
+  filter: blur(0) !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
+}
+
+/* Sequencing game styles */
+.scrambled-badge {
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.15s, background-color 0.15s;
+  font-size: 0.85rem;
+  padding: 8px 14px;
+}
+.scrambled-badge:hover {
+  transform: scale(1.05);
+}
+.timeline-badge {
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  animation: badgeSlideIn 0.3s ease;
+}
+@keyframes badgeSlideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Ear trainer cards */
+.vocab-trainer-card {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  background: #fff;
+}
+.vocab-trainer-card:hover {
+  border-color: var(--accent);
+  background-color: rgba(59, 130, 246, 0.02);
+}
+.vocab-trainer-card.heard {
+  border-color: #10B981 !important;
+  background-color: rgba(16, 185, 129, 0.05) !important;
+}
+.vocab-trainer-card.heard .word-title {
+  color: #047857 !important;
+}
+

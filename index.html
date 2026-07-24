@@ -78,6 +78,11 @@
           </div>
         </div>
       </div>
+      <div class="row justify-content-center mt-5">
+        <div class="col-md-5 col-lg-4 text-center">
+          <a href="teacher-report.html" class="btn btn-outline-warning w-100 py-2.5 fw-semibold shadow-sm"><i class="bi bi-shield-lock-fill me-2"></i>Tutor Report Dashboard</a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -92,10 +97,14 @@
         </div>
       </div>
 
-      <div style="width:46%;">
+      <div style="width:36%;">
         <div class="progress" aria-hidden="false" aria-label="Progress">
           <div id="progressBar" class="progress-bar" role="progressbar" style="width:0%;"></div>
         </div>
+      </div>
+
+      <div>
+        <a href="teacher-report.html" class="btn btn-sm btn-outline-warning fw-semibold"><i class="bi bi-shield-lock-fill me-1"></i>Tutor Report</a>
       </div>
     </div>
   </header>
@@ -133,7 +142,7 @@
           <div class="tab-pane fade show active" id="audio-pane" role="tabpanel" aria-labelledby="audio-tab">
             <p class="small text-muted">A concise audio walkthrough of approach & tips. The step marks complete when the audio ends.</p>
             <audio id="overviewAudio" controls style="width:100%;">
-              <source src="materials/week-25-fri-wt1-audio.mp3" type="audio/mpeg">
+              <source src="materials/Steps_to_earn_university_work_credits.m4a" type="audio/mp4">
               Your browser does not support the audio element.
             </audio>
           </div>
@@ -150,8 +159,26 @@
           <span class="badge bg-success">Overview Completed ✓</span>
         </div>
 
-        <!-- Task Info & Image Analysis -->
-        <div class="row g-3 mt-4 pt-3 border-top">
+        <!-- ACTIVE LISTENING COGNITIVE WIDGET -->
+        <div id="preBriefGuessWidgetT1" class="p-3 bg-light rounded border mt-3">
+          <h6 class="text-primary fw-bold mb-2"><i class="bi bi-qr-code-scan"></i> Active Listening: Guess the Task</h6>
+          <p class="small text-muted mb-3">Scan this QR code with your phone to submit your predictions, or click the link to open it:</p>
+          
+          <div class="row align-items-center g-3 mb-3">
+            <div class="col-sm-5 text-center">
+              <img id="qrCodeImgT1" src="" alt="Scan to Guess" class="img-fluid rounded border p-2 bg-white" style="max-height: 160px;" />
+            </div>
+            <div class="col-sm-7">
+              <a id="guessLinkT1" href="#" target="_blank" class="btn btn-outline-primary btn-sm mb-3 w-100"><i class="bi bi-box-arrow-up-right me-2"></i>Open Guess Page</a>
+              <label class="form-label small fw-bold mb-1">Enter your name to unlock the lesson details:</label>
+              <input type="text" id="unlockNameInputT1" class="form-control form-control-sm" placeholder="e.g. John Doe" oninput="listenForStudentGuessT1()">
+              <div id="unlockFeedbackT1" class="small mt-1 text-muted"><i class="bi bi-clock-history"></i> Waiting for submission...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task Info & Image Analysis (Locked initially) -->
+        <div id="task1AnalysisBlock" class="row g-3 mt-4 pt-3 border-top locked-section">
           <div class="col-md-6">
             <div class="p-3 bg-light rounded border h-100">
               <h6 class="text-primary fw-bold mb-2"><i class="bi bi-file-earmark-text-fill"></i> Task Type</h6>
@@ -191,6 +218,23 @@
               <p class="mb-3">The flowchart below shows the process involved in completing the work experience requirement for university students.</p>
               <p class="mb-3"><strong>Summarise the information by selecting and reporting the main features, and make comparisons where relevant.</strong></p>
               <p class="small text-muted mb-0"><em>Write at least 150 words.</em></p>
+            </div>
+            
+            <!-- FLOWCHART SEQUENCING CHALLENGE -->
+            <div id="sequencingGameT1" class="p-3 bg-white rounded border mb-3">
+              <h6 class="text-primary fw-bold mb-2"><i class="bi bi-shuffle"></i> Flowchart Sequencing Challenge</h6>
+              <p class="small text-muted mb-3">Arrange these flowchart stages in the correct chronological order by clicking them:</p>
+              
+              <div id="scrambledStagesT1" class="d-flex flex-wrap gap-2 mb-3"></div>
+              
+              <div class="p-3 bg-light rounded border mb-2">
+                <div class="small fw-bold text-secondary mb-2">Your Flowchart Timeline:</div>
+                <div id="orderedTimelineT1" class="d-flex flex-wrap gap-2 align-items-center">
+                  <span class="text-muted small italic" id="timelineEmptyHintT1">Timeline is empty. Click stages above to build it.</span>
+                </div>
+              </div>
+              
+              <div id="sequencingFeedbackT1" class="small mb-0"></div>
             </div>
           </div>
 
@@ -286,6 +330,42 @@
             <option value="en-US">US (en-US)</option>
           </select>
         </div>
+
+        <!-- VOCABULARY EAR TRAINER HUNT -->
+        <div class="mt-4 p-3 bg-light rounded border">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="text-primary fw-bold mb-0"><i class="bi bi-music-note-beamed"></i> Ear-Trainer: Vocabulary Hunt</h6>
+            <span id="vocabTrainerBadgeT1" class="badge bg-secondary">Lexical Hunt: 0/4 Found</span>
+          </div>
+          <p class="small text-muted mb-3">Listen to the audio overview again and click the vocabulary cards below to mark them as "Heard". Can you find all 4 core transition words used in the lesson?</p>
+          
+          <div class="row g-2">
+            <div class="col-md-3 col-6">
+              <div class="vocab-trainer-card text-center" onclick="toggleVocabHeard(this, 'Concurrently', 'T1')">
+                <span class="word-title d-block fw-bold text-dark">Concurrently</span>
+                <span class="status-icon text-muted small"><i class="bi bi-circle"></i> Unheard</span>
+              </div>
+            </div>
+            <div class="col-md-3 col-6">
+              <div class="vocab-trainer-card text-center" onclick="toggleVocabHeard(this, 'Subsequently', 'T1')">
+                <span class="word-title d-block fw-bold text-dark">Subsequently</span>
+                <span class="status-icon text-muted small"><i class="bi bi-circle"></i> Unheard</span>
+              </div>
+            </div>
+            <div class="col-md-3 col-6">
+              <div class="vocab-trainer-card text-center" onclick="toggleVocabHeard(this, 'Thereafter', 'T1')">
+                <span class="word-title d-block fw-bold text-dark">Thereafter</span>
+                <span class="status-icon text-muted small"><i class="bi bi-circle"></i> Unheard</span>
+              </div>
+            </div>
+            <div class="col-md-3 col-6">
+              <div class="vocab-trainer-card text-center" onclick="toggleVocabHeard(this, 'Culminates', 'T1')">
+                <span class="word-title d-block fw-bold text-dark">Culminates</span>
+                <span class="status-icon text-muted small"><i class="bi bi-circle"></i> Unheard</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- STEP 4 - INTRODUCTION & OVERVIEW -->
@@ -305,7 +385,7 @@
             <div class="p-3 h-100 border-start border-primary border-3 bg-light rounded">
               <strong class="text-primary d-block mb-2">1. Sample Introduction</strong>
               <blockquote class="blockquote small mb-0" style="font-size: 0.95rem; line-height: 1.6;">
-                "The diagram depicts the various stages that university students must complete in order to satisfy the work experience requirement."
+                "The diagram elucidates the various stages that university students must complete in order to satisfy the work experience requirement."
               </blockquote>
             </div>
           </div>
@@ -514,17 +594,39 @@
           <div class="tab-content pt-3">
             <div class="tab-pane fade show active" id="audio-pane-t2" role="tabpanel">
               <p class="small text-muted">A concise audio walkthrough of approach & tips.</p>
-              <audio controls style="width:100%;">
+              <audio id="overviewAudioT2" controls style="width:100%;">
                 <source src="materials/week-26-mon-wt2-audio.mp3" type="audio/mpeg">
                 Your browser does not support the audio element.
               </audio>
             </div>
             <div class="tab-pane fade" id="video-pane-t2" role="tabpanel">
               <p class="small text-muted">A short video overview.</p>
-              <video controls style="width:100%; border-radius:.4rem;">
+              <video id="overviewVideoT2" controls style="width:100%; border-radius:.4rem;">
                 <source src="materials/week-26-mon-wt2-video.mp4" type="video/mp4">
                 Your browser does not support the video tag.
               </video>
+            </div>
+          </div>
+
+          <div id="mediaCompleteBadgeT2" class="mt-3 hidden">
+            <span class="badge bg-success">Overview Completed ✓</span>
+          </div>
+
+          <!-- ACTIVE LISTENING COGNITIVE WIDGET -->
+          <div id="preBriefGuessWidgetT2" class="p-3 bg-light rounded border mt-3">
+            <h6 class="text-primary fw-bold mb-2"><i class="bi bi-qr-code-scan"></i> Active Listening: Guess the Task</h6>
+            <p class="small text-muted mb-3">Scan this QR code with your phone to submit your predictions, or click the link to open it:</p>
+            
+            <div class="row align-items-center g-3 mb-3">
+              <div class="col-sm-5 text-center">
+                <img id="qrCodeImgT2" src="" alt="Scan to Guess" class="img-fluid rounded border p-2 bg-white" style="max-height: 160px;" />
+              </div>
+              <div class="col-sm-7">
+                <a id="guessLinkT2" href="#" target="_blank" class="btn btn-outline-primary btn-sm mb-3 w-100"><i class="bi bi-box-arrow-up-right me-2"></i>Open Guess Page</a>
+                <label class="form-label small fw-bold mb-1">Enter your name to unlock the lesson details:</label>
+                <input type="text" id="unlockNameInputT2" class="form-control form-control-sm" placeholder="e.g. John Doe" oninput="listenForStudentGuessT2()">
+                <div id="unlockFeedbackT2" class="small mt-1 text-muted"><i class="bi bi-clock-history"></i> Waiting for submission...</div>
+              </div>
             </div>
           </div>
         </section>
@@ -634,6 +736,54 @@ CON--></textarea>
               <option value="en-IN">Indian (en-IN)</option>
               <option value="en-US">US (en-US)</option>
             </select>
+          </div>
+
+          <!-- VOCABULARY EAR TRAINER HUNT -->
+          <div class="mt-4 p-3 bg-light rounded border">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h6 class="text-primary fw-bold mb-0"><i class="bi bi-music-note-beamed"></i> Ear-Trainer: Vocabulary Hunt</h6>
+              <span id="vocabTrainerBadgeT2" class="badge bg-secondary">Lexical Hunt: 0/6 Found</span>
+            </div>
+            <p class="small text-muted mb-3">Listen to the audio overview again and click the vocabulary cards below to mark them as "Heard". Can you find all 6 premium words used in this lesson?</p>
+            
+            <div class="row g-2">
+              <div class="col-md-4 col-6">
+                <div class="vocab-trainer-card text-center" onclick="toggleVocabHeard(this, 'Anathema', 'T2')">
+                  <span class="word-title d-block fw-bold text-dark">Anathema</span>
+                  <span class="status-icon text-muted small"><i class="bi bi-circle"></i> Unheard</span>
+                </div>
+              </div>
+              <div class="col-md-4 col-6">
+                <div class="vocab-trainer-card text-center" onclick="toggleVocabHeard(this, 'Ineluctable', 'T2')">
+                  <span class="word-title d-block fw-bold text-dark">Ineluctable</span>
+                  <span class="status-icon text-muted small"><i class="bi bi-circle"></i> Unheard</span>
+                </div>
+              </div>
+              <div class="col-md-4 col-6">
+                <div class="vocab-trainer-card text-center" onclick="toggleVocabHeard(this, 'Redound', 'T2')">
+                  <span class="word-title d-block fw-bold text-dark">Redound</span>
+                  <span class="status-icon text-muted small"><i class="bi bi-circle"></i> Unheard</span>
+                </div>
+              </div>
+              <div class="col-md-4 col-6">
+                <div class="vocab-trainer-card text-center" onclick="toggleVocabHeard(this, 'Salubrious', 'T2')">
+                  <span class="word-title d-block fw-bold text-dark">Salubrious</span>
+                  <span class="status-icon text-muted small"><i class="bi bi-circle"></i> Unheard</span>
+                </div>
+              </div>
+              <div class="col-md-4 col-6">
+                <div class="vocab-trainer-card text-center" onclick="toggleVocabHeard(this, 'Profligacy', 'T2')">
+                  <span class="word-title d-block fw-bold text-dark">Profligacy</span>
+                  <span class="status-icon text-muted small"><i class="bi bi-circle"></i> Unheard</span>
+                </div>
+              </div>
+              <div class="col-md-4 col-6">
+                <div class="vocab-trainer-card text-center" onclick="toggleVocabHeard(this, 'Sagacious', 'T2')">
+                  <span class="word-title d-block fw-bold text-dark">Sagacious</span>
+                  <span class="status-icon text-muted small"><i class="bi bi-circle"></i> Unheard</span>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -850,6 +1000,10 @@ CON--></textarea>
 
   <!-- Main JS File (kept as in your template) -->
   <script src="assets/js/main.js"></script>
+
+  <!-- Firebase Compat UMD SDKs (required for loading via file:// protocol) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 
   <!-- Extracted Wizard Logic -->
   <script src="assets/js/wizard.js"></script>
