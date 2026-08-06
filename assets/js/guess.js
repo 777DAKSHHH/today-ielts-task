@@ -45,7 +45,7 @@ if (guessForm) {
     const task = urlParams.get('task') || 'task1';
     
     // Auto-assign predicted task types based on active task parameter
-    const taskType = (task === 'task1') ? 'Flowchart' : 'Advantages/Disadvantages Essay';
+    const taskType = (task === 'task1') ? 'Flowchart' : 'Causes and Effects Essay';
 
     // Save student's guess to Realtime Database under guesses node
     const sanitizedName = name.replace(/[.#$\[\]]/g, "_");

@@ -21,106 +21,79 @@ const db = firebase.database(app);
 // === Quiz data (10 questions on today's IELTS lessons) ===
 const QUESTIONS = [
   { 
-    q: "1. Which option provides the most appropriate academic alternative to: 'Students do the work experience requirement'?", 
-    options: [
-      "A. Students make the work experience requirement.",
-      "B. Students complete the work experience requirement.",
-      "C. Students undertake the work experience requirement.",
-      "D. Students perform the work experience requirement."
-    ], 
-    correct: "C" 
+    type: "scramble",
+    q: "1. Arrange the words below to form a grammatically correct passive sentence describing a stage in the student flowchart:", 
+    words: ["obtained,", "schedule", "acceptance", "is", "the", "Once", "finalized.", "is", "employer"],
+    correctSentence: "Once employer acceptance is obtained, the schedule is finalized.",
+    correct: "B"
   },
   { 
-    q: "2. Select the grammatically correct passive sentence describing a stage in the flowchart:", 
-    hint: "For process flows, use the structure: <b>Once [action] is/are [past participle], the next step is...</b>",
-    options: [
-      "A. Once employer acceptance obtained, the schedule is finalized.",
-      "B. Once employer acceptance is obtained, the schedule is finalized.",
-      "C. Once employer acceptance is obtain, the schedule is finalized.",
-      "D. Once employer acceptance is obtaining, the schedule is finalize."
-    ], 
-    correct: "B" 
+    type: "error-correction",
+    q: "2. Tap the incorrect word in the sentence below and select its correction:", 
+    sentence: "While the economy expanded, unemployment was reduce.",
+    errorWord: "reduce.",
+    options: ["reduced.", "reducing.", "reduces.", "reduction."],
+    correct: "A"
   },
   { 
-    q: "3. Fill in the blank with the correct Band 9 vocabulary: 'For many health advocates, the excessive consumption of processed foods is an __________ to healthy living.'", 
-    options: [
-      "A. allure",
-      "B. alternative",
-      "C. allowance",
-      "D. anathema"
-    ], 
-    correct: "D" 
+    type: "scramble",
+    q: "3. Arrange the words below to form a grammatically correct Band 9 sentence about hobbies and career professionals:", 
+    words: ["dedicated", "leisure", "unproductive", "an", "anathema.", "For", "career", "hours", "spending", "considered", "on", "professionals,", "is", "often", "activities"],
+    correctSentence: "For dedicated career professionals, spending hours on unproductive leisure activities is often considered an anathema.",
+    correct: "D"
   },
   { 
-    q: "4. Which sequence connector is most suitable for describing two stages in the flowchart that happen at the same time?", 
-    options: [
-      "A. Subsequently",
-      "B. Concurrently",
-      "C. Initially",
-      "D. Prior to"
-    ], 
-    correct: "B" 
+    type: "error-correction",
+    q: "4. Tap the incorrect word in the sentence below and select its correction:", 
+    sentence: "Initially, students selects a suitable workplace and applies.",
+    errorWord: "selects",
+    options: ["select", "selecting", "selection", "selected"],
+    correct: "A"
   },
   { 
-    q: "5. What is the precise meaning of the word 'ineluctable' in the context of ready-made meals?", 
-    hint: "Recall: <i>'Demanding schedules have made the reliance on convenience foods ineluctable.'</i>",
-    options: [
-      "A. Something highly health-promoting",
-      "B. Wise and showing good judgment",
-      "C. Impossible to avoid or escape",
-      "D. Easily ignored or rejected"
-    ], 
-    correct: "C" 
+    type: "scramble",
+    q: "5. Arrange the words below to form a grammatically correct Task 2 sentence about work schedules and hobbies:", 
+    words: ["left", "rise", "hobbies.", "has", "schedules", "of", "demanding", "little", "ineluctable", "work", "The", "room", "for"],
+    correctSentence: "The ineluctable rise of demanding work schedules has left little room for hobbies.",
+    correct: "C"
   },
   { 
-    q: "6. Which option shows proper academic hedging when discussing the drawbacks of ready-made meals?", 
-    options: [
-      "A. Ready meals will immediately cause chronic illnesses in all consumers.",
-      "B. Ready meals are definitely dangerous and should be banned.",
-      "C. Excessive consumption of prepared meals may contribute to negative health outcomes.",
-      "D. Preservatives in prepared meals always destroy public health."
-    ], 
-    correct: "C" 
+    type: "error-correction",
+    q: "6. Tap the incorrect word in the sentence below and select its correction:", 
+    sentence: "Pursuing active outdoor hobbies has a highly salubrious affect on health.",
+    errorWord: "affect",
+    options: ["effect", "effective", "effects", "affective"],
+    correct: "A"
   },
   { 
-    q: "7. In the student work experience flowchart, what is the logical progression of the first three stages?", 
-    options: [
-      "A. Submit weekly progress reports ➔ Obtain professor approval ➔ Final evaluation",
-      "B. Select workplace & apply ➔ Obtain professor approval ➔ Finalize schedule",
-      "C. Finalize schedule ➔ Start weekly reports ➔ Complete professor approval",
-      "D. Employer interview ➔ Select workplace ➔ Complete final report"
-    ], 
-    correct: "B" 
+    type: "scramble",
+    q: "7. Arrange the words below to form a grammatically correct Task 1 sentence describing concurrent actions:", 
+    words: ["signatures.", "obtain", "and", "their", "Concurrently,", "finalize", "must", "schedules", "students"],
+    correctSentence: "Concurrently, students must finalize their schedules and obtain signatures.",
+    correct: "B"
   },
   { 
-    q: "8. What is the meaning of 'salubrious' in the sentence: 'Freshly prepared home meals are far more salubrious than processed foods'?", 
-    options: [
-      "A. Health-promoting; wholesome",
-      "B. Expensive; luxurious",
-      "C. Highly processed; convenience-focused",
-      "D. Quick and easy to clean up"
-    ], 
-    correct: "A" 
+    type: "error-correction",
+    q: "8. Tap the incorrect word in the sentence below and select its correction:", 
+    sentence: "The profligacy of screen-time habits consume hours of potential leisure.",
+    errorWord: "consume",
+    options: ["consumes", "consuming", "consumption", "consumed"],
+    correct: "A"
   },
   { 
-    q: "9. Identify the correct meaning of 'profligacy' in an IELTS essay about pre-packaged meals:", 
-    options: [
-      "A. Wise choices and conservation",
-      "B. Reckless wastefulness or extravagance (e.g., plastic packaging)",
-      "C. Financial affordability",
-      "D. Nutritious value"
-    ], 
-    correct: "B" 
+    type: "scramble",
+    q: "9. Arrange the words below to form a grammatically correct Task 1 overview summary statement:", 
+    words: ["culminates", "report.", "final", "program", "in", "work", "submission", "The", "experience", "the", "of", "six-stage"],
+    correctSentence: "The six-stage work experience program culminates in the submission of the final report.",
+    correct: "D"
   },
   { 
-    q: "10. What is the best Band 9 alternative for 'end' in: 'The six-stage work experience program ends with the final report'?", 
-    options: [
-      "A. commences with",
-      "B. participates in",
-      "C. schedules",
-      "D. culminates in"
-    ], 
-    correct: "D" 
+    type: "error-correction",
+    q: "10. Tap the incorrect word in the sentence below and select its correction:", 
+    sentence: "A sagacious individual recognise the necessity of work-life balance.",
+    errorWord: "recognise",
+    options: ["recognises", "recognising", "recognition", "recognised"],
+    correct: "A"
   }
 ];
 
@@ -132,6 +105,10 @@ const answers = Array(QUESTIONS.length).fill(null); // store selected letter "A"
 let quizTimerInterval = null;
 let timeRemaining = 180; // 3 minutes
 let isQuizActive = false;
+
+// State tracking arrays for scrambled sentence builder and error spotting
+const studentAssembledWords = Array(QUESTIONS.length).fill(null).map(() => []);
+const studentErrorSelections = Array(QUESTIONS.length).fill(null).map(() => ({ tappedWord: null, selectedOptionIndex: null }));
 
 // Elements
 const welcomeView = document.getElementById("welcomeView");
@@ -190,43 +167,8 @@ function startQuizFlow(){
       setTimeout(()=> quizView.classList.add("show"), 10);
     }
     loadQuestion(idx);
-    startTimer();
+    isQuizActive = true;
   }, 200);
-}
-
-// Timer Logic
-function startTimer() {
-  isQuizActive = true;
-  timeRemaining = 180; // 3 minutes
-  updateTimerDisplay();
-
-  quizTimerInterval = setInterval(() => {
-    timeRemaining--;
-    updateTimerDisplay();
-
-    if (timeRemaining <= 0) {
-      clearInterval(quizTimerInterval);
-      isQuizActive = false;
-      alert("Time's up! Your quiz will be submitted automatically.");
-      disableQuizControls();
-      submitQuiz();
-    }
-  }, 1000);
-}
-
-function updateTimerDisplay() {
-  const min = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
-  const sec = (timeRemaining % 60).toString().padStart(2, '0');
-  if (timerTextEl) timerTextEl.textContent = `${min}:${sec}`;
-
-  const displayEl = document.getElementById('timerDisplay');
-  if (displayEl) {
-    if (timeRemaining < 60 && isQuizActive) {
-      displayEl.classList.add('timer-urgent');
-    } else {
-      displayEl.classList.remove('timer-urgent');
-    }
-  }
 }
 
 function disableQuizControls() {
@@ -273,7 +215,6 @@ function loadQuestion(i){
   const contentWrap = document.createElement("div");
   contentWrap.className = "stack-anim";
 
-  // fill question and options
   const q = QUESTIONS[idx];
   
   const qText = document.createElement("div");
@@ -289,48 +230,247 @@ function loadQuestion(i){
     contentWrap.appendChild(hintDiv);
   }
 
-  const optsList = document.createElement("div");
-  optsList.className = "options";
-  optsList.setAttribute("role", "listbox");
+  // Render based on type
+  if (q.type === "scramble") {
+    renderScrambleQuestion(q, contentWrap);
+  } else if (q.type === "error-correction") {
+    renderErrorCorrectionQuestion(q, contentWrap);
+  }
 
-  q.options.forEach((optText, j)=>{
-    const letter = String.fromCharCode(65 + j); // A,B,C...
-    const opt = document.createElement("button");
-    opt.type = "button";
-    opt.className = "opt";
-    opt.setAttribute("role","option");
-    opt.innerHTML = `<span class="label">${letter}</span><span style="flex:1">${optText.replace(/^([A-D]\.\s*)/,'')}</span>`;
-    if(answers[idx] === letter) opt.classList.add("selected");
-    
-    opt.addEventListener("click", ()=>{
-      const wasSkipped = skippedQuestions.has(idx);
-      const isFirstAttempt = answers[idx] === null && !wasSkipped;
-
-      optsList.querySelectorAll(".opt").forEach(o=>o.classList.remove("selected"));
-      opt.classList.add("selected");
-      answers[idx] = letter;
-      
-      if (nextBtn) nextBtn.textContent = (idx === QUESTIONS.length - 1) ? "Submit" : "Next →";
-
-      if (wasSkipped) skippedQuestions.delete(idx);
-      renderProgressNav(); // Update nav
-
-      // Auto-advance logic (Typeform style)
-      if (isFirstAttempt && idx < QUESTIONS.length - 1) {
-        setTimeout(() => {
-          if (idx === i) {
-            transitionToQuestion(idx + 1);
-          }
-        }, 350);
-      }
-    });
-    optsList.appendChild(opt);
-  });
-  
-  contentWrap.appendChild(optsList);
   qArea.appendChild(contentWrap);
 
-  if (nextBtn) nextBtn.textContent = (idx === QUESTIONS.length - 1) ? "Submit" : (answers[idx] ? "Next →" : "Skip");
+  // Set initial text for Next Button
+  if (nextBtn) {
+    if (idx === QUESTIONS.length - 1) {
+      nextBtn.textContent = "Submit";
+    } else {
+      nextBtn.textContent = answers[idx] ? "Next →" : "Skip";
+    }
+  }
+}
+
+function renderScrambleQuestion(q, contentWrap) {
+  // Preview Box
+  const previewBox = document.createElement("div");
+  previewBox.className = "scramble-preview-box";
+  previewBox.id = "scramblePreview";
+  contentWrap.appendChild(previewBox);
+
+  // Tray
+  const tray = document.createElement("div");
+  tray.className = "token-tray";
+  tray.id = "tokenTray";
+  contentWrap.appendChild(tray);
+
+  // Help info
+  const helpInfo = document.createElement("div");
+  helpInfo.className = "small text-muted text-center mt-2";
+  helpInfo.innerHTML = "<i class='bi bi-info-circle'></i> Tap words below to build the sentence. Tap words in the box to remove them.";
+  contentWrap.appendChild(helpInfo);
+
+  function drawScrambleState() {
+    previewBox.innerHTML = "";
+    tray.innerHTML = "";
+
+    const currentAssembly = studentAssembledWords[idx];
+
+    // Draw preview box words
+    currentAssembly.forEach((wordIndex, order) => {
+      const word = q.words[wordIndex];
+      const token = document.createElement("span");
+      token.className = "word-token";
+      token.textContent = word;
+      token.addEventListener("click", () => {
+        // Remove from assembly
+        studentAssembledWords[idx] = currentAssembly.filter((_, idxFilter) => idxFilter !== order);
+        updateScrambleAnswer();
+        drawScrambleState();
+      });
+      previewBox.appendChild(token);
+    });
+
+    // Draw tray words (in original scrambled order)
+    q.words.forEach((word, wordIndex) => {
+      const token = document.createElement("span");
+      token.className = "word-token";
+      token.textContent = word;
+      
+      const isUsed = currentAssembly.includes(wordIndex);
+      if (isUsed) {
+        token.classList.add("used");
+      } else {
+        token.addEventListener("click", () => {
+          // Add to assembly
+          studentAssembledWords[idx].push(wordIndex);
+          updateScrambleAnswer();
+          drawScrambleState();
+        });
+      }
+      tray.appendChild(token);
+    });
+  }
+
+  function updateScrambleAnswer() {
+    const currentAssembly = studentAssembledWords[idx];
+    const sentence = currentAssembly.map(index => q.words[index]).join(" ");
+    
+    const cleanAssembled = sentence.replace(/\s+/g, ' ').trim();
+    const cleanTarget = q.correctSentence.replace(/\s+/g, ' ').trim();
+
+    if (cleanAssembled === cleanTarget) {
+      answers[idx] = q.correct;
+    } else {
+      if (currentAssembly.length === q.words.length) {
+        answers[idx] = q.correct === "A" ? "B" : "A";
+      } else {
+        answers[idx] = null;
+      }
+    }
+
+    if (nextBtn) {
+      if (idx === QUESTIONS.length - 1) {
+        nextBtn.textContent = "Submit";
+      } else {
+        nextBtn.textContent = answers[idx] ? "Next →" : "Skip";
+      }
+    }
+    
+    // Auto-advance if correctly assembled
+    if (cleanAssembled === cleanTarget && idx < QUESTIONS.length - 1) {
+      setTimeout(() => {
+        transitionToQuestion(idx + 1);
+      }, 600);
+    }
+
+    renderProgressNav();
+  }
+
+  drawScrambleState();
+}
+
+function renderErrorCorrectionQuestion(q, contentWrap) {
+  // Clickable Sentence wrapper
+  const clickableSentence = document.createElement("div");
+  clickableSentence.className = "clickable-sentence";
+  clickableSentence.id = "clickableSentence";
+  contentWrap.appendChild(clickableSentence);
+
+  const words = q.sentence.split(' ');
+  words.forEach((word) => {
+    const span = document.createElement("span");
+    span.className = "sentence-word";
+    span.textContent = word;
+
+    const errorState = studentErrorSelections[idx];
+    if (errorState.tappedWord === word) {
+      if (errorState.selectedOptionIndex !== null) {
+        span.classList.add("corrected");
+        span.textContent = q.options[errorState.selectedOptionIndex];
+      } else {
+        span.classList.add("selected-error");
+      }
+    }
+
+    span.addEventListener("click", () => {
+      clickableSentence.querySelectorAll(".sentence-word").forEach(s => {
+        s.classList.remove("selected-error");
+      });
+      span.classList.add("selected-error");
+
+      // Update state
+      studentErrorSelections[idx].tappedWord = word;
+      studentErrorSelections[idx].selectedOptionIndex = null;
+      answers[idx] = null;
+
+      renderCorrectionPanel(q, span, contentWrap);
+    });
+
+    clickableSentence.appendChild(span);
+  });
+
+  // Help info
+  const helpInfo = document.createElement("div");
+  helpInfo.className = "small text-muted text-center mt-2";
+  helpInfo.innerHTML = "<i class='bi bi-hand-index-thumb'></i> Tap the incorrect word in the sentence above to show corrections.";
+  contentWrap.appendChild(helpInfo);
+
+  // Restore correction panel if already clicked previously
+  if (studentErrorSelections[idx].tappedWord !== null) {
+    const errorState = studentErrorSelections[idx];
+    const wordSpans = clickableSentence.querySelectorAll(".sentence-word");
+    let targetSpan = null;
+    wordSpans.forEach(s => {
+      if (s.textContent === errorState.tappedWord || q.options.includes(s.textContent)) {
+        targetSpan = s;
+      }
+    });
+    if (targetSpan) {
+      renderCorrectionPanel(q, targetSpan, contentWrap);
+    }
+  }
+}
+
+function renderCorrectionPanel(q, wordSpan, contentWrap) {
+  let existingPanel = document.getElementById("correctionPanel");
+  if (existingPanel) existingPanel.remove();
+
+  const panel = document.createElement("div");
+  panel.id = "correctionPanel";
+  panel.className = "correction-panel mt-4";
+
+  const title = document.createElement("div");
+  title.className = "correction-title mb-2";
+  title.textContent = "Select the correct replacement:";
+  panel.appendChild(title);
+
+  const optionsDiv = document.createElement("div");
+  optionsDiv.className = "correction-options";
+
+  q.options.forEach((optText, index) => {
+    const optBtn = document.createElement("button");
+    optBtn.type = "button";
+    optBtn.className = "correction-opt";
+    optBtn.textContent = optText;
+
+    const savedSelection = studentErrorSelections[idx].selectedOptionIndex;
+    if (savedSelection === index) {
+      optBtn.classList.add("selected");
+    }
+
+    optBtn.addEventListener("click", () => {
+      optionsDiv.querySelectorAll(".correction-opt").forEach(o => o.classList.remove("selected"));
+      optBtn.classList.add("selected");
+
+      // Update state
+      studentErrorSelections[idx].selectedOptionIndex = index;
+      
+      // Update word span text and style
+      wordSpan.textContent = optText;
+      wordSpan.classList.remove("selected-error");
+      wordSpan.classList.add("corrected");
+
+      // Save answer as letter (A, B, C, D)
+      const letter = String.fromCharCode(65 + index);
+      answers[idx] = letter;
+
+      if (nextBtn) {
+        nextBtn.textContent = (idx === QUESTIONS.length - 1) ? "Submit" : "Next →";
+      }
+      renderProgressNav();
+
+      // Auto-advance
+      if (idx < QUESTIONS.length - 1) {
+        setTimeout(() => {
+          transitionToQuestion(idx + 1);
+        }, 600);
+      }
+    });
+
+    optionsDiv.appendChild(optBtn);
+  });
+
+  panel.appendChild(optionsDiv);
+  contentWrap.appendChild(panel);
 }
 
 function transitionToQuestion(targetIdx) {
@@ -406,12 +546,12 @@ function handleSwipe() {
 // keyboard shortcuts: number or letter to choose, enter to next
 document.addEventListener("keydown", (e)=>{
   if(!isQuizActive || (welcomeView && welcomeView.style.display !== "none")) return;
-  if(["1","2","3","4","5","6","7","8","9"].includes(e.key) && (parseInt(e.key) <= QUESTIONS[idx].options.length)){
+  if(QUESTIONS[idx].options && ["1","2","3","4","5","6","7","8","9"].includes(e.key) && (parseInt(e.key) <= QUESTIONS[idx].options.length)){
     const choiceIndex = parseInt(e.key)-1;
     const optButtons = document.querySelectorAll(".opt");
     if(optButtons[choiceIndex]) optButtons[choiceIndex].click();
   }
-  if(e.key.length === 1 && e.key.toLowerCase() >= 'a' && e.key.toLowerCase() <= 'd'){
+  if(QUESTIONS[idx].options && e.key.length === 1 && e.key.toLowerCase() >= 'a' && e.key.toLowerCase() <= 'd'){
     const ch = e.key.toUpperCase();
     const letterIndex = ch.charCodeAt(0)-65;
     if(letterIndex >=0 && letterIndex < QUESTIONS[idx].options.length){

@@ -466,3 +466,182 @@ body {
   align-items: center;
   gap: 16px;
 }
+
+/* --- Scrambled Sentence Builder Layout --- */
+.scramble-preview-box {
+  width: 100%;
+  min-height: 80px;
+  border: 2px dashed rgba(15, 149, 255, 0.25);
+  background: #fbfdff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 8px;
+  transition: border-color 0.2s ease;
+}
+.scramble-preview-box:hover {
+  border-color: var(--accent);
+}
+.scramble-preview-box .word-token {
+  background: linear-gradient(135deg, var(--accent), var(--accent-600));
+  color: white;
+  box-shadow: 0 4px 10px rgba(15, 149, 255, 0.15);
+  animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.token-tray {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+  justify-content: center;
+}
+.word-token {
+  display: inline-block;
+  padding: 10px 16px;
+  background: #ffffff;
+  color: #0b2a4a;
+  border: 1px solid rgba(15, 149, 255, 0.15);
+  border-radius: 99px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 4px 12px rgba(12, 16, 40, 0.04);
+  transition: all 0.15s ease;
+}
+.word-token:active {
+  transform: scale(0.95);
+}
+.token-tray .word-token:hover {
+  background: #edf2ff;
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+.word-token.used {
+  opacity: 0.35;
+  pointer-events: none;
+  transform: scale(0.9);
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* --- "Spot the Error" Correction Layout --- */
+.clickable-sentence {
+  font-size: 20px;
+  line-height: 1.8;
+  font-weight: 500;
+  color: #072038;
+  background: #fbfdff;
+  border: 1px solid rgba(11, 42, 74, 0.04);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+}
+.sentence-word {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+  border: 1px solid transparent;
+}
+.sentence-word:hover {
+  background: rgba(15, 149, 255, 0.1);
+  border-color: rgba(15, 149, 255, 0.25);
+  color: var(--accent-600);
+}
+.sentence-word.selected-error {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #b91c1c;
+  font-weight: 700;
+}
+.sentence-word.corrected {
+  background: #d1fae5;
+  border-color: #6ee7b7;
+  color: #065f46;
+  font-weight: 700;
+  animation: flashGreen 0.4s ease;
+}
+
+@keyframes flashGreen {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.correction-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.correction-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.correction-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.correction-opt {
+  padding: 12px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 149, 255, 0.15);
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #072038;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 6px rgba(12, 16, 40, 0.02);
+}
+.correction-opt:hover {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+.correction-opt.selected {
+  background: linear-gradient(135deg, var(--accent), var(--accent-600));
+  color: #ffffff;
+  border-color: var(--accent);
+}
+
+@keyframes slideUp {
+  0% { transform: translateY(10px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@media (max-width: 480px) {
+  .clickable-sentence {
+    font-size: 17px;
+    padding: 16px;
+    gap: 2px 4px;
+  }
+  .correction-options {
+    grid-template-columns: 1fr;
+  }
+  .word-token {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  .token-tray {
+    gap: 6px;
+  }
+}

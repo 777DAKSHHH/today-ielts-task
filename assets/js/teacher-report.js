@@ -466,8 +466,8 @@ function calculateGuessAccuracy(task, guessType, context) {
       score += 50;
     }
   } else {
-    // Expected Task 2 is Advantages/Disadvantages
-    if (guessType.toLowerCase().includes('advantages')) {
+    // Expected Task 2 is Causes and Effects Essay
+    if (guessType.toLowerCase().includes('cause') || guessType.toLowerCase().includes('effect')) {
       score += 50;
     }
   }
@@ -475,7 +475,7 @@ function calculateGuessAccuracy(task, guessType, context) {
   // 2. Keyword Match (50% max - 10% per keyword)
   const text = (context || '').toLowerCase();
   const keywordsT1 = ['workplace', 'approval', 'evaluation', 'report', 'schedule', 'stages'];
-  const keywordsT2 = ['ready-made', 'convenience', 'cook', 'meals', 'health', 'lifestyle', 'time'];
+  const keywordsT2 = ['hobbies', 'leisure', 'work', 'screen', 'digital', 'well-being', 'creativity', 'social'];
   
   const targetKeywords = (task === 'task1') ? keywordsT1 : keywordsT2;
   let matches = 0;
