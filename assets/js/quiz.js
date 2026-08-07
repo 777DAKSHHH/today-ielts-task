@@ -22,9 +22,9 @@ const db = firebase.database(app);
 const QUESTIONS = [
   { 
     type: "scramble",
-    q: "1. Arrange the words below to form a grammatically correct passive sentence describing a stage in the student flowchart:", 
-    words: ["obtained,", "schedule", "acceptance", "is", "the", "Once", "finalized.", "is", "employer"],
-    correctSentence: "Once employer acceptance is obtained, the schedule is finalized.",
+    q: "1. Arrange the words below to form a grammatically correct sentence describing a trend from the bar chart:", 
+    words: ["represented", "the", "consistently", "Daily", "decade.", "proportion", "visits", "throughout", "smallest"],
+    correctSentence: "Daily visits consistently represented the smallest proportion throughout the decade.",
     correct: "B"
   },
   { 
@@ -45,9 +45,9 @@ const QUESTIONS = [
   { 
     type: "error-correction",
     q: "4. Tap the incorrect word in the sentence below and select its correction:", 
-    sentence: "Initially, students selects a suitable workplace and applies.",
-    errorWord: "selects",
-    options: ["select", "selecting", "selection", "selected"],
+    sentence: "The percentage of weekly diners fluctuate slightly during the period.",
+    errorWord: "fluctuate",
+    options: ["fluctuated", "fluctuating", "fluctuates", "fluctuation"],
     correct: "A"
   },
   { 
@@ -67,9 +67,9 @@ const QUESTIONS = [
   },
   { 
     type: "scramble",
-    q: "7. Arrange the words below to form a grammatically correct Task 1 sentence describing concurrent actions:", 
-    words: ["signatures.", "obtain", "and", "their", "Concurrently,", "finalize", "must", "schedules", "students"],
-    correctSentence: "Concurrently, students must finalize their schedules and obtain signatures.",
+    q: "7. Arrange the words below to form a grammatically correct comparative sentence:", 
+    words: ["By", "considerably", "in", "figure", "comparison,", "lower", "was", "the", "2006."],
+    correctSentence: "By comparison, the figure was considerably lower in 2006.",
     correct: "B"
   },
   { 
@@ -82,9 +82,9 @@ const QUESTIONS = [
   },
   { 
     type: "scramble",
-    q: "9. Arrange the words below to form a grammatically correct Task 1 overview summary statement:", 
-    words: ["culminates", "report.", "final", "program", "in", "work", "submission", "The", "experience", "the", "of", "six-stage"],
-    correctSentence: "The six-stage work experience program culminates in the submission of the final report.",
+    q: "9. Arrange the words below to form a grammatically correct summary of a gradual trend change:", 
+    words: ["gradual", "towards", "shift", "a", "The", "monthly", "chart", "consumption.", "illustrates"],
+    correctSentence: "The chart illustrates a gradual shift towards monthly consumption.",
     correct: "D"
   },
   { 

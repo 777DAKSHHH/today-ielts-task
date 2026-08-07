@@ -461,8 +461,8 @@ function calculateGuessAccuracy(task, guessType, context) {
   
   // 1. Task Type Match (50%)
   if (task === 'task1') {
-    // Expected Task 1 is Flowchart
-    if (guessType.toLowerCase().includes('flowchart') || guessType.toLowerCase().includes('process')) {
+    // Expected Task 1 is Bar Chart
+    if (guessType.toLowerCase().includes('bar') || guessType.toLowerCase().includes('chart') || guessType.toLowerCase().includes('comparison')) {
       score += 50;
     }
   } else {
@@ -474,7 +474,7 @@ function calculateGuessAccuracy(task, guessType, context) {
 
   // 2. Keyword Match (50% max - 10% per keyword)
   const text = (context || '').toLowerCase();
-  const keywordsT1 = ['workplace', 'approval', 'evaluation', 'report', 'schedule', 'stages'];
+  const keywordsT1 = ['bar graph', 'bra graph', 'every day', 'several times a week', 'once a week', 'once or twice a month', 'a few times a year', 'never', '2003', '2006', '2013'];
   const keywordsT2 = ['hobbies', 'leisure', 'work', 'screen', 'digital', 'well-being', 'creativity', 'social'];
   
   const targetKeywords = (task === 'task1') ? keywordsT1 : keywordsT2;

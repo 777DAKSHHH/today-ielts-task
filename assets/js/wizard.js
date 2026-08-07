@@ -824,14 +824,14 @@ window.unlockTask2 = function(stance, thesis) {
   alert("Cognitive stance lock passed! Brainstorm canvas and lesson details are unlocked.");
 };
 
-// ---------- Task 1 Flowchart Sequencing Challenge ----------
-const TASK1_FLOWCHART_STAGES = [
-  { id: 1, text: "Select workplace & submit application" },
-  { id: 2, text: "Obtain professor approval" },
-  { id: 3, text: "Schedule minimum working hours" },
-  { id: 4, text: "Submit weekly progress reports" },
-  { id: 5, text: "Complete supervisor evaluation" },
-  { id: 6, text: "Submit final report & receive credits" }
+// ---------- Task 1 Bar Chart Ranking Challenge ----------
+const TASK1_BARCHART_STAGES = [
+  { id: 1, text: "Once or twice a month" },
+  { id: 2, text: "Once a week" },
+  { id: 3, text: "Several times a week" },
+  { id: 4, text: "A few times a year" },
+  { id: 5, text: "Never" },
+  { id: 6, text: "Every day" }
 ];
 let userTimelineT1 = [];
 
@@ -848,7 +848,7 @@ window.initSequencingGameT1 = function() {
   if (feedback) feedback.textContent = '';
 
   // Scramble the stages
-  const scrambled = [...TASK1_FLOWCHART_STAGES].sort(() => Math.random() - 0.5);
+  const scrambled = [...TASK1_BARCHART_STAGES].sort(() => Math.random() - 0.5);
   
   scrambled.forEach(stage => {
     const badge = document.createElement('span');
@@ -878,7 +878,7 @@ function selectStageT1(stage, badgeEl) {
   timelineContainer.appendChild(timelineBadge);
   
   // Check sequence when all stages are selected
-  if (userTimelineT1.length === TASK1_FLOWCHART_STAGES.length) {
+  if (userTimelineT1.length === TASK1_BARCHART_STAGES.length) {
     verifySequenceT1();
   }
 }
@@ -887,8 +887,8 @@ function verifySequenceT1() {
   const feedback = qs('sequencingFeedbackT1');
   let isCorrect = true;
   
-  for (let i = 0; i < TASK1_FLOWCHART_STAGES.length; i++) {
-    if (userTimelineT1[i].id !== TASK1_FLOWCHART_STAGES[i].id) {
+  for (let i = 0; i < TASK1_BARCHART_STAGES.length; i++) {
+    if (userTimelineT1[i].id !== TASK1_BARCHART_STAGES[i].id) {
       isCorrect = false;
       break;
     }
@@ -896,10 +896,10 @@ function verifySequenceT1() {
   
   if (isCorrect) {
     feedback.className = 'small text-success fw-bold';
-    feedback.innerHTML = '<i class="bi bi-check-circle-fill"></i> Flowchart Sequence Verified! Correct order locked.';
+    feedback.innerHTML = '<i class="bi bi-check-circle-fill"></i> Bar Chart Ranking Verified! Correct order locked.';
   } else {
     feedback.className = 'small text-danger fw-bold';
-    feedback.innerHTML = '<i class="bi bi-x-circle-fill"></i> Incorrect chronological sequence. Resetting game...';
+    feedback.innerHTML = '<i class="bi bi-x-circle-fill"></i> Incorrect ranking sequence. Resetting game...';
     setTimeout(initSequencingGameT1, 2000);
   }
 }
