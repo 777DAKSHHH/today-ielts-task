@@ -683,3 +683,32 @@ if (cardEl) {
     }
   });
 }
+
+// ---------- Load Quiz Questions Dynamically from Firebase ----------
+function loadLiveQuestions() {
+  db.ref('activeLesson/quizQuestions').once('value').then((snapshot) => {
+    const data = snapshot.val();
+    if (data && Array.isArray(data) && data.length === 10) {
+      // Overwrite the local QUESTIONS array elements
+      QUESTIONS.length = 0;
+      data.forEach(q => QUESTIONS.push(q));
+      
+      // Re-initialize state arrays to match the new QUESTIONS length
+      answers.length = 0;
+      answers.push(...Array(QUESTIONS.length).fill(null));
+      
+      studentAssembledWords.length = 0;
+      studentAssembledWords.push(...Array(QUESTIONS.length).fill(null).map(() => []));
+      
+      studentErrorSelections.length = 0;
+      studentErrorSelections.push(...Array(QUESTIONS.length).fill(null).map(() => ({ tappedWord: null, selectedOptionIndex: null })));
+      
+      console.log("Live quiz questions loaded successfully from Firebase!");
+    }
+  }).catch((err) => {
+    console.warn("Could not load live quiz questions, using offline defaults.", err);
+  });
+}
+
+// Fetch on load
+loadLiveQuestions();

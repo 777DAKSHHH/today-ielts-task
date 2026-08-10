@@ -1,0 +1,129 @@
+/* ---- IELTS Admin CMS CSS Styles ---- */
+:root {
+  --bg-color: #f3f4f6;
+  --card-bg: #ffffff;
+  --primary-color: #0f95ff;
+  --primary-hover: #0d86e6;
+  --border-color: #e5e7eb;
+  --text-dark: #1f2937;
+  --text-muted: #6b7280;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+body {
+  background-color: var(--bg-color);
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-dark);
+}
+
+.admin-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 32px;
+  margin-bottom: 24px;
+}
+
+.login-card {
+  max-width: 420px;
+  margin: 120px auto;
+  border-radius: 20px;
+}
+
+.nav-tabs .nav-link {
+  border: none;
+  color: var(--text-muted);
+  font-weight: 600;
+  padding: 12px 20px;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.nav-tabs .nav-link:hover {
+  border-color: transparent;
+  color: var(--primary-color);
+}
+
+.nav-tabs .nav-link.active {
+  background: transparent;
+  color: var(--primary-color);
+  border-bottom: 3px solid var(--primary-color);
+}
+
+.form-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(15, 149, 255, 0.15);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+.btn-outline-secondary {
+  border-radius: 10px;
+  padding: 10px 24px;
+  font-weight: 600;
+}
+
+.alert-success {
+  background-color: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #065f46;
+  border-radius: 12px;
+}
+
+.toast-container {
+  z-index: 1100;
+}
+
+.row-vocab-item {
+  border-bottom: 1px solid var(--border-color);
+  padding: 12px 0;
+}
+.row-vocab-item:last-child {
+  border-bottom: none;
+}
+
+.card-form-sub {
+  background-color: #f9fafb;
+  border: 1px dashed #d1d5db;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.badge-info-helper {
+  background-color: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+  font-size: 0.8rem;
+  padding: 6px 12px;
+}
+
+/* Animations */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

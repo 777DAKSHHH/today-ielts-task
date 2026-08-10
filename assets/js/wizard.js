@@ -345,24 +345,29 @@ if ('speechSynthesis' in window) {
   populateVoices();
 }
 
-document.querySelectorAll('.vocab-word').forEach(wordCell => {
-  wordCell.style.cursor = 'pointer';
-  wordCell.addEventListener('click', () => {
-    const word = wordCell.textContent.trim();
-    const row = wordCell.parentElement;
-    row.classList.add('speaking-row');
-    
-    const wrapper = wordCell.closest('.wizard-wrapper');
-    const selectId = (wrapper && wrapper.id === 'task2-wrapper') ? 'accentSelectT2' : 'accentSelect';
-    const selectEl = qs(selectId);
-    const accent = selectEl ? selectEl.value : 'en-GB';
-    
-    speak(word, accent, () => {
-      // Remove highlight after speaking is finished
-      setTimeout(() => row.classList.remove('speaking-row'), 300);
-    });
+window.bindVocabPronunciationClicks = function() {
+  document.querySelectorAll('.vocab-word').forEach(wordCell => {
+    wordCell.style.cursor = 'pointer';
+    wordCell.onclick = () => {
+      const word = wordCell.textContent.trim();
+      const row = wordCell.parentElement;
+      row.classList.add('speaking-row');
+      
+      const wrapper = wordCell.closest('.wizard-wrapper');
+      const selectId = (wrapper && wrapper.id === 'task2-wrapper') ? 'accentSelectT2' : 'accentSelect';
+      const selectEl = qs(selectId);
+      const accent = selectEl ? selectEl.value : 'en-GB';
+      
+      speak(word, accent, () => {
+        // Remove highlight after speaking is finished
+        setTimeout(() => row.classList.remove('speaking-row'), 300);
+      });
+    };
   });
-});
+};
+
+// Bind initially on script load
+bindVocabPronunciationClicks();
 
 // ---------- Save & Finalize ----------
 window.finalize = function(){
@@ -678,6 +683,9 @@ window.autoResize = function(el) {
 
 // ---------- Init AOS & initial UI ----------
 document.addEventListener('DOMContentLoaded', function(){
+  // Load live lesson configurations from Firebase database
+  loadLiveLesson();
+
   // Initialize AOS
   if(window.AOS){
     AOS.init({ duration: 500, once: false, easing: 'ease-out-cubic' });
@@ -939,4 +947,141 @@ window.toggleVocabHeard = function(cardEl, word, mode) {
       badge.className = 'badge bg-secondary';
     }
   }
+};
+
+// ---------- Load Lesson Data Dynamically from Firebase ----------
+window.loadLiveLesson = function() {
+  db.ref('activeLesson').once('value').then((snapshot) => {
+    const data = snapshot.val();
+    if (!data) return;
+
+    // --- Task 1 Override ---
+    if (data.task1) {
+      const t1 = data.task1;
+      if (t1.audioUrl && qs('t1AudioSource')) {
+        qs('t1AudioSource').src = 'materials/' + t1.audioUrl;
+        const overviewAudio = qs('overviewAudio');
+        if (overviewAudio) overviewAudio.load();
+      }
+      if (t1.imageUrl && qs('t1Image')) {
+        qs('t1Image').src = 'materials/' + t1.imageUrl;
+        if (qs('t1ImageLink')) qs('t1ImageLink').href = 'materials/' + t1.imageUrl;
+      }
+      if (t1.taskType && qs('t1TaskType')) qs('t1TaskType').textContent = t1.taskType;
+      if (t1.questionText && qs('t1QuestionText')) {
+        qs('t1QuestionText').innerHTML = t1.questionText.replace(/\n/g, '<br>');
+      }
+      if (t1.sampleIntro && qs('t1SampleIntro')) qs('t1SampleIntro').textContent = `"${t1.sampleIntro}"`;
+      if (t1.sampleOverview && qs('t1SampleOverview')) qs('t1SampleOverview').textContent = `"${t1.sampleOverview}"`;
+      if (t1.bp1Covers && qs('t1Bp1Covers')) qs('t1Bp1Covers').textContent = t1.bp1Covers;
+      if (t1.bp1Points && qs('t1Bp1Bullets')) {
+        qs('t1Bp1Bullets').innerHTML = t1.bp1Points.map(p => `<li>${p}</li>`).join('');
+      }
+      if (t1.bp2Covers && qs('t1Bp2Covers')) qs('t1Bp2Covers').textContent = t1.bp2Covers;
+      if (t1.bp2Points && qs('t1Bp2Bullets')) {
+        qs('t1Bp2Bullets').innerHTML = t1.bp2Points.map(p => `<li>${p}</li>`).join('');
+      }
+      if (t1.bp1Flow && qs('t1Bp1Flow')) {
+        qs('t1Bp1Flow').innerHTML = t1.bp1Flow.map(p => `<li>${p}</li>`).join('');
+      }
+      if (t1.bp2Flow && qs('t1Bp2Flow')) {
+        qs('t1Bp2Flow').innerHTML = t1.bp2Flow.map(p => `<li>${p}</li>`).join('');
+      }
+      if (t1.vocabList && qs('t1VocabTable1')) {
+        qs('t1VocabTable1').innerHTML = t1.vocabList.map(item => `
+          <tr><td>${item.simple}</td><td class="vocab-word fw-bold text-success" role="button">${item.band9}</td></tr>
+        `).join('');
+      }
+      // Update Ranking Game
+      if (t1.ranking && Array.isArray(t1.ranking)) {
+        TASK1_BARCHART_STAGES.length = 0;
+        t1.ranking.forEach((text, i) => {
+          TASK1_BARCHART_STAGES.push({ id: i + 1, text: text });
+        });
+        initSequencingGameT1();
+      }
+      // Update Lexical Hunt cards
+      if (t1.vocabHunt && Array.isArray(t1.vocabHunt) && qs('t1VocabHuntContainer')) {
+        qs('t1VocabHuntContainer').innerHTML = t1.vocabHunt.map(word => `
+          <div class="col-md-3 col-6">
+            <div class="vocab-trainer-card text-center" onclick="toggleVocabHeard(this, '${word}', 'T1')">
+              <span class="word-title d-block fw-bold text-dark">${word}</span>
+              <span class="status-icon text-muted small"><i class="bi bi-circle"></i> Unheard</span>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // --- Task 2 Override ---
+    if (data.task2) {
+      const t2 = data.task2;
+      if (t2.audioUrl && qs('t2AudioSource')) {
+        qs('t2AudioSource').src = 'materials/' + t2.audioUrl;
+        const overviewAudioT2 = qs('overviewAudioT2');
+        if (overviewAudioT2) overviewAudioT2.load();
+      }
+      if (t2.questionText && qs('t2QuestionText')) {
+        qs('t2QuestionText').innerHTML = t2.questionText.replace(/\n/g, '<br>');
+      }
+      if (t2.sampleIntro && qs('t2SampleIntro')) qs('t2SampleIntro').textContent = t2.sampleIntro;
+      if (t2.sampleConclusion && qs('t2SampleConclusion')) qs('t2SampleConclusion').textContent = t2.sampleConclusion;
+      if (t2.bp1Title && qs('t2CausesTitle')) qs('t2CausesTitle').textContent = 'Focus: ' + t2.bp1Title;
+      if (t2.bp2Title && qs('t2EffectsTitle')) qs('t2EffectsTitle').textContent = 'Focus: ' + t2.bp2Title;
+
+      if (t2.vocabList && qs('t2VocabTable')) {
+        qs('t2VocabTable').innerHTML = t2.vocabList.map(item => `
+          <tr>
+            <td class="vocab-word fw-bold" role="button">${item.word}</td>
+            <td>${item.meaning}</td>
+            <td>${item.example}</td>
+          </tr>
+        `).join('');
+      }
+      // Update Causes Grid
+      if (t2.causes && Array.isArray(t2.causes) && qs('t2CausesGrid')) {
+        qs('t2CausesGrid').innerHTML = t2.causes.map((item, i) => `
+          <div class="col-md-6">
+            <div class="card h-100 border-0 bg-light p-3">
+              <h6 class="text-primary fw-bold mb-2">${i + 1}. ${item.title}</h6>
+              <p class="small text-muted mb-2" style="line-height: 1.5;">${item.desc}</p>
+              <div class="bg-white p-2 rounded border small text-secondary">
+                <strong>Example:</strong> ${item.ex}
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+      // Update Effects Grid
+      if (t2.effects && Array.isArray(t2.effects) && qs('t2EffectsGrid')) {
+        qs('t2EffectsGrid').innerHTML = t2.effects.map((item, i) => `
+          <div class="col-md-6">
+            <div class="card h-100 border-0 bg-light p-3">
+              <h6 class="text-success fw-bold mb-2">${i + 1}. ${item.title}</h6>
+              <p class="small text-muted mb-2" style="line-height: 1.5;">${item.desc}</p>
+              <div class="bg-white p-2 rounded border small text-secondary">
+                <strong>Example:</strong> ${item.ex}
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+      // Update Lexical Hunt cards
+      if (t2.vocabHunt && Array.isArray(t2.vocabHunt) && qs('t2VocabHuntContainer')) {
+        qs('t2VocabHuntContainer').innerHTML = t2.vocabHunt.map(word => `
+          <div class="col-md-4 col-6">
+            <div class="vocab-trainer-card text-center" onclick="toggleVocabHeard(this, '${word}', 'T2')">
+              <span class="word-title d-block fw-bold text-dark">${word}</span>
+              <span class="status-icon text-muted small"><i class="bi bi-circle"></i> Unheard</span>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Re-bind dynamic click events
+    bindVocabPronunciationClicks();
+  }).catch((err) => {
+    console.warn("Could not load live lesson from database. Using fallbacks.", err);
+  });
 };

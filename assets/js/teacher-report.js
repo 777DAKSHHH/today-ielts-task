@@ -397,6 +397,45 @@ function showAnswerDistribution(questionIndex) {
   if (answerDistributionModal) answerDistributionModal.show();
 }
 
+// --- Active Lesson Content Sync ---
+let liveKeywordsT1 = ['bar graph', 'bra graph', 'every day', 'several times a week', 'once a week', 'once or twice a month', 'a few times a year', 'never', '2003', '2006', '2013'];
+let liveKeywordsT2 = ['infrastructure', 'development', 'modernization', 'construction', 'roads', 'transport', 'urban growth', 'old buildings', 'heritage', 'history', 'culture', 'preservation', 'restoration', 'identity', 'architecture', 'tourism', 'cost', 'maintenance', 'progress', 'community'];
+let liveTask2Type = "Causes and Effects Essay";
+
+db.ref('activeLesson').on('value', (snapshot) => {
+  const data = snapshot.val();
+  if (data) {
+    if (data.task1 && Array.isArray(data.task1.keywords)) {
+      liveKeywordsT1 = data.task1.keywords;
+    }
+    if (data.task2 && Array.isArray(data.task2.keywords)) {
+      liveKeywordsT2 = data.task2.keywords;
+    }
+    if (data.task2 && data.task2.taskType) {
+      liveTask2Type = data.task2.taskType;
+    }
+    if (data.quizQuestions && Array.isArray(data.quizQuestions) && data.quizQuestions.length === 10) {
+      // Sync QUESTIONS array for graph distributions
+      QUESTIONS.length = 0;
+      data.quizQuestions.forEach(q => {
+        const mappedQ = {
+          q: q.q,
+          correct: q.correct,
+          options: q.type === 'scramble' 
+            ? ["A", "B", "C", "D"]
+            : (q.options || ["A", "B", "C", "D"])
+        };
+        QUESTIONS.push(mappedQ);
+      });
+    }
+    // Rerender guess table
+    db.ref("guesses").once("value", (snap) => {
+      const g = snap.val() || {};
+      renderGuessTable(Object.values(g));
+    });
+  }
+});
+
 // --- Active Listening Guesses Listener ---
 const guessesRef = db.ref("guesses");
 const guessTableBody = document.getElementById("guessTableBody");
@@ -466,18 +505,24 @@ function calculateGuessAccuracy(task, guessType, context) {
       score += 50;
     }
   } else {
-    // Expected Task 2 is Causes and Effects Essay
-    if (guessType.toLowerCase().includes('cause') || guessType.toLowerCase().includes('effect')) {
-      score += 50;
+    // Expected Task 2 is dynamically checked based on liveTask2Type
+    const target = liveTask2Type.toLowerCase();
+    const guess = guessType.toLowerCase();
+    if (target.includes('agree') || target.includes('disagree')) {
+      if (guess.includes('agree') || guess.includes('disagree') || guess.includes('opinion')) score += 50;
+    } else if (target.includes('cause') || target.includes('effect')) {
+      if (guess.includes('cause') || guess.includes('effect')) score += 50;
+    } else if (target.includes('advantage') || target.includes('disadvantage')) {
+      if (guess.includes('advantage') || guess.includes('disadvantage') || guess.includes('benefit')) score += 50;
+    } else {
+      // Fallback matching
+      if (guess.split(' ').some(w => w.length > 3 && target.includes(w))) score += 50;
     }
   }
 
   // 2. Keyword Match (50% max - 10% per keyword)
   const text = (context || '').toLowerCase();
-  const keywordsT1 = ['bar graph', 'bra graph', 'every day', 'several times a week', 'once a week', 'once or twice a month', 'a few times a year', 'never', '2003', '2006', '2013'];
-  const keywordsT2 = ['hobbies', 'leisure', 'work', 'screen', 'digital', 'well-being', 'creativity', 'social'];
-  
-  const targetKeywords = (task === 'task1') ? keywordsT1 : keywordsT2;
+  const targetKeywords = (task === 'task1') ? liveKeywordsT1 : liveKeywordsT2;
   let matches = 0;
   
   targetKeywords.forEach(kw => {

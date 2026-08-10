@@ -78,9 +78,12 @@
           </div>
         </div>
       </div>
-      <div class="row justify-content-center mt-5">
+      <div class="row justify-content-center mt-5 g-3">
         <div class="col-md-5 col-lg-4 text-center">
           <a href="teacher-report.html" class="btn btn-outline-warning w-100 py-2.5 fw-semibold shadow-sm"><i class="bi bi-shield-lock-fill me-2"></i>Tutor Report Dashboard</a>
+        </div>
+        <div class="col-md-5 col-lg-4 text-center">
+          <a href="admin.html" class="btn btn-outline-primary w-100 py-2.5 fw-semibold shadow-sm"><i class="bi bi-sliders2-vertical me-2"></i>Tutor Admin Panel</a>
         </div>
       </div>
     </div>
@@ -103,8 +106,9 @@
         </div>
       </div>
 
-      <div>
+      <div class="d-flex gap-2">
         <a href="teacher-report.html" class="btn btn-sm btn-outline-warning fw-semibold"><i class="bi bi-shield-lock-fill me-1"></i>Tutor Report</a>
+        <a href="admin.html" class="btn btn-sm btn-outline-primary fw-semibold"><i class="bi bi-sliders2-vertical me-1"></i>Admin Panel</a>
       </div>
     </div>
   </header>
@@ -142,7 +146,7 @@
           <div class="tab-pane fade show active" id="audio-pane" role="tabpanel" aria-labelledby="audio-tab">
             <p class="small text-muted">A concise audio walkthrough of approach & tips. The step marks complete when the audio ends.</p>
             <audio id="overviewAudio" controls style="width:100%;">
-              <source src="materials/Fast_food_habits_2003_to_2013.m4a" type="audio/mp4">
+              <source id="t1AudioSource" src="materials/Fast_food_habits_2003_to_2013.m4a" type="audio/mp4">
               Your browser does not support the audio element.
             </audio>
           </div>
@@ -182,14 +186,14 @@
           <div class="col-md-6">
             <div class="p-3 bg-light rounded border h-100">
               <h6 class="text-primary fw-bold mb-2"><i class="bi bi-file-earmark-text-fill"></i> Task Type</h6>
-              <p class="mb-0"><strong>Bar Chart (Comparative Data over Time)</strong></p>
-              <p class="small text-muted mb-0">Requires comparing fast-food eating frequency percentages across three years (2003, 2006, 2013) using trend vocabulary and comparisons.</p>
+              <p class="mb-0"><strong id="t1TaskType">Bar Chart (Comparative Data over Time)</strong></p>
+              <p id="t1TaskTypeDesc" class="small text-muted mb-0">Requires comparing fast-food eating frequency percentages across three years (2003, 2006, 2013) using trend vocabulary and comparisons.</p>
             </div>
           </div>
           <div class="col-md-6">
             <div class="p-3 bg-light rounded border h-100">
               <h6 class="text-primary fw-bold mb-2"><i class="bi bi-search"></i> Image Analysis</h6>
-              <ul class="list-unstyled mb-0 small" style="line-height: 1.6;">
+              <ul id="t1AnalysisPoints" class="list-unstyled mb-0 small" style="line-height: 1.6;">
                 <li><strong>• Data categories:</strong> 6 frequencies (from Daily to Never).</li>
                 <li><strong>• Target period:</strong> 2003, 2006, and 2013.</li>
                 <li><strong>• Main units:</strong> Percentages (%) of the US population.</li>
@@ -215,8 +219,10 @@
           <div class="col-lg-7">
             <div class="mb-3 p-3 bg-light rounded border">
               <h6 class="text-primary fw-bold mb-2">IELTS Academic Writing Task 1 Question</h6>
-              <p class="mb-3">The bar chart illustrates the frequency of eating at fast food restaurants among people in the USA in <strong>2003, 2006 and 2013</strong>. The figures are presented in <strong>percentages (%)</strong>.</p>
-              <p class="mb-3"><strong>Summarise the information by selecting and reporting the main features, and make comparisons where relevant.</strong></p>
+              <div id="t1QuestionText">
+                <p class="mb-3">The bar chart illustrates the frequency of eating at fast food restaurants among people in the USA in <strong>2003, 2006 and 2013</strong>. The figures are presented in <strong>percentages (%)</strong>.</p>
+                <p class="mb-3"><strong>Summarise the information by selecting and reporting the main features, and make comparisons where relevant.</strong></p>
+              </div>
               <p class="small text-muted mb-0"><em>Write at least 150 words.</em></p>
             </div>
             
@@ -240,8 +246,8 @@
 
           <div class="col-lg-5">
             <figure class="figure">
-              <a href="materials/fast-food-bar-chart.png" class="glightbox">
-                <img src="materials/fast-food-bar-chart.png" alt="Task Chart" class="img-fluid rounded border" />
+              <a id="t1ImageLink" href="materials/fast-food-bar-chart.png" class="glightbox">
+                <img id="t1Image" src="materials/fast-food-bar-chart.png" alt="Task Chart" class="img-fluid rounded border" />
               </a>
               <figcaption class="figure-caption small text-muted text-center mt-2">Click chart to enlarge.</figcaption>
             </figure>
@@ -278,7 +284,7 @@
                 <thead class="table-light">
                   <tr><th style="width:50%;">Simple Term</th><th style="width:50%;" class="text-success">Band 9 Alternative</th></tr>
                 </thead>
-                <tbody>
+                <tbody id="t1VocabTable1">
                   <tr><td>most common</td><td class="vocab-word fw-bold text-success" role="button">Predominant</td></tr>
                   <tr><td>small / minor</td><td class="vocab-word fw-bold text-success" role="button">Marginal</td></tr>
                   <tr><td>slow change</td><td class="vocab-word fw-bold text-success" role="button">Gradual Shift</td></tr>
@@ -299,7 +305,7 @@
                 <thead class="table-light">
                   <tr><th style="width:30%;">Word</th><th style="width:70%;">IELTS Example</th></tr>
                 </thead>
-                <tbody>
+                <tbody id="t1VocabTable2">
                   <tr>
                     <td class="vocab-word fw-bold" role="button">Predominant</td>
                     <td>Weekly visits were the <em>predominant</em> eating pattern in the earlier years.</td>
@@ -339,7 +345,7 @@
           </div>
           <p class="small text-muted mb-3">Listen to the audio overview again and click the vocabulary cards below to mark them as "Heard". Can you find all 4 core transition words used in the lesson?</p>
           
-          <div class="row g-2">
+          <div id="t1VocabHuntContainer" class="row g-2">
             <div class="col-md-3 col-6">
               <div class="vocab-trainer-card text-center" onclick="toggleVocabHeard(this, 'Predominant', 'T1')">
                 <span class="word-title d-block fw-bold text-dark">Predominant</span>
@@ -384,7 +390,7 @@
           <div class="col-md-6">
             <div class="p-3 h-100 border-start border-primary border-3 bg-light rounded">
               <strong class="text-primary d-block mb-2">1. Sample Introduction</strong>
-              <blockquote class="blockquote small mb-0" style="font-size: 0.95rem; line-height: 1.6;">
+              <blockquote id="t1SampleIntro" class="blockquote small mb-0" style="font-size: 0.95rem; line-height: 1.6;">
                 "The bar chart compares the frequency with which people in the USA consumed fast food across six categories in 2003, 2006 and 2013, with the data expressed in percentages."
               </blockquote>
             </div>
@@ -393,7 +399,7 @@
           <div class="col-md-6">
             <div class="p-3 h-100 border-start border-warning border-3 bg-light rounded">
               <strong class="text-warning d-block mb-2">2. Sample Overview</strong>
-              <blockquote class="blockquote small mb-0" style="font-size: 0.95rem; line-height: 1.6;">
+              <blockquote id="t1SampleOverview" class="blockquote small mb-0" style="font-size: 0.95rem; line-height: 1.6;">
                 "Overall, eating fast food once a week and once or twice a month accounted for the largest proportions throughout the period, whereas daily consumption and never eating fast food consistently represented the smallest shares. In addition, there was a noticeable shift from weekly consumption towards monthly consumption over the ten-year period."
               </blockquote>
             </div>
@@ -419,11 +425,11 @@
               <h5 class="text-primary mb-3"><i class="bi bi-1-circle-fill"></i> Body Paragraph 1</h5>
               <div class="mb-3">
                 <span class="badge bg-primary mb-2">Covers Frequencies</span>
-                <p class="small text-muted mb-0 fw-bold">Every day • Several times a week • Once a week</p>
+                <p id="t1Bp1Covers" class="small text-muted mb-0 fw-bold">Every day • Several times a week • Once a week</p>
               </div>
               <div>
                 <span class="badge bg-secondary mb-2">Key Features to Describe</span>
-                <ul class="small text-muted ps-3 mb-0" style="line-height: 1.6;">
+                <ul id="t1Bp1Bullets" class="small text-muted ps-3 mb-0" style="line-height: 1.6;">
                   <li><strong>Daily consumption</strong> was the least common habit (~3% to 4%)</li>
                   <li><strong>Several times a week</strong> visits rose slightly in 2006 before declining in 2013</li>
                   <li><strong>Once a week</strong> was the peak frequency in 2003 and 2006, declining by 2013</li>
@@ -438,11 +444,11 @@
               <h5 class="text-primary mb-3"><i class="bi bi-2-circle-fill"></i> Body Paragraph 2</h5>
               <div class="mb-3">
                 <span class="badge bg-primary mb-2">Covers Frequencies</span>
-                <p class="small text-muted mb-0 fw-bold">Once or twice a month • A few times a year • Never</p>
+                <p id="t1Bp2Covers" class="small text-muted mb-0 fw-bold">Once or twice a month • A few times a year • Never</p>
               </div>
               <div>
                 <span class="badge bg-secondary mb-2">Key Features to Describe</span>
-                <ul class="small text-muted ps-3 mb-0" style="line-height: 1.6;">
+                <ul id="t1Bp2Bullets" class="small text-muted ps-3 mb-0" style="line-height: 1.6;">
                   <li><strong>Once or twice a month</strong> visits rose, becoming the largest category in 2013 (~33%)</li>
                   <li><strong>A few times a year</strong> visits remained stable at around 15%</li>
                   <li><strong>Never</strong> eating fast food consistently accounted for a small minority (under 5%)</li>
@@ -470,7 +476,7 @@
           <div class="col-md-6">
             <div class="p-3 border rounded bg-white shadow-sm h-100">
               <h6 class="text-primary fw-bold border-bottom pb-2">Paragraph 1 Flow (Frequent Consumption)</h6>
-              <ul class="small text-muted ps-3 mb-0" style="line-height: 1.8; list-style-type: disc;">
+              <ul id="t1Bp1Flow" class="small text-muted ps-3 mb-0" style="line-height: 1.8; list-style-type: disc;">
                 <li class="mb-2"><strong>Daily consumption:</strong> Remained the least common habit, with only a very small proportion of people eating fast food every day throughout the period.</li>
                 <li class="mb-2"><strong>Several times a week:</strong> The percentage of people eating fast food several times a week rose slightly in 2006 before declining again in 2013.</li>
                 <li class="mb-0"><strong>Once a week:</strong> Once a week was the most common frequency in both 2003 and 2006, although its proportion declined by the end of the period.</li>
@@ -481,7 +487,7 @@
           <div class="col-md-6">
             <div class="p-3 border rounded bg-white shadow-sm h-100">
               <h6 class="text-primary fw-bold border-bottom pb-2">Paragraph 2 Flow (Occasional Consumption)</h6>
-              <ul class="small text-muted ps-3 mb-0" style="line-height: 1.8; list-style-type: disc;">
+              <ul id="t1Bp2Flow" class="small text-muted ps-3 mb-0" style="line-height: 1.8; list-style-type: disc;">
                 <li class="mb-2"><strong>Once or twice a month:</strong> The proportion of people eating fast food once or twice a month increased overall and became the largest category in 2013.</li>
                 <li class="mb-2"><strong>A few times a year:</strong> The percentage of individuals visiting fast-food restaurants a few times a year remained relatively stable throughout the period.</li>
                 <li class="mb-0"><strong>Never:</strong> Likewise, those who never consumed fast food consistently accounted for only a small minority.</li>
@@ -587,7 +593,7 @@
             <div class="tab-pane fade show active" id="audio-pane-t2" role="tabpanel">
               <p class="small text-muted">A concise audio walkthrough of approach & tips.</p>
               <audio id="overviewAudioT2" controls style="width:100%;">
-                <source src="materials/Why_we_choose_screens_over_hobbies.m4a" type="audio/mp4">
+                <source id="t2AudioSource" src="materials/Replacing_historic_landmarks_with_modern_infrastructure.m4a" type="audio/mp4">
                 Your browser does not support the audio element.
               </audio>
             </div>
@@ -637,9 +643,11 @@
             <div class="col-lg-8">
               <div class="mb-3 p-3 bg-light rounded border">
                 <h6 class="text-primary">Task 2 Question</h6>
-                <p class="lead mb-0">Very few people devote time to hobbies these days.<br><br>
-                <strong>• Why is this happening?</strong><br>
-                <strong>• What effect does this have on an individual and society in general?</strong></p>
+                <div id="t2QuestionText">
+                  <p class="lead mb-0">Very few people devote time to hobbies these days.<br><br>
+                  <strong>• Why is this happening?</strong><br>
+                  <strong>• What effect does this have on an individual and society in general?</strong></p>
+                </div>
               </div>
               
               <!-- Brainstorming Toolbar -->
@@ -711,7 +719,7 @@ CON--></textarea>
               <thead class="table-light">
                 <tr><th style="width:25%;">Word</th><th style="width:45%;">Meaning</th><th style="width:30%;">Example</th></tr>
               </thead>
-              <tbody>
+              <tbody id="t2VocabTable">
                 <tr><td class="vocab-word fw-bold" role="button">Anathema</td><td>Something intensely disliked or avoided.</td><td>For dedicated career professionals, spending hours on unproductive leisure activities is often considered an <strong>anathema</strong>.</td></tr>
                 <tr><td class="vocab-word fw-bold" role="button">Ineluctable</td><td>Impossible to avoid or escape.</td><td>The <strong>ineluctable</strong> rise of demanding work schedules has left very little room for traditional hobbies.</td></tr>
                 <tr><td class="vocab-word fw-bold" role="button">Redound</td><td>To contribute or lead to an outcome (positive or negative).</td><td>Engaging in recreational activities will ultimately <strong>redound</strong> to the benefit of an individual's mental well-being.</td></tr>
@@ -738,7 +746,7 @@ CON--></textarea>
             </div>
             <p class="small text-muted mb-3">Listen to the audio overview again and click the vocabulary cards below to mark them as "Heard". Can you find all 6 premium words used in this lesson?</p>
             
-            <div class="row g-2">
+            <div id="t2VocabHuntContainer" class="row g-2">
               <div class="col-md-4 col-6">
                 <div class="vocab-trainer-card text-center" onclick="toggleVocabHeard(this, 'Anathema', 'T2')">
                   <span class="word-title d-block fw-bold text-dark">Anathema</span>
@@ -793,7 +801,7 @@ CON--></textarea>
             <div class="col-md-12">
               <div class="p-4" style="background:#fbfbff; border-radius:.6rem; border-left: 4px solid var(--primary-color);">
                 <strong class="text-primary d-block mb-2">SAMPLE INTRODUCTION</strong>
-                <p class="small mb-0" style="line-height:1.6; font-size:1rem;">Nowadays, considerably fewer people devote time to hobbies than in the past due to <strong>increasing professional commitments, digital distractions, and the growing pressure to remain competitive</strong>. This trend has significant consequences for <strong>individual well-being, creativity, social cohesion, and overall quality of life</strong>.</p>
+                <p id="t2SampleIntro" class="small mb-0" style="line-height:1.6; font-size:1rem;">Nowadays, considerably fewer people devote time to hobbies than in the past due to <strong>increasing professional commitments, digital distractions, and the growing pressure to remain competitive</strong>. This trend has significant consequences for <strong>individual well-being, creativity, social cohesion, and overall quality of life</strong>.</p>
               </div>
             </div>
           </div>
@@ -811,7 +819,7 @@ CON--></textarea>
           <hr>
           <div class="p-4" style="background:#fffaf0; border-radius:.6rem; border-left: 4px solid var(--warning-color);">
             <strong class="text-warning d-block mb-2">SAMPLE CONCLUSION</strong>
-            <p class="small mb-0" style="line-height:1.6; font-size:1rem;">In conclusion, increasing work demands, digital distractions, and competitive lifestyles have significantly reduced people's participation in hobbies. <strong>As a result, this trend negatively affects mental well-being, creativity, social relationships, and overall life satisfaction. Therefore, individuals should consciously devote time to recreational pursuits in order to maintain a healthier and more balanced lifestyle.</strong></p>
+            <p id="t2SampleConclusion" class="small mb-0" style="line-height:1.6; font-size:1rem;">In conclusion, increasing work demands, digital distractions, and competitive lifestyles have significantly reduced people's participation in hobbies. <strong>As a result, this trend negatively affects mental well-being, creativity, social relationships, and overall life satisfaction. Therefore, individuals should consciously devote time to recreational pursuits in order to maintain a healthier and more balanced lifestyle.</strong></p>
           </div>
         </section>
 
@@ -820,45 +828,45 @@ CON--></textarea>
           <div class="d-flex justify-content-between">
             <div>
               <h3>Plan: Body Paragraph 1</h3>
-              <p class="text-muted">Focus: Causes of the Decline in Hobbies</p>
+              <p id="t2CausesTitle" class="text-muted">Focus: Investing in New Infrastructure</p>
             </div>
-            <div class="text-muted"><small>Causes &amp; Supporting Examples</small></div>
+            <div class="text-muted"><small>Supporting Points &amp; Examples</small></div>
           </div>
           <hr>
-          <div class="row g-3">
+          <div id="t2CausesGrid" class="row g-3">
             <div class="col-md-6">
               <div class="card h-100 border-0 bg-light p-3">
-                <h6 class="text-primary fw-bold mb-2">1. Increasing Professional Commitments</h6>
-                <p class="small text-muted mb-2" style="line-height: 1.5;">Demanding work schedules leave little time for leisure activities.</p>
+                <h6 class="text-primary fw-bold mb-2">1. Accommodates Population Growth</h6>
+                <p class="small text-muted mb-2" style="line-height: 1.5;">Modern facilities can meet the demands of expanding urban populations.</p>
                 <div class="bg-white p-2 rounded border small text-secondary">
-                  <strong>Example:</strong> According to the <strong>International Labour Organization (ILO)</strong>, many employees worldwide regularly work beyond the standard 40-hour week, reducing opportunities for recreation.
+                  <strong>Example:</strong> New housing, transport networks and hospitals can ease pressure on overcrowded cities.
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="card h-100 border-0 bg-light p-3">
-                <h6 class="text-primary fw-bold mb-2">2. Digital Entertainment Dominance</h6>
-                <p class="small text-muted mb-2" style="line-height: 1.5;">Screen-based entertainment has gradually replaced traditional hobbies.</p>
+                <h6 class="text-primary fw-bold mb-2">2. Enhances Economic Productivity</h6>
+                <p class="small text-muted mb-2" style="line-height: 1.5;">Efficient infrastructure facilitates business activity and improves connectivity.</p>
                 <div class="bg-white p-2 rounded border small text-secondary">
-                  <strong>Example:</strong> A report by <strong>DataReportal (2025)</strong> found that the average internet user spends <strong>over six hours per day online</strong>, much of it on social media and streaming platforms.
+                  <strong>Example:</strong> Upgraded roads and public transport can reduce commuting and freight-delivery times.
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="card h-100 border-0 bg-light p-3">
-                <h6 class="text-primary fw-bold mb-2">3. Competitive Academic and Career Culture</h6>
-                <p class="small text-muted mb-2" style="line-height: 1.5;">People devote more time to acquiring qualifications and professional skills.</p>
+                <h6 class="text-primary fw-bold mb-2">3. Improves Public Safety</h6>
+                <p class="small text-muted mb-2" style="line-height: 1.5;">New structures can incorporate contemporary safety and environmental standards.</p>
                 <div class="bg-white p-2 rounded border small text-secondary">
-                  <strong>Example:</strong> The <strong>OECD</strong> reports that lifelong learning and continuous upskilling have become essential in today's job market.
+                  <strong>Example:</strong> Modern bridges and buildings are designed to withstand structural and climatic risks more effectively.
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="card h-100 border-0 bg-light p-3">
-                <h6 class="text-primary fw-bold mb-2">4. Changing Lifestyle Priorities</h6>
-                <p class="small text-muted mb-2" style="line-height: 1.5;">Financial success and productivity are increasingly prioritised over personal fulfilment.</p>
+                <h6 class="text-primary fw-bold mb-2">4. Supports Technological Progress</h6>
+                <p class="small text-muted mb-2" style="line-height: 1.5;">Contemporary infrastructure can accommodate emerging technologies and changing public needs.</p>
                 <div class="bg-white p-2 rounded border small text-secondary">
-                  <strong>Example:</strong> Many professionals sacrifice leisure activities to pursue promotions or additional sources of income.
+                  <strong>Example:</strong> Smart transport systems and energy-efficient buildings can improve urban efficiency.
                 </div>
               </div>
             </div>
@@ -870,45 +878,45 @@ CON--></textarea>
           <div class="d-flex justify-content-between">
             <div>
               <h3>Plan: Body Paragraph 2</h3>
-              <p class="text-muted">Focus: Effects of the Decline in Hobbies</p>
+              <p id="t2EffectsTitle" class="text-muted">Focus: Preserving Old Buildings</p>
             </div>
-            <div class="text-muted"><small>Effects &amp; Supporting Examples</small></div>
+            <div class="text-muted"><small>Supporting Points &amp; Examples</small></div>
           </div>
           <hr>
-          <div class="row g-3">
+          <div id="t2EffectsGrid" class="row g-3">
             <div class="col-md-6">
               <div class="card h-100 border-0 bg-light p-3">
-                <h6 class="text-success fw-bold mb-2">1. Declining Mental Well-being</h6>
-                <p class="small text-muted mb-2" style="line-height: 1.5;">The absence of hobbies increases stress and emotional fatigue.</p>
+                <h6 class="text-success fw-bold mb-2">1. Protects Cultural Heritage</h6>
+                <p class="small text-muted mb-2" style="line-height: 1.5;">Historic structures embody a society's architectural and cultural legacy.</p>
                 <div class="bg-white p-2 rounded border small text-secondary">
-                  <strong>Example:</strong> The <strong>World Health Organization (WHO)</strong> recognises leisure and recreation as important contributors to mental well-being.
+                  <strong>Example:</strong> Preserving landmarks allows future generations to retain a tangible connection with their history.
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="card h-100 border-0 bg-light p-3">
-                <h6 class="text-success fw-bold mb-2">2. Reduced Creativity</h6>
-                <p class="small text-muted mb-2" style="line-height: 1.5;">Hobbies stimulate imagination, innovation, and problem-solving skills.</p>
+                <h6 class="text-success fw-bold mb-2">2. Strengthens Tourism</h6>
+                <p class="small text-muted mb-2" style="line-height: 1.5;">Heritage sites can attract visitors and generate local economic activity.</p>
                 <div class="bg-white p-2 rounded border small text-secondary">
-                  <strong>Example:</strong> Creative activities such as painting or playing music have been linked to improved cognitive performance.
+                  <strong>Example:</strong> Historic districts often support museums, hotels, restaurants and local businesses.
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="card h-100 border-0 bg-light p-3">
-                <h6 class="text-success fw-bold mb-2">3. Weakening Social Cohesion</h6>
-                <p class="small text-muted mb-2" style="line-height: 1.5;">Shared recreational interests strengthen relationships and community participation.</p>
+                <h6 class="text-success fw-bold mb-2">3. Maintains Architectural Identity</h6>
+                <p class="small text-muted mb-2" style="line-height: 1.5;">Older buildings give cities a distinctive character that modern developments may lack.</p>
                 <div class="bg-white p-2 rounded border small text-secondary">
-                  <strong>Example:</strong> Community clubs and sports teams encourage social interaction across different age groups.
+                  <strong>Example:</strong> Traditional architecture can differentiate one city from increasingly uniform urban landscapes.
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="card h-100 border-0 bg-light p-3">
-                <h6 class="text-success fw-bold mb-2">4. Lower Overall Quality of Life</h6>
-                <p class="small text-muted mb-2" style="line-height: 1.5;">An unhealthy work-life imbalance often leads to dissatisfaction and burnout.</p>
+                <h6 class="text-success fw-bold mb-2">4. Encourages Sustainable Development</h6>
+                <p class="small text-muted mb-2" style="line-height: 1.5;">Reusing existing structures can reduce demolition waste and conserve construction resources.</p>
                 <div class="bg-white p-2 rounded border small text-secondary">
-                  <strong>Example:</strong> Studies consistently show that people with regular leisure activities report higher life satisfaction.
+                  <strong>Example:</strong> Converting historic buildings into offices or cultural centres can extend their useful life.
                 </div>
               </div>
             </div>

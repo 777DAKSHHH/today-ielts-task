@@ -18,6 +18,20 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.database(app);
 
+// Live lesson task type cache (pre-fetched on load)
+let liveTask1Type = "Bar Chart";
+let liveTask2Type = "Causes and Effects Essay";
+
+db.ref('activeLesson').once('value').then((snapshot) => {
+  const data = snapshot.val();
+  if (data) {
+    if (data.task1 && data.task1.taskType) liveTask1Type = data.task1.taskType;
+    if (data.task2 && data.task2.taskType) liveTask2Type = data.task2.taskType;
+  }
+}).catch((err) => {
+  console.warn("Could not load live task types from Firebase. Using fallbacks.", err);
+});
+
 const guessForm = document.getElementById('guessForm');
 const successOverlay = document.getElementById('successOverlay');
 const cardHeader = document.getElementById('cardHeader');
@@ -45,7 +59,7 @@ if (guessForm) {
     const task = urlParams.get('task') || 'task1';
     
     // Auto-assign predicted task types based on active task parameter
-    const taskType = (task === 'task1') ? 'Bar Chart' : 'Causes and Effects Essay';
+    const taskType = (task === 'task1') ? liveTask1Type : liveTask2Type;
 
     // Save student's guess to Realtime Database under guesses node
     const sanitizedName = name.replace(/[.#$\[\]]/g, "_");

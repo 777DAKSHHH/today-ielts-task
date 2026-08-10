@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IELTS Tutor Admin - Live Lesson Panel</title>
+  <!-- Google Fonts & Bootstrap -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body>
+
+  <!-- LOGIN SECTION -->
+  <div id="login-section" class="container">
+    <div class="card login-card admin-card text-center animate-fade-in">
+      <div class="mb-3">
+        <i class="bi bi-shield-lock-fill text-primary" style="font-size: 3rem;"></i>
+      </div>
+      <h3 class="fw-bold mb-1">Tutor Admin Panel</h3>
+      <p class="text-muted small mb-4">Enter passcode to configure today's active lessons.</p>
+      
+      <div class="mb-3">
+        <input type="password" id="password-input" class="form-control text-center" placeholder="Enter Admin Passcode" autofocus>
+        <div id="error-alert" class="text-danger small mt-2 fw-bold" style="display:none;">
+          <i class="bi bi-exclamation-triangle-fill"></i> Incorrect passcode. Try again.
+        </div>
+      </div>
+      
+      <button id="login-btn" class="btn btn-primary w-100 py-2">Access Panel</button>
+    </div>
+  </div>
+
+  <!-- ADMIN CONSOLE SECTION (Hidden initially) -->
+  <div id="admin-section" class="container py-5 animate-fade-in" style="display: none;">
+    <header class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom">
+      <div>
+        <h2 class="fw-bold text-primary mb-0"><i class="bi bi-sliders2-vertical me-2"></i>IELTS Lesson Manager</h2>
+        <p class="text-muted mb-0 small">Publish live Writing Tasks and interactive Quiz questions instantly.</p>
+      </div>
+      <div class="d-flex gap-2">
+        <button id="btn-load-defaults" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-counterclockwise me-1"></i>Load Defaults</button>
+        <a href="teacher-report.html" class="btn btn-warning btn-sm"><i class="bi bi-clipboard-data me-1"></i>Tutor Report</a>
+        <a href="index.html" class="btn btn-secondary btn-sm" target="_blank"><i class="bi bi-eye me-1"></i>View Site</a>
+      </div>
+    </header>
+
+    <form id="cms-form">
+      <div class="nav nav-tabs mb-4" id="cms-tabs" role="tablist">
+        <button class="nav-link active" id="tab-t1-btn" data-bs-toggle="tab" data-bs-target="#tab-t1" type="button" role="tab"><i class="bi bi-bar-chart-line-fill me-2"></i>Writing Task 1</button>
+        <button class="nav-link" id="tab-t2-btn" data-bs-toggle="tab" data-bs-target="#tab-t2" type="button" role="tab"><i class="bi bi-journal-text me-2"></i>Writing Task 2</button>
+        <button class="nav-link" id="tab-quiz-btn" data-bs-toggle="tab" data-bs-target="#tab-quiz" type="button" role="tab"><i class="bi bi-patch-check-fill me-2"></i>Quiz Manager</button>
+      </div>
+
+      <div class="tab-content" id="cms-tab-content">
+        <!-- WRITING TASK 1 TAB -->
+        <div class="tab-pane fade show active" id="tab-t1" role="tabpanel">
+          <div class="admin-card">
+            <h4 class="fw-bold text-primary mb-4"><i class="bi bi-journal-album me-2"></i>Task 1 Lesson Settings</h4>
+            
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Audio Briefing File Name (in materials/)</label>
+                <input type="text" id="t1-audio" class="form-control" placeholder="e.g. Fast_food_habits_2003_to_2013.m4a">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Graphic Image Name (in materials/)</label>
+                <input type="text" id="t1-image" class="form-control" placeholder="e.g. fast-food-bar-chart.png">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Question Type / Label</label>
+                <input type="text" id="t1-type" class="form-control" placeholder="e.g. Bar Chart (Comparative Data over Time)">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Question Text Prompt</label>
+                <textarea id="t1-question" class="form-control" rows="3" placeholder="Paste question here..."></textarea>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Sample Introduction</label>
+                <textarea id="t1-intro" class="form-control" rows="3" placeholder="The bar chart compares..."></textarea>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Sample Overview</label>
+                <textarea id="t1-overview" class="form-control" rows="3" placeholder="Overall, eating fast food..."></textarea>
+              </div>
+            </div>
+
+            <hr class="my-4">
+            
+            <h5 class="fw-bold text-dark mb-3">Academic Descriptors Vocabulary (Step 3 Table)</h5>
+            <div id="t1-vocab-container">
+              <!-- Rebuilt dynamically by JS -->
+            </div>
+
+            <hr class="my-4">
+
+            <h5 class="fw-bold text-dark mb-3">Body Paragraph 1 & 2 Guides</h5>
+            <div class="row g-3">
+              <div class="col-md-6 card-form-sub p-3">
+                <h6>Body Paragraph 1 Plan</h6>
+                <div class="mb-2">
+                  <label class="form-label">BP1 Covers</label>
+                  <input type="text" id="t1-bp1-covers" class="form-control form-control-sm" placeholder="e.g. Every day • Several times a week">
+                </div>
+                <label class="form-label">BP1 Bullets (one per line)</label>
+                <textarea id="t1-bp1-bullets" class="form-control form-control-sm" rows="4" placeholder="Bullet 1&#10;Bullet 2"></textarea>
+              </div>
+              <div class="col-md-6 card-form-sub p-3">
+                <h6>Body Paragraph 2 Plan</h6>
+                <div class="mb-2">
+                  <label class="form-label">BP2 Covers</label>
+                  <input type="text" id="t1-bp2-covers" class="form-control form-control-sm" placeholder="e.g. Once or twice a month • Never">
+                </div>
+                <label class="form-label">BP2 Bullets (one per line)</label>
+                <textarea id="t1-bp2-bullets" class="form-control form-control-sm" rows="4" placeholder="Bullet 1&#10;Bullet 2"></textarea>
+              </div>
+            </div>
+
+            <hr class="my-4">
+
+            <h5 class="fw-bold text-dark mb-3">Category-wise Detailed Breakdowns (Step 6)</h5>
+            <div class="row g-3">
+              <div class="col-md-6 card-form-sub p-3">
+                <h6>Paragraph 1 Flow Details (one item per line)</h6>
+                <textarea id="t1-bp1-flow" class="form-control form-control-sm" rows="4" placeholder="Stage 1 details&#10;Stage 2 details"></textarea>
+              </div>
+              <div class="col-md-6 card-form-sub p-3">
+                <h6>Paragraph 2 Flow Details (one item per line)</h6>
+                <textarea id="t1-bp2-flow" class="form-control form-control-sm" rows="4" placeholder="Stage 4 details&#10;Stage 5 details"></textarea>
+              </div>
+            </div>
+
+            <hr class="my-4">
+
+            <h5 class="fw-bold text-dark mb-3">Active Listening Grading Keywords &amp; Ranking Challenge</h5>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Grading Keywords (comma-separated, min 5)</label>
+                <input type="text" id="t1-keywords" class="form-control" placeholder="bar graph, every day, several times, 2013">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Ranking Categories (highest to lowest, comma-separated)</label>
+                <input type="text" id="t1-ranking" class="form-control" placeholder="Once or twice a month, Once a week, Every day">
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Ear-Trainer Vocab Card Words (comma-separated, exactly 4)</label>
+                <input type="text" id="t1-vocab-hunt" class="form-control" placeholder="Predominant, Marginal, Gradual Shift, Fluctuate">
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- WRITING TASK 2 TAB -->
+        <div class="tab-pane fade" id="tab-t2" role="tabpanel">
+          <div class="admin-card">
+            <h4 class="fw-bold text-primary mb-4"><i class="bi bi-file-earmark-ruled-fill"></i> Task 2 Lesson Settings</h4>
+            
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Audio Briefing File Name (in materials/)</label>
+                <input type="text" id="t2-audio" class="form-control" placeholder="e.g. Why_we_choose_screens_over_hobbies.m4a">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Task 2 Essay Type / Label</label>
+                <input type="text" id="t2-type" class="form-control" placeholder="e.g. Causes and Effects Essay / To what extent do you agree or disagree">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Question Text Prompt</label>
+                <textarea id="t2-question" class="form-control" rows="3" placeholder="Paste task 2 prompt here..."></textarea>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Sample Introduction</label>
+                <textarea id="t2-intro" class="form-control" rows="3" placeholder="Nowadays, fewer people..."></textarea>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Sample Conclusion</label>
+                <textarea id="t2-conclusion" class="form-control" rows="3" placeholder="In conclusion, while work schedules..."></textarea>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Body Paragraph 1 Title</label>
+                <input type="text" id="t2-bp1-title" class="form-control" placeholder="e.g. Causes of the Decline in Hobbies / Arguments for Agreeing">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Body Paragraph 2 Title</label>
+                <input type="text" id="t2-bp2-title" class="form-control" placeholder="e.g. Effects of the Decline in Hobbies / Arguments for Disagreeing">
+              </div>
+            </div>
+
+            <hr class="my-4">
+
+            <h5 class="fw-bold text-dark mb-3">Lexical Items Vocabulary (Step 3 Card Set, exactly 6)</h5>
+            <div id="t2-vocab-container">
+              <!-- Rebuilt dynamically by JS -->
+            </div>
+
+            <hr class="my-4">
+
+            <h5 id="t2-bp1-header-label" class="fw-bold text-dark mb-3">Body Paragraph 1 Grid Cards (4 items)</h5>
+            <div id="t2-causes-container" class="row g-3">
+              <!-- Rebuilt dynamically by JS -->
+            </div>
+
+            <hr class="my-4">
+
+            <h5 id="t2-bp2-header-label" class="fw-bold text-dark mb-3">Body Paragraph 2 Grid Cards (4 items)</h5>
+            <div id="t2-effects-container" class="row g-3">
+              <!-- Rebuilt dynamically by JS -->
+            </div>
+
+            <hr class="my-4">
+
+            <h5 class="fw-bold text-dark mb-3">Active Listening Grading Keywords</h5>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Grading Keywords (comma-separated, min 5)</label>
+                <input type="text" id="t2-keywords" class="form-control" placeholder="hobbies, leisure, work, screen, digital">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Ear-Trainer Vocab Card Words (comma-separated, exactly 6)</label>
+                <input type="text" id="t2-vocab-hunt" class="form-control" placeholder="Anathema, Ineluctable, Redound, Salubrious, Profligacy, Sagacious">
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- QUIZ MANAGER TAB -->
+        <div class="tab-pane fade" id="tab-quiz" role="tabpanel">
+          <div class="admin-card">
+            <h4 class="fw-bold text-primary mb-4"><i class="bi bi-patch-check-fill me-2"></i>Quiz Questions Manager (10 Questions)</h4>
+            
+            <div id="quiz-questions-container">
+              <!-- Rendered dynamically by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FORM ACTIONS -->
+      <div class="admin-card text-end sticky-bottom bg-white border-top p-3" style="box-shadow: 0 -10px 30px rgba(0,0,0,0.03);">
+        <span id="save-status" class="text-success fw-bold me-3" style="display:none;"><i class="bi bi-check-circle-fill me-1"></i>Lesson Updated Live!</span>
+        <button type="submit" id="btn-submit" class="btn btn-primary btn-lg px-5 shadow"><i class="bi bi-cloud-arrow-up-fill me-2"></i>Publish Live Lesson</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="successToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          <i class="bi bi-check-circle-fill me-2"></i>Lesson successfully updated in Firebase! Live site updated.
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap and Firebase compat scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-database-compat.js"></script>
+  <script src="assets/js/admin.js"></script>
+</body>
+</html>
