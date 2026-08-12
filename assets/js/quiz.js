@@ -22,9 +22,9 @@ const db = firebase.database(app);
 const QUESTIONS = [
   { 
     type: "scramble",
-    q: "1. Arrange the words below to form a grammatically correct sentence describing a trend from the bar chart:", 
-    words: ["represented", "the", "consistently", "Daily", "decade.", "proportion", "visits", "throughout", "smallest"],
-    correctSentence: "Daily visits consistently represented the smallest proportion throughout the decade.",
+    q: "1. Arrange the words below to form a grammatically correct sentence describing the start of the life cycle:", 
+    words: ["begins", "water.", "The", "eggs", "with", "laid", "in", "cycle"],
+    correctSentence: "The cycle begins with eggs laid in water.",
     correct: "B"
   },
   { 
@@ -45,15 +45,15 @@ const QUESTIONS = [
   { 
     type: "error-correction",
     q: "4. Tap the incorrect word in the sentence below and select its correction:", 
-    sentence: "The percentage of weekly diners fluctuate slightly during the period.",
-    errorWord: "fluctuate",
-    options: ["fluctuated", "fluctuating", "fluctuates", "fluctuation"],
+    sentence: "The developmental process culminate in the emergence of an adult frog.",
+    errorWord: "culminate",
+    options: ["culminates", "culminating", "culmination", "culminated"],
     correct: "A"
   },
   { 
     type: "scramble",
     q: "5. Arrange the words below to form a grammatically correct Task 2 sentence about work schedules and hobbies:", 
-    words: ["left", "rise", "hobbies.", "has", "schedules", "of", "demanding", "little", "ineluctable", "work", "The", "room", "for"],
+    words: ["left", "rose", "hobbies.", "has", "schedules", "of", "demanding", "little", "ineluctable", "work", "The", "room", "for"],
     correctSentence: "The ineluctable rise of demanding work schedules has left little room for hobbies.",
     correct: "C"
   },
@@ -82,9 +82,9 @@ const QUESTIONS = [
   },
   { 
     type: "scramble",
-    q: "9. Arrange the words below to form a grammatically correct summary of a gradual trend change:", 
-    words: ["gradual", "towards", "shift", "a", "The", "monthly", "chart", "consumption.", "illustrates"],
-    correctSentence: "The chart illustrates a gradual shift towards monthly consumption.",
+    q: "9. Arrange the words below to form a grammatically correct sentence describing the tadpole development stage:", 
+    words: ["undergoes", "physical", "before", "The", "tadpole", "reaching", "several", "changes", "maturity."],
+    correctSentence: "The tadpole undergoes several physical changes before reaching maturity.",
     correct: "D"
   },
   { 

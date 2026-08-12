@@ -226,50 +226,50 @@ window.toggleQuizTypeFields = function(selectEl, index) {
 const DEFAULT_LESSON = {
   task1: {
     audioUrl: "Fast_food_habits_2003_to_2013.m4a",
-    imageUrl: "fast-food-bar-chart.png",
-    taskType: "Bar Chart (Comparative Data over Time)",
-    questionText: "The bar chart illustrates the frequency of eating at fast food restaurants among people in the USA in 2003, 2006 and 2013. The figures are presented in percentages (%).",
-    sampleIntro: "The bar chart compares the frequency with which people in the USA consumed fast food across six categories in 2003, 2006 and 2013, with the data expressed in percentages.",
-    sampleOverview: "Overall, eating fast food once a week and once or twice a month accounted for the largest proportions throughout the period, whereas daily consumption and never eating fast food consistently represented the smallest shares. In addition, there was a noticeable shift from weekly consumption towards monthly consumption over the ten-year period.",
+    imageUrl: "frog-life-cycle.png",
+    taskType: "Process Diagram (Natural Cycle)",
+    questionText: "The diagram below shows the life cycle of a frog. Summarize the information by selecting and reporting the main features.",
+    sampleIntro: "The diagram illustrates the natural life cycle of a frog, showing the series of developmental stages through which it progresses from an egg to adulthood.",
+    sampleOverview: "Overall, this is a natural cyclical process comprising six main stages, beginning with the formation of eggs and culminating in the development of an adult frog. A striking feature is the continuous transformation of the tadpole, which gradually develops limbs and the ability to breathe through its lungs before reaching maturity.",
     bp1Title: "Body Paragraph 1",
-    bp1Covers: "Every day • Several times a week • Once a week",
+    bp1Covers: "Eggs ➔ Tadpole ➔ Development of limbs",
     bp1Points: [
-      "Daily consumption was the least common habit (~3% to 4%)",
-      "Several times a week visits rose slightly in 2006 before declining in 2013",
-      "Once a week was the peak frequency in 2003 and 2006, declining by 2013",
-      "Frequent eating patterns showed a minor downward trend overall"
+      "Initially, the cycle begins with eggs laid in water, within which an embryo develops.",
+      "Subsequently, the eggs hatch into tadpoles, which undergo gradual physical development.",
+      "As the tadpole matures, its body becomes more developed and the hind and front limbs emerge.",
+      "Following this, the developing frog acquires its front legs, marking a further transition towards adulthood."
     ],
     bp2Title: "Body Paragraph 2",
-    bp2Covers: "Once or twice a month • A few times a year • Never",
+    bp2Covers: "Pulmonary breathing ➔ Tadpole frog ➔ Adult frog",
     bp2Points: [
-      "Once or twice a month visits rose, becoming the largest category in 2013 (~33%)",
-      "A few times a year visits remained stable at around 15%",
-      "Never eating fast food consistently accounted for a small minority (under 5%)",
-      "Occasional eating patterns became slightly more common than frequent visits"
+      "Thereafter, the developing frog begins pulmonary breathing, indicating the transition from aquatic to air-based respiration.",
+      "The tail gradually diminishes as the animal develops into a tadpole frog.",
+      "Eventually, the juvenile frog completes its metamorphosis and becomes an adult frog.",
+      "The mature frog subsequently reproduces, laying eggs and thereby restarting the cycle."
     ],
     bp1Flow: [
-      "Daily consumption: Remained the least common habit, with only a very small proportion of people eating fast food every day throughout the period.",
-      "Several times a week: The percentage of people eating fast food several times a week rose slightly in 2006 before declining again in 2013.",
-      "Once a week: Once a week was the most common frequency in both 2003 and 2006, although its proportion declined by the end of the period."
+      "Initially: The cycle commences with eggs laid in water, within which an embryo develops.",
+      "Subsequently: The eggs hatch into tadpoles, which undergo gradual physical development in water.",
+      "Limbs Development: As the tadpole matures, its body becomes more developed and the hind and front limbs emerge."
     ],
     bp2Flow: [
-      "Once or twice a month: The proportion of people eating fast food once or twice a month increased overall and became the largest category in 2013.",
-      "A few times a year: The percentage of individuals visiting fast-food restaurants a few times a year remained relatively stable throughout the period.",
-      "Never: Likewise, those who never consumed fast food consistently accounted for only a small minority."
+      "Thereafter: The developing frog begins pulmonary breathing, indicating the transition from aquatic to air-based respiration.",
+      "Tadpole Frog: The tail gradually diminishes as the animal develops into a tadpole frog.",
+      "Eventually: The juvenile frog completes its metamorphosis and becomes a mature adult frog, which eventually reproduces."
     ],
     vocabList: [
-      { simple: "most common", band9: "Predominant" },
-      { simple: "small / minor", band9: "Marginal" },
-      { simple: "slow change", band9: "Gradual Shift" },
-      { simple: "go up and down", band9: "Fluctuate" },
-      { simple: "unchanged", band9: "Stable" },
-      { simple: "represented", band9: "Accounted for" },
-      { simple: "medium", band9: "Moderate" },
-      { simple: "way of eating", band9: "Consumption Pattern" }
+      { simple: "physical transformation", band9: "Metamorphosis" },
+      { simple: "ends with", band9: "Culminates" },
+      { simple: "experiences", band9: "Undergoes" },
+      { simple: "becomes visible", band9: "Emerges" },
+      { simple: "changes into", band9: "Transforms" },
+      { simple: "becomes smaller", band9: "Diminishes" },
+      { simple: "begins", band9: "Commences" },
+      { simple: "develops forward", band9: "Progresses" }
     ],
-    vocabHunt: ["Predominant", "Marginal", "Gradual Shift", "Fluctuate"],
-    ranking: ["Once or twice a month", "Once a week", "Several times a week", "A few times a year", "Never", "Every day"],
-    keywords: ["bar graph", "bra graph", "every day", "several times a week", "once a week", "once or twice a month", "a few times a year", "never", "2003", "2006", "2013"]
+    vocabHunt: ["Metamorphosis", "Culminates", "Undergoes", "Emerges"],
+    ranking: ["Eggs", "Tadpole", "Limbs Development", "Pulmonary Breathing", "Tadpole Frog", "Adult Frog"],
+    keywords: ["frog", "cycle", "egg", "embryo", "tadpole", "limb", "breathing", "lung", "gills", "metamorphosis", "reproduce"]
   },
   task2: {
     audioUrl: "Replacing_historic_landmarks_with_modern_infrastructure.m4a",
@@ -305,9 +305,9 @@ const DEFAULT_LESSON = {
   quizQuestions: [
     { 
       type: "scramble",
-      q: "1. Arrange the words below to form a grammatically correct sentence describing a trend from the bar chart:", 
-      words: ["represented", "the", "consistently", "Daily", "decade.", "proportion", "visits", "throughout", "smallest"],
-      correctSentence: "Daily visits consistently represented the smallest proportion throughout the decade.",
+      q: "1. Arrange the words below to form a grammatically correct sentence describing the start of the life cycle:", 
+      words: ["begins", "water.", "The", "eggs", "with", "laid", "in", "cycle"],
+      correctSentence: "The cycle begins with eggs laid in water.",
       correct: "B"
     },
     { 
@@ -328,9 +328,9 @@ const DEFAULT_LESSON = {
     { 
       type: "error-correction",
       q: "4. Tap the incorrect word in the sentence below and select its correction:", 
-      sentence: "The percentage of weekly diners fluctuate slightly during the period.",
-      errorWord: "fluctuate",
-      options: ["fluctuated", "fluctuating", "fluctuates", "fluctuation"],
+      sentence: "The developmental process culminate in the emergence of an adult frog.",
+      errorWord: "culminate",
+      options: ["culminates", "culminating", "culmination", "culminated"],
       correct: "A"
     },
     { 
@@ -365,9 +365,9 @@ const DEFAULT_LESSON = {
     },
     { 
       type: "scramble",
-      q: "9. Arrange the words below to form a grammatically correct summary of a gradual trend change:", 
-      words: ["gradual", "towards", "shift", "a", "The", "monthly", "chart", "consumption.", "illustrates"],
-      correctSentence: "The chart illustrates a gradual shift towards monthly consumption.",
+      q: "9. Arrange the words below to form a grammatically correct sentence describing the tadpole development stage:", 
+      words: ["undergoes", "physical", "before", "The", "tadpole", "reaching", "several", "changes", "maturity."],
+      correctSentence: "The tadpole undergoes several physical changes before reaching maturity.",
       correct: "D"
     },
     { 

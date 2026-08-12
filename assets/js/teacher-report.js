@@ -398,7 +398,7 @@ function showAnswerDistribution(questionIndex) {
 }
 
 // --- Active Lesson Content Sync ---
-let liveKeywordsT1 = ['bar graph', 'bra graph', 'every day', 'several times a week', 'once a week', 'once or twice a month', 'a few times a year', 'never', '2003', '2006', '2013'];
+let liveKeywordsT1 = ['frog', 'cycle', 'egg', 'embryo', 'tadpole', 'limb', 'breathing', 'lung', 'gills', 'metamorphosis', 'reproduce'];
 let liveKeywordsT2 = ['infrastructure', 'development', 'modernization', 'construction', 'roads', 'transport', 'urban growth', 'old buildings', 'heritage', 'history', 'culture', 'preservation', 'restoration', 'identity', 'architecture', 'tourism', 'cost', 'maintenance', 'progress', 'community'];
 let liveTask2Type = "Causes and Effects Essay";
 
