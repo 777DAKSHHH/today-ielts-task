@@ -272,35 +272,35 @@ const DEFAULT_LESSON = {
     keywords: ["frog", "cycle", "egg", "embryo", "tadpole", "limb", "breathing", "lung", "gills", "metamorphosis", "reproduce"]
   },
   task2: {
-    audioUrl: "Replacing_historic_landmarks_with_modern_infrastructure.m4a",
-    taskType: "Causes and Effects Essay",
-    questionText: "Very few people devote time to hobbies these days. Why is this happening? What effect does this have on an individual and society in general?",
-    sampleIntro: "Nowadays, considerably fewer people devote time to hobbies than in the past due to increasing professional commitments, digital distractions, and the growing pressure to remain competitive. This trend has significant consequences for individual well-being, creativity, social cohesion, and overall quality of life.",
-    sampleConclusion: "In conclusion, while demanding work hours and digital screens have ineluctably reduced the time spent on hobbies, this change redounds to lower mental health standards and fragmented communities. Prioritizing recreational outlets is essential for restoring both personal well-being and societal unity.",
-    bp1Title: "Investing in New Infrastructure",
-    bp2Title: "Preserving Old Buildings",
+    audioUrl: "Trading_academic_subjects_for_life_skills.m4a",
+    taskType: "Advantages and Disadvantages Essay",
+    questionText: "In some countries, secondary schools provide students an opportunity to learn skills such as cooking, basic repairs, drawing and woodwork. What are the advantages and disadvantages of teaching such non-academic skills in school?",
+    sampleIntro: "In several nations, secondary educational institutions offer courses in practical and creative domains, including cooking, simple maintenance, drawing, and woodworking. This essay will examine both the benefits, such as fostering self-reliance and vocational readiness, and the drawbacks, including curriculum dilution and financial demands, of introducing these subjects.",
+    sampleConclusion: "In conclusion, introducing practical and creative skills in secondary schools presents certain challenges, such as curriculum overload and increased funding requirements. However, these drawbacks are significantly overshadowed by the benefits of fostering self-reliance, enhancing motor skills, and offering alternative career paths. Therefore, schools should strive to incorporate these vocational classes into their regular schedules to ensure a more holistic education.",
+    bp1Title: "Advantages of Teaching Non-Academic Skills",
+    bp2Title: "Disadvantages of Teaching Non-Academic Skills",
     vocabList: [
-      { word: "Anathema", meaning: "Something intensely disliked or loathed.", example: "For dedicated career professionals, spending hours on unproductive leisure activities is often considered an anathema." },
-      { word: "Ineluctable", meaning: "Unable to be avoided; resistless; inevitable.", example: "The ineluctable rise of demanding work schedules has left little room for hobbies." },
-      { word: "Redound", meaning: "To have a particular result or effect (often negative in this context).", example: "Neglecting relaxation does not redound to professional success, but rather leads to burnout." },
-      { word: "Salubrious", meaning: "Favorable to or promoting health; healthful.", example: "Pursuing active outdoor hobbies has a highly salubrious effect on mental and physical health." },
-      { word: "Profligacy", meaning: "Reckless extravagance or wastefulness.", example: "The profligacy of screen-time habits consumes hours of potential leisure." },
-      { word: "Sagacious", meaning: "Having or showing keen discernment and good judgment.", example: "A sagacious individual recognizes the necessity of work-life balance for long-term productivity." }
+      { word: "Holistic", meaning: "Addressing the whole person or system rather than just parts.", example: "A holistic curriculum balances academic rigor with essential life skills." },
+      { word: "Pragmatic", meaning: "Dealing with things sensibly and realistically based on practical considerations.", example: "Woodwork and cooking classes provide a pragmatic application of academic theories." },
+      { word: "Pedagogical", meaning: "Relating to the methods and theory of teaching.", example: "Integrating practical courses is a sound pedagogical strategy to keep students engaged." },
+      { word: "Efficacy", meaning: "The ability to produce a desired or intended result.", example: "The efficacy of vocational training is demonstrated by the high employability of graduates." },
+      { word: "Acquisition", meaning: "The act of gaining or acquiring a skill, habit, or quality.", example: "The acquisition of hands-on skills builds personal confidence in young adolescents." },
+      { word: "Vanguard", meaning: "A position of leading or being at the forefront of a development or trend.", example: "Progressive institutions are in the vanguard of blending academic learning with life-skills training." }
     ],
-    vocabHunt: ["Anathema", "Ineluctable", "Redound", "Salubrious", "Profligacy", "Sagacious"],
+    vocabHunt: ["Holistic", "Pragmatic", "Pedagogical", "Efficacy", "Acquisition", "Vanguard"],
     causes: [
-      { title: "Accommodates Population Growth", desc: "Modern facilities can meet the demands of expanding urban populations.", ex: "New housing, transport networks and hospitals can ease pressure on overcrowded cities." },
-      { title: "Enhances Economic Productivity", desc: "Efficient infrastructure facilitates business activity and improves connectivity.", ex: "Upgraded roads and public transport can reduce commuting and freight-delivery times." },
-      { title: "Improves Public Safety", desc: "New structures can incorporate contemporary safety and environmental standards.", ex: "Modern bridges and buildings are designed to withstand structural and climatic risks more effectively." },
-      { title: "Supports Technological Progress", desc: "Contemporary infrastructure can accommodate emerging technologies and changing public needs.", ex: "Smart transport systems and energy-efficient buildings can improve urban efficiency." }
+      { title: "Fosters Self-Reliance", desc: "Practical skills like cooking and basic repairs prepare students to manage daily life effectively without depending on others.", ex: "Students who learn culinary basics can prepare nutritious meals independently, reducing reliance on unhealthy fast food." },
+      { title: "Cultivates Creative & Motor Skills", desc: "Hands-on subjects like drawing and woodwork develop fine motor coordination and spatial reasoning.", ex: "Designing and assembling wooden projects requires precise spatial awareness, translating to improved hand-eye coordination." },
+      { title: "Unlocks Vocational Career Paths", desc: "Early exposure to vocational arts helps students identify talents that could lead to rewarding non-academic professions.", ex: "A student discovering a talent for woodworking might pursue highly skilled trades like carpentry or industrial design." },
+      { title: "Offers Cognitive Relief", desc: "Practical and creative classes provide a mental break from highly demanding core academic subjects, reducing student stress.", ex: "Engaging in drawing sessions helps students express emotions and relax, improving overall focus in mathematics and science." }
     ],
     effects: [
-      { title: "Protects Cultural Heritage", desc: "Historic structures embody a society's architectural and cultural legacy.", ex: "Preserving landmarks allows future generations to retain a tangible connection with their history." },
-      { title: "Strengthens Tourism", desc: "Heritage sites can attract visitors and generate local economic activity.", ex: "Historic districts often support museums, hotels, restaurants and local businesses." },
-      { title: "Maintains Architectural Identity", desc: "Older buildings give cities a distinctive character that modern developments may lack.", ex: "Traditional architecture can differentiate one city from increasingly uniform urban landscapes." },
-      { title: "Encourages Sustainable Development", desc: "Reusing existing structures can reduce demolition waste and conserve construction resources.", ex: "Converting historic buildings into offices or cultural centres can extend their useful life." }
+      { title: "Dilutes Academic Focus", desc: "Allocating time to practical arts reduces the hours available for critical subjects like science, mathematics, and literacy.", ex: "Shifting classroom hours to woodworking might leave students less prepared for competitive university entrance exams." },
+      { title: "Places Financial Strain on Schools", desc: "Equipping workshops and kitchens requires substantial funding for tools, safety gear, and specialized staff.", ex: "Purchasing sewing machines, stoves, and carpentry benches can deplete a public school's limited annual budget." },
+      { title: "Introduces Safety & Liability Risks", desc: "Working with sharp tools, stoves, and heavy equipment increases the likelihood of student injuries in class.", ex: "Woodwork rooms require strict safety protocols to prevent accidents involving power tools or sharp hand implements." },
+      { title: "Reinforces Socio-economic Tracking", desc: "Directing students towards practical skills classes can sometimes divert underprivileged students away from academic pursuits.", ex: "Schools in poorer districts might over-emphasize vocational training, limiting students' access to higher education." }
     ],
-    keywords: ["infrastructure", "development", "modernization", "construction", "roads", "transport", "urban growth", "old buildings", "heritage", "history", "culture", "preservation", "restoration", "identity", "architecture", "tourism", "cost", "maintenance", "progress", "community"]
+    keywords: ["advantages", "disadvantages", "benefits", "drawbacks", "non-academic skills", "vocational", "cooking", "repairs", "drawing", "woodwork", "schools", "curriculum", "independence", "career paths", "funding", "academic focus", "safety risks"]
   },
   quizQuestions: [
     { 

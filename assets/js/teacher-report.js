@@ -399,8 +399,8 @@ function showAnswerDistribution(questionIndex) {
 
 // --- Active Lesson Content Sync ---
 let liveKeywordsT1 = ['frog', 'cycle', 'egg', 'embryo', 'tadpole', 'limb', 'breathing', 'lung', 'gills', 'metamorphosis', 'reproduce'];
-let liveKeywordsT2 = ['infrastructure', 'development', 'modernization', 'construction', 'roads', 'transport', 'urban growth', 'old buildings', 'heritage', 'history', 'culture', 'preservation', 'restoration', 'identity', 'architecture', 'tourism', 'cost', 'maintenance', 'progress', 'community'];
-let liveTask2Type = "Causes and Effects Essay";
+let liveKeywordsT2 = ['advantages', 'disadvantages', 'benefits', 'drawbacks', 'non-academic skills', 'vocational', 'cooking', 'repairs', 'drawing', 'woodwork', 'schools', 'curriculum', 'independence', 'career paths', 'funding', 'academic focus', 'safety risks'];
+let liveTask2Type = "Advantages and Disadvantages Essay";
 
 db.ref('activeLesson').on('value', (snapshot) => {
   const data = snapshot.val();
