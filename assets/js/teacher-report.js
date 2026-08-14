@@ -398,7 +398,7 @@ function showAnswerDistribution(questionIndex) {
 }
 
 // --- Active Lesson Content Sync ---
-let liveKeywordsT1 = ['frog', 'cycle', 'egg', 'embryo', 'tadpole', 'limb', 'breathing', 'lung', 'gills', 'metamorphosis', 'reproduce'];
+let liveKeywordsT1 = ['noodles', 'manufacture', 'process', 'stages', 'flour', 'silos', 'mixer', 'water', 'oil', 'dough', 'sheets', 'rollers', 'strips', 'discs', 'cooking', 'frying', 'drying', 'cups', 'vegetables', 'spices', 'labelling', 'sealing'];
 let liveKeywordsT2 = ['advantages', 'disadvantages', 'benefits', 'drawbacks', 'non-academic skills', 'vocational', 'cooking', 'repairs', 'drawing', 'woodwork', 'schools', 'curriculum', 'independence', 'career paths', 'funding', 'academic focus', 'safety risks'];
 let liveTask2Type = "Advantages and Disadvantages Essay";
 

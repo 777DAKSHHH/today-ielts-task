@@ -225,51 +225,50 @@ window.toggleQuizTypeFields = function(selectEl, index) {
 // --- DEFAULT LESSON PAYLOAD ---
 const DEFAULT_LESSON = {
   task1: {
-    audioUrl: "Fast_food_habits_2003_to_2013.m4a",
-    imageUrl: "frog-life-cycle.png",
-    taskType: "Process Diagram (Natural Cycle)",
-    questionText: "The diagram below shows the life cycle of a frog. Summarize the information by selecting and reporting the main features.",
-    sampleIntro: "The diagram illustrates the natural life cycle of a frog, showing the series of developmental stages through which it progresses from an egg to adulthood.",
-    sampleOverview: "Overall, this is a natural cyclical process comprising six main stages, beginning with the formation of eggs and culminating in the development of an adult frog. A striking feature is the continuous transformation of the tadpole, which gradually develops limbs and the ability to breathe through its lungs before reaching maturity.",
+    audioUrl: "How_Instant_Cup_Noodles_Are_Made.m4a",
+    imageUrl: "instant-noodles.png",
+    taskType: "Process Diagram (Man-made Process)",
+    questionText: "The diagram below shows how instant noodles are manufactured. Summarize the information by selecting and reporting the main features.",
+    sampleIntro: "The diagram illustrates the manufacturing process of instant noodles, showing how the product is produced on an industrial scale.",
+    sampleOverview: "Overall, this is a man-made linear process comprising eight distinct stages, commencing with the storage of flour in silos and culminating in the labelling and sealing of the finished noodle cups. A striking feature of this process is that the noodles are cooked in oil and dried before being portioned into cups, where supplementary ingredients are added prior to final packaging.",
     bp1Title: "Body Paragraph 1",
-    bp1Covers: "Eggs ➔ Tadpole ➔ Development of limbs",
+    bp1Covers: "Flour Silo Storage ➔ Dough Sheets ➔ Slicing Dough Strips",
     bp1Points: [
-      "Initially, the cycle begins with eggs laid in water, within which an embryo develops.",
-      "Subsequently, the eggs hatch into tadpoles, which undergo gradual physical development.",
-      "As the tadpole matures, its body becomes more developed and the hind and front limbs emerge.",
-      "Following this, the developing frog acquires its front legs, marking a further transition towards adulthood."
+      "Initially, raw flour is transported from storage silos to a mixing machine, where it is homogenized with water and oil.",
+      "Subsequently, the mixture is passed through a series of rollers to flatten it into thin dough sheets.",
+      "Following this, these flat sheets are sheared by machinery to form wavy dough strips."
     ],
     bp2Title: "Body Paragraph 2",
-    bp2Covers: "Pulmonary breathing ➔ Tadpole frog ➔ Adult frog",
+    bp2Covers: "Forming Noodle Discs ➔ Frying & Dehydrating ➔ Cup Packaging ➔ Sealing",
     bp2Points: [
-      "Thereafter, the developing frog begins pulmonary breathing, indicating the transition from aquatic to air-based respiration.",
-      "The tail gradually diminishes as the animal develops into a tadpole frog.",
-      "Eventually, the juvenile frog completes its metamorphosis and becomes an adult frog.",
-      "The mature frog subsequently reproduces, laying eggs and thereby restarting the cycle."
+      "Thereafter, the wavy strips are portioned and shaped into circular noodle discs.",
+      "These discs are then cooked in hot oil, which parboils them, and are subsequently dried to remove moisture.",
+      "Next, the dehydrated noodle discs are dispensed into cups, followed by the addition of dried vegetables and spices.",
+      "Eventually, the cups are hermetically sealed and labelled, completing the production line."
     ],
     bp1Flow: [
-      "Initially: The cycle commences with eggs laid in water, within which an embryo develops.",
-      "Subsequently: The eggs hatch into tadpoles, which undergo gradual physical development in water.",
-      "Limbs Development: As the tadpole matures, its body becomes more developed and the hind and front limbs emerge."
+      "Initially: The manufacturing line commences when raw flour is released from storage silos into a mixer.",
+      "Subsequently: The flour, water, and oil are homogenized into dough and rolled into laminated sheets.",
+      "Shearing: The dough sheets are then sheared into narrow, wavy strips."
     ],
     bp2Flow: [
-      "Thereafter: The developing frog begins pulmonary breathing, indicating the transition from aquatic to air-based respiration.",
-      "Tadpole Frog: The tail gradually diminishes as the animal develops into a tadpole frog.",
-      "Eventually: The juvenile frog completes its metamorphosis and becomes a mature adult frog, which eventually reproduces."
+      "Thereafter: The strips are shaped into circular noodle discs, cooked in oil, and dehydrated.",
+      "Cup Dispensing: The dry noodle discs are placed in cups with vegetables and spices added.",
+      "Eventually: The cups are hermetically sealed and labelled, completing the production cycle."
     ],
     vocabList: [
-      { simple: "physical transformation", band9: "Metamorphosis" },
+      { simple: "starts", band9: "Commences" },
       { simple: "ends with", band9: "Culminates" },
-      { simple: "experiences", band9: "Undergoes" },
-      { simple: "becomes visible", band9: "Emerges" },
-      { simple: "changes into", band9: "Transforms" },
-      { simple: "becomes smaller", band9: "Diminishes" },
-      { simple: "begins", band9: "Commences" },
-      { simple: "develops forward", band9: "Progresses" }
+      { simple: "mixed thoroughly", band9: "Homogenized" },
+      { simple: "rolled flat", band9: "Laminated" },
+      { simple: "cut with pressure", band9: "Sheared" },
+      { simple: "all moisture removed", band9: "Dehydrated" },
+      { simple: "portioned/dispensed", band9: "Dispensed" },
+      { simple: "sealed airtight", band9: "Hermetically sealed" }
     ],
-    vocabHunt: ["Metamorphosis", "Culminates", "Undergoes", "Emerges"],
-    ranking: ["Eggs", "Tadpole", "Limbs Development", "Pulmonary Breathing", "Tadpole Frog", "Adult Frog"],
-    keywords: ["frog", "cycle", "egg", "embryo", "tadpole", "limb", "breathing", "lung", "gills", "metamorphosis", "reproduce"]
+    vocabHunt: ["Commences", "Homogenized", "Laminated", "Hermetically sealed"],
+    ranking: ["Flour Storage (Silos)", "Mixing (Water & Oil)", "Rolling Dough Sheets", "Slicing Dough Strips", "Forming Noodle Discs", "Cooking & Drying", "Adding Vegetables & Spices", "Sealing & Labelling Cups"],
+    keywords: ["noodles", "manufacture", "process", "stages", "flour", "silos", "mixer", "water", "oil", "dough", "sheets", "rollers", "strips", "discs", "cooking", "frying", "drying", "cups", "vegetables", "spices", "labelling", "sealing"]
   },
   task2: {
     audioUrl: "Trading_academic_subjects_for_life_skills.m4a",
