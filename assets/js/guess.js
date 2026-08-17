@@ -20,7 +20,7 @@ const db = firebase.database(app);
 
 // Live lesson task type cache (pre-fetched on load)
 let liveTask1Type = "Process Diagram";
-let liveTask2Type = "Advantages and Disadvantages Essay";
+let liveTask2Type = "Discuss Both Views & Opinion Essay";
 
 db.ref('activeLesson').once('value').then((snapshot) => {
   const data = snapshot.val();

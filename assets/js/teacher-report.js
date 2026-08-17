@@ -399,8 +399,8 @@ function showAnswerDistribution(questionIndex) {
 
 // --- Active Lesson Content Sync ---
 let liveKeywordsT1 = ['noodles', 'manufacture', 'process', 'stages', 'flour', 'silos', 'mixer', 'water', 'oil', 'dough', 'sheets', 'rollers', 'strips', 'discs', 'cooking', 'frying', 'drying', 'cups', 'vegetables', 'spices', 'labelling', 'sealing'];
-let liveKeywordsT2 = ['advantages', 'disadvantages', 'benefits', 'drawbacks', 'non-academic skills', 'vocational', 'cooking', 'repairs', 'drawing', 'woodwork', 'schools', 'curriculum', 'independence', 'career paths', 'funding', 'academic focus', 'safety risks'];
-let liveTask2Type = "Advantages and Disadvantages Essay";
+let liveKeywordsT2 = ['zoos', 'cruelty', 'closed down', 'protecting', 'wild animals', 'captivity', 'conservation', 'endangered species', 'breeding', 'cages', 'natural habitat', 'freedom', 'extinction', 'public awareness', 'research', 'animal welfare', 'ethical concerns', 'rehabilitation'];
+let liveTask2Type = "Discuss Both Views & Opinion Essay";
 
 db.ref('activeLesson').on('value', (snapshot) => {
   const data = snapshot.val();

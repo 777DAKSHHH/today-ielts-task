@@ -271,35 +271,35 @@ const DEFAULT_LESSON = {
     keywords: ["noodles", "manufacture", "process", "stages", "flour", "silos", "mixer", "water", "oil", "dough", "sheets", "rollers", "strips", "discs", "cooking", "frying", "drying", "cups", "vegetables", "spices", "labelling", "sealing"]
   },
   task2: {
-    audioUrl: "Trading_academic_subjects_for_life_skills.m4a",
-    taskType: "Advantages and Disadvantages Essay",
-    questionText: "In some countries, secondary schools provide students an opportunity to learn skills such as cooking, basic repairs, drawing and woodwork. What are the advantages and disadvantages of teaching such non-academic skills in school?",
-    sampleIntro: "In several nations, secondary educational institutions offer courses in practical and creative domains, including cooking, simple maintenance, drawing, and woodworking. This essay will examine both the benefits, such as fostering self-reliance and vocational readiness, and the drawbacks, including curriculum dilution and financial demands, of introducing these subjects.",
-    sampleConclusion: "In conclusion, introducing practical and creative skills in secondary schools presents certain challenges, such as curriculum overload and increased funding requirements. However, these drawbacks are significantly overshadowed by the benefits of fostering self-reliance, enhancing motor skills, and offering alternative career paths. Therefore, schools should strive to incorporate these vocational classes into their regular schedules to ensure a more holistic education.",
-    bp1Title: "Advantages of Teaching Non-Academic Skills",
-    bp2Title: "Disadvantages of Teaching Non-Academic Skills",
+    audioUrl: "Sanctuaries_or_prisons_for_endangered_species.m4a",
+    taskType: "Discuss Both Views & Opinion Essay",
+    questionText: "Some people think that zoos are cruel and should be closed down. Others, however, believe that zoos can be useful in protecting wild animals. Discuss both the views and give your opinion.",
+    sampleIntro: "While many people argue that keeping animals in zoos is cruel and should be banned, others believe these facilities play a key role in protecting wildlife. In my opinion, despite the ethical concerns of keeping animals in cages, zoos are necessary because they safeguard endangered species from extinction.",
+    sampleConclusion: "In conclusion, although captivity can cause animals psychological distress and limit their freedom, zoos provide essential breeding programs and a safe environment for species under threat. Therefore, I believe zoos should remain open, but they must prioritize animal welfare over commercial profit.",
+    bp1Title: "Arguments for Zoo Closure (Cruelty & Captivity)",
+    bp2Title: "Arguments for Zoo Conservation (Wildlife Protection)",
     vocabList: [
-      { word: "Holistic", meaning: "Addressing the whole person or system rather than just parts.", example: "A holistic curriculum balances academic rigor with essential life skills." },
-      { word: "Pragmatic", meaning: "Dealing with things sensibly and realistically based on practical considerations.", example: "Woodwork and cooking classes provide a pragmatic application of academic theories." },
-      { word: "Pedagogical", meaning: "Relating to the methods and theory of teaching.", example: "Integrating practical courses is a sound pedagogical strategy to keep students engaged." },
-      { word: "Efficacy", meaning: "The ability to produce a desired or intended result.", example: "The efficacy of vocational training is demonstrated by the high employability of graduates." },
-      { word: "Acquisition", meaning: "The act of gaining or acquiring a skill, habit, or quality.", example: "The acquisition of hands-on skills builds personal confidence in young adolescents." },
-      { word: "Vanguard", meaning: "A position of leading or being at the forefront of a development or trend.", example: "Progressive institutions are in the vanguard of blending academic learning with life-skills training." }
+      { word: "Confinement", meaning: "The state of being restricted in a limited space.", example: "The lifelong confinement of large predators in small cages can lead to severe psychological distress." },
+      { word: "Indispensable", meaning: "Absolutely necessary; essential.", example: "Captive breeding programs have proved indispensable in saving endangered species from extinction." },
+      { word: "Abolished", meaning: "Formally put an end to a system, practice, or institution.", example: "Critics demand that traditional zoos be abolished in favor of natural wildlife reserves." },
+      { word: "Cognitive", meaning: "Relating to mental processes of perception, memory, judgment, and reasoning.", example: "Restrictive enclosures often fail to stimulate the cognitive abilities of highly intelligent primates." },
+      { word: "Altruistic", meaning: "Showing a disinterested and selfless concern for the well-being of others.", example: "While some zoo operators have purely commercial motives, others are driven by altruistic conservation goals." },
+      { word: "Propensity", meaning: "An inclination or natural tendency to behave in a particular way.", example: "Captive animals often lose their natural propensity to hunt and survive in the wild." }
     ],
-    vocabHunt: ["Holistic", "Pragmatic", "Pedagogical", "Efficacy", "Acquisition", "Vanguard"],
+    vocabHunt: ["Confinement", "Indispensable", "Abolished", "Cognitive", "Altruistic", "Propensity"],
     causes: [
-      { title: "Fosters Self-Reliance", desc: "Practical skills like cooking and basic repairs prepare students to manage daily life effectively without depending on others.", ex: "Students who learn culinary basics can prepare nutritious meals independently, reducing reliance on unhealthy fast food." },
-      { title: "Cultivates Creative & Motor Skills", desc: "Hands-on subjects like drawing and woodwork develop fine motor coordination and spatial reasoning.", ex: "Designing and assembling wooden projects requires precise spatial awareness, translating to improved hand-eye coordination." },
-      { title: "Unlocks Vocational Career Paths", desc: "Early exposure to vocational arts helps students identify talents that could lead to rewarding non-academic professions.", ex: "A student discovering a talent for woodworking might pursue highly skilled trades like carpentry or industrial design." },
-      { title: "Offers Cognitive Relief", desc: "Practical and creative classes provide a mental break from highly demanding core academic subjects, reducing student stress.", ex: "Engaging in drawing sessions helps students express emotions and relax, improving overall focus in mathematics and science." }
+      { title: "Restricts Natural Behavior", desc: "Enclosures prevent animals from roaming long distances, hunting, and engaging in natural social structures.", ex: "Large migratory species like elephants and polar bears often develop repetitive pacing behaviors in confined spaces." },
+      { title: "Causes Psychological Distress", desc: "Constant public exposure and artificial noise can lead to chronic stress and depression in captive animals.", ex: "Many primates exhibit self-harming habits and aggression due to the lack of mental stimulation in artificial habitats." },
+      { title: "Weakens Survival Instincts", desc: "Animals born or raised in captivity become dependent on keepers for food and shelter, losing crucial survival skills.", ex: "Predators raised in cages struggle to adapt or hunt successfully if they are reintroduced into natural wild ecosystems." },
+      { title: "Driven by Commercial Profit", desc: "Many roadside zoos prioritize ticket sales and public entertainment over the genuine health and comfort of their animals.", ex: "Exploitative animal shows and petting encounters are often designed for visitor amusement rather than ecological education." }
     ],
     effects: [
-      { title: "Dilutes Academic Focus", desc: "Allocating time to practical arts reduces the hours available for critical subjects like science, mathematics, and literacy.", ex: "Shifting classroom hours to woodworking might leave students less prepared for competitive university entrance exams." },
-      { title: "Places Financial Strain on Schools", desc: "Equipping workshops and kitchens requires substantial funding for tools, safety gear, and specialized staff.", ex: "Purchasing sewing machines, stoves, and carpentry benches can deplete a public school's limited annual budget." },
-      { title: "Introduces Safety & Liability Risks", desc: "Working with sharp tools, stoves, and heavy equipment increases the likelihood of student injuries in class.", ex: "Woodwork rooms require strict safety protocols to prevent accidents involving power tools or sharp hand implements." },
-      { title: "Reinforces Socio-economic Tracking", desc: "Directing students towards practical skills classes can sometimes divert underprivileged students away from academic pursuits.", ex: "Schools in poorer districts might over-emphasize vocational training, limiting students' access to higher education." }
+      { title: "Prevents Extinction", desc: "Captive breeding programs provide a safe refuge to rebuild populations of species threatened in the wild.", ex: "The California Condor and the Arabian Oryx were saved from total extinction solely through specialized zoo breeding initiatives." },
+      { title: "Fosters Public Awareness", desc: "Seeing live animals up close inspires visitors to care about conservation and support global wildlife protection funds.", ex: "School children who visit zoo education centers are statistically more likely to support environmental charities in the future." },
+      { title: "Facilitates Scientific Research", desc: "Zoos offer researchers a controlled environment to study animal biology, behavior, and disease management.", ex: "Veterinary findings in zoos regarding infectious wildlife diseases can be directly applied to protect wild herds." },
+      { title: "Safe Haven from Threats", desc: "Zoos shield vulnerable animals from threats in the wild, such as poaching, habitat destruction, and climate change.", ex: "Orphaned or injured animals are given life-saving rehabilitation that would be impossible in the harsh wilderness." }
     ],
-    keywords: ["advantages", "disadvantages", "benefits", "drawbacks", "non-academic skills", "vocational", "cooking", "repairs", "drawing", "woodwork", "schools", "curriculum", "independence", "career paths", "funding", "academic focus", "safety risks"]
+    keywords: ["zoos", "cruelty", "closed down", "protecting", "wild animals", "captivity", "conservation", "endangered species", "breeding", "cages", "natural habitat", "freedom", "extinction", "public awareness", "research", "animal welfare", "ethical concerns", "rehabilitation"]
   },
   quizQuestions: [
     { 
