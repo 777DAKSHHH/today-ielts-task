@@ -225,50 +225,49 @@ window.toggleQuizTypeFields = function(selectEl, index) {
 // --- DEFAULT LESSON PAYLOAD ---
 const DEFAULT_LESSON = {
   task1: {
-    audioUrl: "How_Instant_Cup_Noodles_Are_Made.m4a",
-    imageUrl: "instant-noodles.png",
-    taskType: "Process Diagram (Man-made Process)",
-    questionText: "The diagram below shows how instant noodles are manufactured. Summarize the information by selecting and reporting the main features.",
-    sampleIntro: "The diagram illustrates the manufacturing process of instant noodles, showing how the product is produced on an industrial scale.",
-    sampleOverview: "Overall, this is a man-made linear process comprising eight distinct stages, commencing with the storage of flour in silos and culminating in the labelling and sealing of the finished noodle cups. A striking feature of this process is that the noodles are cooked in oil and dried before being portioned into cups, where supplementary ingredients are added prior to final packaging.",
+    audioUrl: "Replacing_coastal_factories_with_luxury_marinas.m4a",
+    imageUrl: "riverpark-comparison.png",
+    taskType: "Map Comparison (Development over Time)",
+    questionText: "The diagrams below show the Riverpark area of 20 years ago and the Riverpark area now. Summarise the information by selecting and reporting the main features and make relevant comparisons.",
+    sampleIntro: "The maps illustrate the industrial, commercial, and infrastructural developments in the Riverpark area over a twenty-year period from the past to the present day.",
+    sampleOverview: "Overall, the Riverpark area has undergone a significant transformation from a semi-industrial layout into a more commercial and leisure-oriented space. The most notable changes include the construction of a marina in the sea, the replacement of the factory with a supermarket, and the addition of public transport links near the railway track.",
     bp1Title: "Body Paragraph 1",
-    bp1Covers: "Flour Silo Storage ➔ Dough Sheets ➔ Slicing Dough Strips",
+    bp1Covers: "Sea, Sunset Street, and the Railway Track",
     bp1Points: [
-      "Initially, raw flour is transported from storage silos to a mixing machine, where it is homogenized with water and oil.",
-      "Subsequently, the mixture is passed through a series of rollers to flatten it into thin dough sheets.",
-      "Following this, these flat sheets are sheared by machinery to form wavy dough strips."
+      "In terms of commercial and transport developments, a new marina has been constructed in the sea to accommodate boats.",
+      "Near Sunset Street, the former factory has been demolished and replaced by a supermarket, while the retail shops nearby have been redeveloped into two separate units.",
+      "Additionally, a new railway station has been built on the railway track."
     ],
     bp2Title: "Body Paragraph 2",
-    bp2Covers: "Forming Noodle Discs ➔ Frying & Dehydrating ➔ Cup Packaging ➔ Sealing",
+    bp2Covers: "Estuary Road, Sun Road, College, and the Woodlands",
     bp2Points: [
-      "Thereafter, the wavy strips are portioned and shaped into circular noodle discs.",
-      "These discs are then cooked in hot oil, which parboils them, and are subsequently dried to remove moisture.",
-      "Next, the dehydrated noodle discs are dispensed into cups, followed by the addition of dried vegetables and spices.",
-      "Eventually, the cups are hermetically sealed and labelled, completing the production line."
+      "Regarding public infrastructure, the petrol station along Estuary Road has been replaced by a post office, and the road connecting Sunset Street to Sun Road has been pedestrianized.",
+      "In contrast, the library, doctor's surgery, and college have remained unchanged in their original positions.",
+      "Finally, the woodland area has been preserved, with a bird house added to the site."
     ],
     bp1Flow: [
-      "Initially: The manufacturing line commences when raw flour is released from storage silos into a mixer.",
-      "Subsequently: The flour, water, and oil are homogenized into dough and rolled into laminated sheets.",
-      "Shearing: The dough sheets are then sheared into narrow, wavy strips."
+      "Marina: Built in the sea to provide vessel mooring facilities.",
+      "Supermarket & Shops: Former factory demolished to erect a supermarket; nearby shops split into two units.",
+      "Railway: A new station built along the railway track."
     ],
     bp2Flow: [
-      "Thereafter: The strips are shaped into circular noodle discs, cooked in oil, and dehydrated.",
-      "Cup Dispensing: The dry noodle discs are placed in cups with vegetables and spices added.",
-      "Eventually: The cups are hermetically sealed and labelled, completing the production cycle."
+      "Post Office: Replaced the old petrol station along Estuary Road.",
+      "Pedestrianization: Central connecting road turned into a walking pedestrian road.",
+      "Woodlands: Trees preserved and a bird house added."
     ],
     vocabList: [
-      { simple: "starts", band9: "Commences" },
-      { simple: "ends with", band9: "Culminates" },
-      { simple: "mixed thoroughly", band9: "Homogenized" },
-      { simple: "rolled flat", band9: "Laminated" },
-      { simple: "cut with pressure", band9: "Sheared" },
-      { simple: "all moisture removed", band9: "Dehydrated" },
-      { simple: "portioned/dispensed", band9: "Dispensed" },
-      { simple: "sealed airtight", band9: "Hermetically sealed" }
+      { simple: "pulled down", band9: "Demolished" },
+      { simple: "built", band9: "Constructed" },
+      { simple: "converted for walking", band9: "Pedestrianized" },
+      { simple: "kept unchanged", band9: "Preserved" },
+      { simple: "modernized", band9: "Redeveloped" },
+      { simple: "split into two", band9: "Divided" },
+      { simple: "changed function", band9: "Converted" },
+      { simple: "remained", band9: "Persisted" }
     ],
-    vocabHunt: ["Commences", "Homogenized", "Laminated", "Hermetically sealed"],
-    ranking: ["Flour Storage (Silos)", "Mixing (Water & Oil)", "Rolling Dough Sheets", "Slicing Dough Strips", "Forming Noodle Discs", "Cooking & Drying", "Adding Vegetables & Spices", "Sealing & Labelling Cups"],
-    keywords: ["noodles", "manufacture", "process", "stages", "flour", "silos", "mixer", "water", "oil", "dough", "sheets", "rollers", "strips", "discs", "cooking", "frying", "drying", "cups", "vegetables", "spices", "labelling", "sealing"]
+    vocabHunt: ["Demolished", "Constructed", "Pedestrianized", "Preserved"],
+    ranking: ["Marina constructed in the sea", "Factory replaced by supermarket near Sunset Street", "Retail shops nearby divided into two units", "Railway station built on the railway track", "Petrol station near Estuary Road replaced by post office", "Connecting road pedestrianized", "Library, doctor's surgery, and college preserved", "Bird house added to the woodland area"],
+    keywords: ["riverpark", "maps", "comparisons", "sea", "marina", "factory", "supermarket", "shops", "railway", "station", "petrol station", "post office", "pedestrian", "road", "library", "surgery", "college", "bird house", "trees", "development", "transformation"]
   },
   task2: {
     audioUrl: "Sanctuaries_or_prisons_for_endangered_species.m4a",

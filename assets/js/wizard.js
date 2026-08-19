@@ -834,12 +834,14 @@ window.unlockTask2 = function(stance, thesis) {
 
 // ---------- Task 1 Bar Chart Ranking Challenge ----------
 const TASK1_BARCHART_STAGES = [
-  { id: 1, text: "Once or twice a month" },
-  { id: 2, text: "Once a week" },
-  { id: 3, text: "Several times a week" },
-  { id: 4, text: "A few times a year" },
-  { id: 5, text: "Never" },
-  { id: 6, text: "Every day" }
+  { id: 1, text: "Marina constructed in the sea" },
+  { id: 2, text: "Factory replaced by supermarket near Sunset Street" },
+  { id: 3, text: "Retail shops nearby divided into two units" },
+  { id: 4, text: "Railway station built on the railway track" },
+  { id: 5, text: "Petrol station near Estuary Road replaced by post office" },
+  { id: 6, text: "Connecting road pedestrianized" },
+  { id: 7, text: "Library, doctor's surgery, and college preserved" },
+  { id: 8, text: "Bird house added to the woodland area" }
 ];
 let userTimelineT1 = [];
 
@@ -904,7 +906,7 @@ function verifySequenceT1() {
   
   if (isCorrect) {
     feedback.className = 'small text-success fw-bold';
-    feedback.innerHTML = '<i class="bi bi-check-circle-fill"></i> Bar Chart Ranking Verified! Correct order locked.';
+    feedback.innerHTML = '<i class="bi bi-check-circle-fill"></i> Riverpark Development Ranking Verified! Correct order locked.';
   } else {
     feedback.className = 'small text-danger fw-bold';
     feedback.innerHTML = '<i class="bi bi-x-circle-fill"></i> Incorrect ranking sequence. Resetting game...';

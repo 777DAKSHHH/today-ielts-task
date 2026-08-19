@@ -398,7 +398,7 @@ function showAnswerDistribution(questionIndex) {
 }
 
 // --- Active Lesson Content Sync ---
-let liveKeywordsT1 = ['noodles', 'manufacture', 'process', 'stages', 'flour', 'silos', 'mixer', 'water', 'oil', 'dough', 'sheets', 'rollers', 'strips', 'discs', 'cooking', 'frying', 'drying', 'cups', 'vegetables', 'spices', 'labelling', 'sealing'];
+let liveKeywordsT1 = ['riverpark', 'maps', 'comparisons', 'sea', 'marina', 'factory', 'supermarket', 'shops', 'railway', 'station', 'petrol station', 'post office', 'pedestrian', 'road', 'library', 'surgery', 'college', 'bird house', 'trees', 'development', 'transformation'];
 let liveKeywordsT2 = ['zoos', 'cruelty', 'closed down', 'protecting', 'wild animals', 'captivity', 'conservation', 'endangered species', 'breeding', 'cages', 'natural habitat', 'freedom', 'extinction', 'public awareness', 'research', 'animal welfare', 'ethical concerns', 'rehabilitation'];
 let liveTask2Type = "Discuss Both Views & Opinion Essay";
 
@@ -500,8 +500,8 @@ function calculateGuessAccuracy(task, guessType, context) {
   
   // 1. Task Type Match (50%)
   if (task === 'task1') {
-    // Expected Task 1 is Bar Chart
-    if (guessType.toLowerCase().includes('bar') || guessType.toLowerCase().includes('chart') || guessType.toLowerCase().includes('comparison')) {
+    // Expected Task 1 is Map Comparison
+    if (guessType.toLowerCase().includes('map') || guessType.toLowerCase().includes('comparison')) {
       score += 50;
     }
   } else {
