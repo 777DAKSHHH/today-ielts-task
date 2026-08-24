@@ -270,35 +270,37 @@ const DEFAULT_LESSON = {
     keywords: ["riverpark", "maps", "comparisons", "sea", "marina", "factory", "supermarket", "shops", "railway", "station", "petrol station", "post office", "pedestrian", "road", "library", "surgery", "college", "bird house", "trees", "development", "transformation"]
   },
   task2: {
-    audioUrl: "Sanctuaries_or_prisons_for_endangered_species.m4a",
-    taskType: "Discuss Both Views & Opinion Essay",
-    questionText: "Some people think that zoos are cruel and should be closed down. Others, however, believe that zoos can be useful in protecting wild animals. Discuss both the views and give your opinion.",
-    sampleIntro: "While many people argue that keeping animals in zoos is cruel and should be banned, others believe these facilities play a key role in protecting wildlife. In my opinion, despite the ethical concerns of keeping animals in cages, zoos are necessary because they safeguard endangered species from extinction.",
-    sampleConclusion: "In conclusion, although captivity can cause animals psychological distress and limit their freedom, zoos provide essential breeding programs and a safe environment for species under threat. Therefore, I believe zoos should remain open, but they must prioritize animal welfare over commercial profit.",
-    bp1Title: "Arguments for Zoo Closure (Cruelty & Captivity)",
-    bp2Title: "Arguments for Zoo Conservation (Wildlife Protection)",
+    audioUrl: "Why_Students_Are_Quitting_Hard_Science.m4a",
+    taskType: "Why is this & Positive/Negative Development Essay",
+    questionText: "Nowadays, not enough students choose science subjects at university in many countries. Why is this? Is this a positive or negative development?",
+    sampleIntro: "In recent years, a growing number of countries have witnessed a decline in the number of university students opting to study science-related disciplines. This trend is primarily driven by the perceived difficulty of scientific fields and the allure of lucrative careers in technology and business. In my view, this is a highly negative development, as it creates critical deficits in essential fields like healthcare and environmental research.",
+    sampleConclusion: "In conclusion, the dwindling interest in university science courses stems from the rigorous academic demands of these subjects and a shift toward high-paying sectors like commerce. I strongly believe this decline represents a highly detrimental development, because a society lacking skilled scientific professionals cannot adequately address future healthcare crises or technological challenges.",
+    bp1Title: "Why science enrollment is decreasing (Reasons)",
+    bp2Title: "Why this is a negative development (Consequences)",
     vocabList: [
-      { word: "Confinement", meaning: "The state of being restricted in a limited space.", example: "The lifelong confinement of large predators in small cages can lead to severe psychological distress." },
-      { word: "Indispensable", meaning: "Absolutely necessary; essential.", example: "Captive breeding programs have proved indispensable in saving endangered species from extinction." },
-      { word: "Abolished", meaning: "Formally put an end to a system, practice, or institution.", example: "Critics demand that traditional zoos be abolished in favor of natural wildlife reserves." },
-      { word: "Cognitive", meaning: "Relating to mental processes of perception, memory, judgment, and reasoning.", example: "Restrictive enclosures often fail to stimulate the cognitive abilities of highly intelligent primates." },
-      { word: "Altruistic", meaning: "Showing a disinterested and selfless concern for the well-being of others.", example: "While some zoo operators have purely commercial motives, others are driven by altruistic conservation goals." },
-      { word: "Propensity", meaning: "An inclination or natural tendency to behave in a particular way.", example: "Captive animals often lose their natural propensity to hunt and survive in the wild." }
+      { word: "Disinclination", meaning: "A reluctance or lack of enthusiasm to do something.", example: "The growing disinclination among university applicants to select science fields is due to the demanding workloads." },
+      { word: "Remuneration", meaning: "Money paid for work or a service (salary/compensation).", example: "Careers in finance often offer substantial financial remuneration compared to laboratory research positions." },
+      { word: "Plummet", meaning: "To fall or drop straight down at high speed.", example: "Enrollment numbers in advanced physics and chemistry courses have plummeted over the last decade." },
+      { word: "Myopic", meaning: "Short-sighted; lacking foresight or intellectual insight.", example: "Avoiding scientific studies for short-term financial gains is a myopic strategy that harms long-term technological progress." },
+      { word: "Exodus", meaning: "A mass departure of people (e.g. leaving sciences for business).", example: "The steady exodus of students from pure sciences into business majors has created a deficit in research labs." },
+      { word: "Conundrum", meaning: "A confusing and difficult problem or question.", example: "Addressing the shortage of researchers without increasing university funding presents a major policy conundrum." }
     ],
-    vocabHunt: ["Confinement", "Indispensable", "Abolished", "Cognitive", "Altruistic", "Propensity"],
+    vocabHunt: ["Disinclination", "Remuneration", "Plummet", "Myopic", "Exodus", "Conundrum"],
     causes: [
-      { title: "Restricts Natural Behavior", desc: "Enclosures prevent animals from roaming long distances, hunting, and engaging in natural social structures.", ex: "Large migratory species like elephants and polar bears often develop repetitive pacing behaviors in confined spaces." },
-      { title: "Causes Psychological Distress", desc: "Constant public exposure and artificial noise can lead to chronic stress and depression in captive animals.", ex: "Many primates exhibit self-harming habits and aggression due to the lack of mental stimulation in artificial habitats." },
-      { title: "Weakens Survival Instincts", desc: "Animals born or raised in captivity become dependent on keepers for food and shelter, losing crucial survival skills.", ex: "Predators raised in cages struggle to adapt or hunt successfully if they are reintroduced into natural wild ecosystems." },
-      { title: "Driven by Commercial Profit", desc: "Many roadside zoos prioritize ticket sales and public entertainment over the genuine health and comfort of their animals.", ex: "Exploitative animal shows and petting encounters are often designed for visitor amusement rather than ecological education." }
+      { title: "Rigorous and Demanding Academic Pathways", desc: "Science subjects like physics, chemistry, and advanced mathematics require long hours of laboratory work and complex formulas.", ex: "STEM courses typically have significantly higher dropout rates compared to humanities." },
+      { title: "Perceived Mismatch in Financial Compensation", desc: "Many students perceive that careers in corporate finance, marketing, or management offer faster paths to high salaries.", ex: "A fresh business graduate often secures a higher starting salary than a research chemist." },
+      { title: "Inadequate Engagement in Early Education", desc: "In many schools, science is taught through dry memorization rather than practical, engaging laboratory experiences.", ex: "Schools lacking functioning labs struggle to inspire students to pursue tertiary science." },
+      { title: "Lack of Visible Career Progression", desc: "Unlike medicine or law, research positions in pure sciences are often dependent on unstable government grants.", ex: "Postdoctoral research positions are frequently short-term, leading to job insecurity." }
     ],
     effects: [
-      { title: "Prevents Extinction", desc: "Captive breeding programs provide a safe refuge to rebuild populations of species threatened in the wild.", ex: "The California Condor and the Arabian Oryx were saved from total extinction solely through specialized zoo breeding initiatives." },
-      { title: "Fosters Public Awareness", desc: "Seeing live animals up close inspires visitors to care about conservation and support global wildlife protection funds.", ex: "School children who visit zoo education centers are statistically more likely to support environmental charities in the future." },
-      { title: "Facilitates Scientific Research", desc: "Zoos offer researchers a controlled environment to study animal biology, behavior, and disease management.", ex: "Veterinary findings in zoos regarding infectious wildlife diseases can be directly applied to protect wild herds." },
-      { title: "Safe Haven from Threats", desc: "Zoos shield vulnerable animals from threats in the wild, such as poaching, habitat destruction, and climate change.", ex: "Orphaned or injured animals are given life-saving rehabilitation that would be impossible in the harsh wilderness." }
+      { title: "[Negative] Stifles Innovation in Vital Industries", desc: "A lack of science graduates slows down breakthroughs in critical areas such as pharmacology and energy.", ex: "Developing next-generation vaccines or solar panels requires a constant influx of trained chemists." },
+      { title: "[Negative] Widens Technological Gaps Between Nations", desc: "Countries with a shortage of science graduates become dependent on importing foreign technology.", ex: "Developing nations often rely on hiring international firms for infrastructure projects due to lack of local talent." },
+      { title: "[Negative] Impairs Policy and Crisis Management", desc: "Governments require scientific advisors to formulate policies on pandemics and environmental threats.", ex: "A shortage of experts leads to poorly informed governance during public health crises." },
+      { title: "[Positive] Fosters Growth in Other Essential Sectors", desc: "A shift away from sciences allows more students to enter other crucial fields like psychology, law, and creative design.", ex: "The growth of digital media and user experience (UX) industries relies heavily on humanities graduates." },
+      { title: "[Positive] Promotes Interdisciplinary Innovation", desc: "Modern industries value graduates who combine creative humanities thinking with technological application.", ex: "Leading technology firms are frequently co-founded by individuals who blend business, psychology, and basic engineering." },
+      { title: "[Positive] Natural Market-Driven Correction", desc: "A shortage of scientists forces the market to adjust by offering higher salaries and better benefits to attract graduates.", ex: "Biotech firms have begun offering fully-funded research fellowships to attract students back to pure science." }
     ],
-    keywords: ["zoos", "cruelty", "closed down", "protecting", "wild animals", "captivity", "conservation", "endangered species", "breeding", "cages", "natural habitat", "freedom", "extinction", "public awareness", "research", "animal welfare", "ethical concerns", "rehabilitation"]
+    keywords: ["science", "subjects", "university", "countries", "STEM", "enrollment", "careers", "lucrative", "innovation", "detrimental", "extinction", "education", "shortage", "research"]
   },
   quizQuestions: [
     { 

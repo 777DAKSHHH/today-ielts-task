@@ -1,25 +1,89 @@
 /* ---- Wizard-specific styles ---- */
 :root {
-  --accent: #3B82F6; /* Modern Vivid Blue */
-  --accent-hover: #2563EB;
-  --bg: #F8FAFC; /* Ultra Light Slate */
+  --accent: #64748b; /* Premium Slate Grey */
+  --accent-hover: #475569;
+  --bg: #f8fafc; /* Ultra Light Slate */
   --card: #ffffff;
-  --text-main: #0F172A; /* Deep Navy/Slate */
-  --text-muted: #64748B;
-  --border-color: #E2E8F0;
+  --text-main: #0f172a; /* Deep Navy/Slate */
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
   /* Premium layered shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   --radius: 24px; /* More rounded modern look */
+
+  /* Bootstrap Native Theme Variables Overrides */
+  --bs-primary: #64748b !important;
+  --bs-primary-rgb: 100, 116, 139 !important;
+  --bs-success: #475569 !important;
+  --bs-success-rgb: 71, 85, 105 !important;
+  --bs-info: #64748b !important;
+  --bs-info-rgb: 100, 116, 139 !important;
+  --bs-warning: #f59e0b !important;
+  --bs-warning-rgb: 245, 158, 11 !important;
 }
+
+/* Bootstrap Color Overrides for Light-Grey Accent Theme */
+.btn-primary, .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active,
+.btn-outline-primary:hover, .btn-outline-primary:active, .btn-outline-primary.active {
+  background-color: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #ffffff !important;
+}
+.btn-outline-primary {
+  color: var(--accent) !important;
+  border-color: var(--accent) !important;
+}
+.btn-success, .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active,
+.btn-outline-success:hover, .btn-outline-success:active, .btn-outline-success.active {
+  background-color: var(--accent-hover) !important;
+  border-color: var(--accent-hover) !important;
+  color: #ffffff !important;
+}
+.btn-outline-success {
+  color: var(--accent-hover) !important;
+  border-color: var(--accent-hover) !important;
+}
+.text-primary {
+  color: var(--accent) !important;
+}
+.text-success {
+  color: var(--accent-hover) !important;
+}
+.bg-primary {
+  background-color: var(--accent) !important;
+}
+.bg-success {
+  background-color: var(--accent-hover) !important;
+}
+.border-primary {
+  border-color: var(--accent) !important;
+}
+.border-success {
+  border-color: var(--accent-hover) !important;
+}
+.nav-tabs .nav-link.active {
+  color: var(--accent-hover) !important;
+  border-bottom-color: #ffffff !important;
+}
+.nav-tabs .nav-link {
+  color: var(--accent) !important;
+}
+.progress-bar {
+  background-color: var(--accent) !important;
+}
+.badge.bg-success {
+  background-color: var(--accent-hover) !important;
+}
+
 html, body {
   height: 100%;
 }
 body {
   background-color: var(--bg);
-  /* Modern gradient mesh background */
-  background-image: radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.08) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.05) 0px, transparent 50%);
+  /* Modern gradient mesh background with grey accents instead of blue */
+  background-image: radial-gradient(at 0% 0%, rgba(100, 116, 139, 0.08) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(100, 116, 139, 0.05) 0px, transparent 50%);
   background-attachment: fixed;
   font-family: "Poppins", sans-serif;
   color: var(--text-main);
@@ -62,7 +126,7 @@ h1, h2, h3, h4, h5, h6 {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; height: 6px;
-  background: linear-gradient(90deg, var(--accent), #60A5FA);
+  background: linear-gradient(90deg, var(--accent), #94a3b8);
 }
 .login-card h2 {
   margin-bottom: 1rem;
@@ -174,7 +238,7 @@ main.wizard-main {
 .step-pill {
   width: 42px;
   height: 42px;
-  background: linear-gradient(135deg, var(--accent), #2563EB);
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
   color: #fff;
   border-radius: 50%;
   display: flex;
@@ -184,7 +248,7 @@ main.wizard-main {
   font-size: 16px;
   position: relative;
   z-index: 1;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
 }
 .step-pill::after {
   content: '';
@@ -251,18 +315,18 @@ main.wizard-main {
 
 /* Button Polish */
 .btn-primary {
-  background: linear-gradient(180deg, var(--accent), #2563EB);
+  background: linear-gradient(180deg, var(--accent), var(--accent-hover));
   border: none;
-  box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 4px 6px rgba(100, 116, 139, 0.2);
   transition: all 0.2s;
   font-weight: 600;
   padding: 0.6rem 1.5rem;
   border-radius: 0.5rem;
 }
 .btn-primary:hover {
-  background: linear-gradient(180deg, #2563EB, #1D4ED8);
+  background: linear-gradient(180deg, var(--accent-hover), #334155);
   transform: translateY(-1px);
-  box-shadow: 0 6px 12px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 6px 12px rgba(100, 116, 139, 0.25);
 }
 
 /* Form Control Polish */

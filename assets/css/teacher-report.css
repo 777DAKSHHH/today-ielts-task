@@ -1,13 +1,19 @@
 /* ---- Teacher Live Report Styles ---- */
 :root {
-  --primary-color: #1A73E8; /* Royal Blue */
-  --secondary-color: #0D1B2A; /* Deep Navy */
+  --primary-color: #64748b; /* Slate Grey Accent */
+  --secondary-color: #475569;
   --text-color: #303030; /* Charcoal */
   --success-color: #198754;
   --danger-color: #dc3545;
   --warning-color: #ffc107;
   --bg-color: #F7F9FC; /* Cool Grey */
   --card-bg: #FFFFFF;
+
+  /* Bootstrap Native Theme Variables Overrides */
+  --bs-primary: #64748b !important;
+  --bs-primary-rgb: 100, 116, 139 !important;
+  --bs-success: #475569 !important;
+  --bs-success-rgb: 71, 85, 105 !important;
 }
 body {
   font-family: 'Lato', sans-serif;
@@ -32,7 +38,7 @@ h2, h3 {
   border-bottom: 0;
 }
 .table tbody tr:hover {
-  background-color: rgba(0, 87, 183, 0.05);
+  background-color: rgba(100, 116, 139, 0.05);
 }
 .table td {
   vertical-align: middle;

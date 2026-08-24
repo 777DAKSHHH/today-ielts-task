@@ -177,6 +177,7 @@
               <label class="form-label small fw-bold mb-1">Enter your name to unlock the lesson details:</label>
               <input type="text" id="unlockNameInputT1" class="form-control form-control-sm" placeholder="e.g. John Doe" oninput="listenForStudentGuessT1()">
               <div id="unlockFeedbackT1" class="small mt-1 text-muted"><i class="bi bi-clock-history"></i> Waiting for submission...</div>
+              <button id="manualUnlockBtnT1" onclick="handleManualUnlockT1()" class="btn btn-outline-secondary btn-sm w-100 mt-2">Unlock Task Manually</button>
             </div>
           </div>
         </div>
@@ -638,7 +639,7 @@
             <div class="tab-pane fade show active" id="audio-pane-t2" role="tabpanel">
               <p class="small text-muted">A concise audio walkthrough of approach & tips.</p>
               <audio id="overviewAudioT2" controls style="width:100%;">
-                <source id="t2AudioSource" src="materials/Sanctuaries_or_prisons_for_endangered_species.m4a" type="audio/mp4">
+                <source id="t2AudioSource" src="materials/Why_Students_Are_Quitting_Hard_Science.m4a" type="audio/mp4">
                 Your browser does not support the audio element.
               </audio>
             </div>
@@ -669,6 +670,7 @@
                 <label class="form-label small fw-bold mb-1">Enter your name to unlock the lesson details:</label>
                 <input type="text" id="unlockNameInputT2" class="form-control form-control-sm" placeholder="e.g. John Doe" oninput="listenForStudentGuessT2()">
                 <div id="unlockFeedbackT2" class="small mt-1 text-muted"><i class="bi bi-clock-history"></i> Waiting for submission...</div>
+                <button id="manualUnlockBtnT2" onclick="handleManualUnlockT2()" class="btn btn-outline-secondary btn-sm w-100 mt-2">Unlock Task Manually</button>
               </div>
             </div>
           </div>
@@ -702,7 +704,7 @@
                     <button class="btn btn-outline-primary" id="toolDrawBtn" onclick="setBrainstormTool('draw')" title="Draw Mode"><i class="bi bi-pencil-fill"></i> Draw</button>
                   </div>
                   <div id="drawOptions" class="d-flex gap-2 align-items-center hidden" style="border-left:1px solid #ccc; padding-left:8px;">
-                    <input type="color" id="bsColorPicker" class="form-control form-control-color form-control-sm" value="#0d6efd" title="Pen Color" onchange="updateBsStyle()">
+                    <input type="color" id="bsColorPicker" class="form-control form-control-color form-control-sm" value="#64748b" title="Pen Color" onchange="updateBsStyle()">
                     <input type="range" class="form-range" id="bsSizeSlider" min="1" max="20" value="2" style="width: 70px;" title="Brush Size" oninput="updateBsStyle()">
                     <div class="btn-group btn-group-sm" role="group">
                       <button class="btn btn-sm btn-outline-primary active" id="bsPenBtn" onclick="setBsDrawMode('pencil')" title="Pen"><i class="bi bi-pencil-fill"></i></button>
@@ -928,42 +930,7 @@ CON--></textarea>
           </div>
           <hr>
           <div id="t2EffectsGrid" class="row g-3">
-            <div class="col-md-6">
-              <div class="card h-100 border-0 bg-light p-3">
-                <h6 class="text-success fw-bold mb-2">1. Prevents Extinction</h6>
-                <p class="small text-muted mb-2" style="line-height: 1.5;">Captive breeding programs provide a safe refuge to rebuild populations of species threatened in the wild.</p>
-                <div class="bg-white p-2 rounded border small text-secondary">
-                  <strong>Example:</strong> The California Condor and the Arabian Oryx were saved from total extinction solely through specialized zoo breeding initiatives.
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="card h-100 border-0 bg-light p-3">
-                <h6 class="text-success fw-bold mb-2">2. Fosters Public Awareness</h6>
-                <p class="small text-muted mb-2" style="line-height: 1.5;">Seeing live animals up close inspires visitors to care about conservation and support global wildlife protection funds.</p>
-                <div class="bg-white p-2 rounded border small text-secondary">
-                  <strong>Example:</strong> School children who visit zoo education centers are statistically more likely to support environmental charities in the future.
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="card h-100 border-0 bg-light p-3">
-                <h6 class="text-success fw-bold mb-2">3. Facilitates Scientific Research</h6>
-                <p class="small text-muted mb-2" style="line-height: 1.5;">Zoos offer researchers a controlled environment to study animal biology, behavior, and disease management.</p>
-                <div class="bg-white p-2 rounded border small text-secondary">
-                  <strong>Example:</strong> Veterinary findings in zoos regarding infectious wildlife diseases can be directly applied to protect wild herds.
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="card h-100 border-0 bg-light p-3">
-                <h6 class="text-success fw-bold mb-2">4. Safe Haven from Threats</h6>
-                <p class="small text-muted mb-2" style="line-height: 1.5;">Zoos shield vulnerable animals from threats in the wild, such as poaching, habitat destruction, and climate change.</p>
-                <div class="bg-white p-2 rounded border small text-secondary">
-                  <strong>Example:</strong> Orphaned or injured animals are given life-saving rehabilitation that would be impossible in the harsh wilderness.
-                </div>
-              </div>
-            </div>
+            <!-- Dynamically populated by wizard.js into Negative and Positive columns -->
           </div>
         </section>
 

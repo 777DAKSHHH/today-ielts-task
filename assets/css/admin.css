@@ -2,12 +2,18 @@
 :root {
   --bg-color: #f3f4f6;
   --card-bg: #ffffff;
-  --primary-color: #0f95ff;
-  --primary-hover: #0d86e6;
+  --primary-color: #64748b; /* Slate Grey Accent */
+  --primary-hover: #475569;
   --border-color: #e5e7eb;
   --text-dark: #1f2937;
   --text-muted: #6b7280;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+
+  /* Bootstrap Native Theme Variables Overrides */
+  --bs-primary: #64748b !important;
+  --bs-primary-rgb: 100, 116, 139 !important;
+  --bs-success: #475569 !important;
+  --bs-success-rgb: 71, 85, 105 !important;
 }
 
 body {

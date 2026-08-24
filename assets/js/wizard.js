@@ -17,8 +17,8 @@ const db = firebase.database(app);
 const CORRECT_PASS = "VII I MMVI"; // exact passphrase
 let TOTAL_STEPS = 8;
 let currentMode = 'task1'; // 'task1' or 'task2'
-let t1OverviewUnlocked = true;
-let t2OverviewUnlocked = true;
+let t1OverviewUnlocked = false;
+let t2OverviewUnlocked = false;
 
 // ---------- Elements ----------
 const loginSection = document.getElementById('login-section');
@@ -786,6 +786,32 @@ window.unlockTask1 = function() {
   alert("Cognitive check passed! Flowchart analysis is unlocked and active.");
 };
 
+let clickTimeoutT1 = null;
+window.handleManualUnlockT1 = function() {
+  if (clickTimeoutT1) {
+    clearTimeout(clickTimeoutT1);
+    clickTimeoutT1 = null;
+    window.doubleClickUnlockT1();
+  } else {
+    clickTimeoutT1 = setTimeout(() => {
+      clickTimeoutT1 = null;
+      window.unlockTask1();
+    }, 250);
+  }
+};
+
+window.doubleClickUnlockT1 = function() {
+  t1OverviewUnlocked = true;
+  const analysisBlock = qs('task1AnalysisBlock');
+  if (analysisBlock) {
+    analysisBlock.classList.remove('locked-section');
+    analysisBlock.classList.add('unlocked-section');
+  }
+  const nextBtn = document.getElementById('nextBtn');
+  if (nextBtn) nextBtn.style.visibility = 'visible';
+  gotoStep(2);
+};
+
 // ---------- Task 2 Active Listening & Stance Selector ----------
 window.listenForStudentGuessT2 = function() {
   const name = qs('unlockNameInputT2').value.trim();
@@ -830,6 +856,27 @@ window.unlockTask2 = function(stance, thesis) {
   if (nextBtn) nextBtn.style.visibility = 'visible';
 
   alert("Cognitive stance lock passed! Brainstorm canvas and lesson details are unlocked.");
+};
+
+let clickTimeoutT2 = null;
+window.handleManualUnlockT2 = function() {
+  if (clickTimeoutT2) {
+    clearTimeout(clickTimeoutT2);
+    clickTimeoutT2 = null;
+    window.doubleClickUnlockT2();
+  } else {
+    clickTimeoutT2 = setTimeout(() => {
+      clickTimeoutT2 = null;
+      window.unlockTask2('Manual Stance', 'Manual Unlock');
+    }, 250);
+  }
+};
+
+window.doubleClickUnlockT2 = function() {
+  t2OverviewUnlocked = true;
+  const nextBtn = document.getElementById('nextBtn');
+  if (nextBtn) nextBtn.style.visibility = 'visible';
+  gotoStep(2);
 };
 
 // ---------- Task 1 Bar Chart Ranking Challenge ----------
@@ -1056,17 +1103,53 @@ window.loadLiveLesson = function() {
       }
       // Update Effects Grid
       if (t2.effects && Array.isArray(t2.effects) && qs('t2EffectsGrid')) {
-        qs('t2EffectsGrid').innerHTML = t2.effects.map((item, i) => `
-          <div class="col-md-6">
-            <div class="card h-100 border-0 bg-light p-3">
-              <h6 class="text-success fw-bold mb-2">${i + 1}. ${item.title}</h6>
-              <p class="small text-muted mb-2" style="line-height: 1.5;">${item.desc}</p>
-              <div class="bg-white p-2 rounded border small text-secondary">
-                <strong>Example:</strong> ${item.ex}
-              </div>
+        let negs = t2.effects.filter(item => item.title.toLowerCase().includes('negative') || item.title.toLowerCase().includes('consequence') || item.title.toLowerCase().includes('against') || item.title.toLowerCase().includes('cruelty') || item.title.toLowerCase().includes('closure'));
+        let poss = t2.effects.filter(item => item.title.toLowerCase().includes('positive') || item.title.toLowerCase().includes('benefit') || item.title.toLowerCase().includes('support') || item.title.toLowerCase().includes('conservation') || item.title.toLowerCase().includes('protect'));
+        
+        if (negs.length === 0 && poss.length === 0) {
+          const half = Math.ceil(t2.effects.length / 2);
+          negs = t2.effects.slice(0, half);
+          poss = t2.effects.slice(half);
+        } else if (negs.length === 0) {
+          negs = t2.effects.filter(x => !poss.includes(x));
+        } else if (poss.length === 0) {
+          poss = t2.effects.filter(x => !negs.includes(x));
+        }
+
+        const negsHtml = negs.map((item, idx) => `
+          <div class="card border-0 bg-light p-3 mb-3">
+            <h6 class="text-danger fw-bold mb-2">${idx + 1}. ${item.title.replace(/\[Negative\]/i, '').trim()}</h6>
+            <p class="small text-muted mb-2" style="line-height: 1.5;">${item.desc}</p>
+            <div class="bg-white p-2 rounded border small text-secondary">
+              <strong>Example:</strong> ${item.ex}
             </div>
           </div>
         `).join('');
+
+        const possHtml = poss.map((item, idx) => `
+          <div class="card border-0 bg-light p-3 mb-3">
+            <h6 class="text-success fw-bold mb-2">${idx + 1}. ${item.title.replace(/\[Positive\]/i, '').trim()}</h6>
+            <p class="small text-muted mb-2" style="line-height: 1.5;">${item.desc}</p>
+            <div class="bg-white p-2 rounded border small text-secondary">
+              <strong>Example:</strong> ${item.ex}
+            </div>
+          </div>
+        `).join('');
+
+        qs('t2EffectsGrid').innerHTML = `
+          <div class="col-md-6">
+            <div class="pe-md-3 border-end h-100" style="border-color: #e2e8f0 !important;">
+              <h5 class="mb-3 text-danger fw-bold"><i class="bi bi-dash-circle-fill"></i> Negative Aspects</h5>
+              ${negsHtml || '<p class="small text-muted">No negative points configured.</p>'}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="ps-md-3 h-100">
+              <h5 class="mb-3 text-success fw-bold"><i class="bi bi-plus-circle-fill"></i> Positive Aspects</h5>
+              ${possHtml || '<p class="small text-muted">No positive points configured.</p>'}
+            </div>
+          </div>
+        `;
       }
       // Update Lexical Hunt cards
       if (t2.vocabHunt && Array.isArray(t2.vocabHunt) && qs('t2VocabHuntContainer')) {
